@@ -26,13 +26,16 @@ Serie LQSA = new Serie("La que se Avecina", 90, 16);
 Documental LaVidaEnNuestroPlaneta = new Documental("La Vida en Nuestro Planeta", 56, "Naturaleza y Ciencia");
 
 List<Contenido> contenidoStreaming = [Anastasia, Braveheart, ANHQV, LQSA, LaVidaEnNuestroPlaneta];
+
+//Ejecución métodos
 buscarTituloDeStreaming(contenidoStreaming);
+filtrarPeliculas(contenidoStreaming);
 
 //Método para buscar título de la lista
-void buscarTituloDeStreaming(List<Contenido> contenido)
+void buscarTituloDeStreaming(List<Contenido> listaStreaming)
 {
     Console.WriteLine("====== Contenido Streaming ======");
-    foreach (var elementoStreaming in contenido)
+    foreach (var elementoStreaming in listaStreaming)
     {
         Console.WriteLine(elementoStreaming.ObtenerDescripcion());
     }
@@ -43,7 +46,7 @@ void buscarTituloDeStreaming(List<Contenido> contenido)
     string tituloBuscar = Console.ReadLine().ToLower().Trim();
     bool tituloEncontrado = false;
 
-    foreach (var elementoStreaming in contenido)
+    foreach (var elementoStreaming in listaStreaming)
     {
         if (tituloBuscar == elementoStreaming.Titulo.ToLower().Trim())
         {
@@ -56,5 +59,20 @@ void buscarTituloDeStreaming(List<Contenido> contenido)
     {
         Console.WriteLine("No se ha encontrado el contenido");
     }
+    
+    Console.WriteLine("");
 }
 
+//Método para filtrar la lista para mostrar solo las peliculas
+void filtrarPeliculas(List<Contenido> listaStreaming)
+{
+    Console.WriteLine("====== Películas ======");
+    foreach (var contenido in listaStreaming)
+    {
+        if (contenido is Pelicula)
+        {
+            Console.WriteLine(contenido.ObtenerDescripcion());
+        }
+    }
+    Console.WriteLine("");
+}
