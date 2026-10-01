@@ -1,5 +1,6 @@
 ﻿using ModelsVideojuegos;
 using ModelsStreaming;
+using ModelsBiblioteca;
 
 //1. Videojuegos
 Guerrero guerreroMu = new Guerrero("Mu", 20, 9);
@@ -75,4 +76,59 @@ void filtrarPeliculas(List<Contenido> listaStreaming)
         }
     }
     Console.WriteLine("");
+}
+
+//5-6 Biblioteca
+Libro AlasDeSangre = new Libro("Alas de Sangre", 2023, "Rebecca Yarros");
+Libro UnaCorteDeLlamasPlateadas = new Libro("UnaCorteDeLlamasPlateadas", 2021, "Sarah J. Mass");
+Revista Loka1 = new Revista("Revista Loka", 2000, 1);
+Revista Loka2 = new Revista("Revista Loka", 2000, 2);
+Comic TheWalkingDead1 = new Comic("The Walking Dead", 2003, "Charlie Adlard Tony Moore");
+Comic TheWalkingDead2 = new Comic("The Walking Dead", 2004, "Charlie Adlard Tony Moore");
+
+List<Publicacion> publicacionesBiblioteca = [AlasDeSangre, UnaCorteDeLlamasPlateadas, Loka1, Loka2, TheWalkingDead1, TheWalkingDead2];
+
+Console.WriteLine("====== PUBLICACIONES BIBLIOTECA ======");
+foreach (var publicacion in publicacionesBiblioteca)
+{
+    publicacion.ObtenerDescripcion();
+}
+Console.WriteLine("");
+
+solicitarPublicacionesAnterioresAANio(publicacionesBiblioteca);
+
+//Método para solicitar publicaciones anteriores a un número introducido por teclado
+void solicitarPublicacionesAnterioresAANio(List<Publicacion> listaPublicaciones)
+{
+    int anio;
+    DateTime fechaActual = DateTime.Now;
+    int anioActual = fechaActual.Year;
+    int contador = 0;
+
+    Console.WriteLine("Mostrar publicaciones anteriores al año (Introduce un número): ");
+
+    if(int.TryParse(Console.ReadLine(), out anio))
+    {
+
+        if(anio <= anioActual)
+        {
+            Console.WriteLine($"Lista Publicaciones anteriores a {anio}");
+            foreach(var publicacion in listaPublicaciones)
+            {
+                if(publicacion.AnioPublicacion < anio)
+                {
+                    publicacion.ObtenerDescripcion();
+                    contador++;
+                }
+            }
+            if(contador == 0)
+            {
+                Console.WriteLine($"No hay publicaciones previas al año {anio}");
+            }
+        }
+        else
+        {
+            Console.WriteLine("No se admiten años futuros.");
+        }
+    }
 }
