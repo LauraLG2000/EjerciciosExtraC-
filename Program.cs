@@ -103,7 +103,6 @@ void solicitarPublicacionesAnterioresAANio(List<Publicacion> listaPublicaciones)
     int anio;
     DateTime fechaActual = DateTime.Now;
     int anioActual = fechaActual.Year;
-    Console.WriteLine($"{anioActual}");
     int contador = 0;
 
     Console.WriteLine("Mostrar publicaciones anteriores al año (Introduce un número): ");
