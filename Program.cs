@@ -1,5 +1,6 @@
 ﻿using ModelsVideojuegos;
 using ModelsStreaming;
+using ModelsBiblioteca;
 
 //1. Videojuegos
 Guerrero guerreroMu = new Guerrero("Mu", 20, 9);
@@ -76,3 +77,20 @@ void filtrarPeliculas(List<Contenido> listaStreaming)
     }
     Console.WriteLine("");
 }
+
+//5-6 Biblioteca
+Libro AlasDeSangre = new Libro("Alas de Sangre", 2023, "Rebecca Yarros");
+Libro UnaCorteDeLlamasPlateadas = new Libro("UnaCorteDeLlamasPlateadas", 2021, "Sarah J. Mass");
+Revista Loka1 = new Revista("Revista Loka", 2000, 1);
+Revista Loka2 = new Revista("Revista Loka", 2000, 2);
+Comic TheWalkingDead1 = new Comic("The Walking Dead", 2003, "Charlie Adlard Tony Moore");
+Comic TheWalkingDead2 = new Comic("The Walking Dead", 2004, "Charlie Adlard Tony Moore");
+
+List<Publicacion> publicacionesBiblioteca = [AlasDeSangre, UnaCorteDeLlamasPlateadas, Loka1, Loka2, TheWalkingDead1, TheWalkingDead2];
+
+Console.WriteLine("====== PUBLICACIONES BIBLIOTECA ======");
+foreach (var publicacion in publicacionesBiblioteca)
+{
+    publicacion.ObtenerDescripcion();
+}
+Console.WriteLine("");
