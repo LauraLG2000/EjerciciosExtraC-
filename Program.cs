@@ -180,13 +180,14 @@ do{
                 break;      
             
             default:
-                Console.WriteLine("Opción no encontrada.");
+                Console.WriteLine("Opción no válida.");
                 break;
         }
 
     }else
     {
         Console.WriteLine("Opción no válida.");
+        opcionMenuParking = -1;
     }
 
 }while(opcionMenuParking != 0);
@@ -216,7 +217,7 @@ void BuscarPorMatricula(List<Vehiculo> listaVehiculos){
 
         if(encontrado) break;
     } 
-    
+
     if(!encontrado){
         Console.WriteLine("No se ha encontrado un vehículo con esa matrícula.");
     }
