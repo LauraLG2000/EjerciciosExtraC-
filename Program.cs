@@ -1,6 +1,7 @@
 ﻿using ModelsVideojuegos;
 using ModelsStreaming;
 using ModelsBiblioteca;
+using ModelsParking;
 
 //1. Videojuegos
 Guerrero guerreroMu = new Guerrero("Mu", 20, 9);
@@ -134,15 +135,15 @@ void solicitarPublicacionesAnterioresAANio(List<Publicacion> listaPublicaciones)
 }
 
 //7-8 Parking
-Coche cocheSeatIbiza = new Coche("Seat Ibiza", "1234BCD", 355, 5);
-Coche cocheHundai = new Coche("Hyundai Tucson", "5678FGH", 620, 5);
-Coche cochePeugeot = new Coche("Peugeot 5008", "9012JKL", 210, 7);
+Coche cocheSeatIbiza = new Coche("1234BCD", "Seat Ibiza", 355, 5);
+Coche cocheHundai = new Coche("5678FGH", "Hyundai Tucson", 620, 5);
+Coche cochePeugeot = new Coche("9012JKL", "Peugeot 5008", 210, 7);
 
-Furgoneta furgonetaMercedesBenz = new Furgoneta("Mercedes-Benz Sprinter", "1234BCD", 14.0, 270);
-Furgoneta furgonetaFordTransit = new Furgoneta("Ford Transit", "5678FGH", 11.5, 180);
+Furgoneta furgonetaMercedesBenz = new Furgoneta("1234XYZ", "Mercedes-Benz Sprinter", 14.0m, 270);
+Furgoneta furgonetaFordTransit = new Furgoneta("5678IJK", "Ford Transit", 11.5m, 180);
 
-Moto motoVespa = new Moto("Vespa Primavera", "2468VWX", "Urbano Integrado", true);
-Moto motoHonda = new Moto("Honda PCX 125", "5678FGH", "Estándar", true);
+Moto motoVespa = new Moto("2468ZAB", "Vespa Primavera", "Urbano Integrado", true);
+Moto motoHonda = new Moto("5678EFG", "Honda PCX 125", "Estándar", true);
 
 List<Vehiculo> listaVehiculosParking = [cocheSeatIbiza, cocheHundai, cochePeugeot, furgonetaMercedesBenz, furgonetaFordTransit, motoVespa, motoHonda];
 
@@ -195,7 +196,7 @@ void ListarInformacionVehiculos(List<Vehiculo> listaVehiculos){
     Console.WriteLine("===  Vehículos del Parking   ===");
     foreach (var vehiculo in listaVehiculos)
     {
-        Console.WriteLine(vehiculo.ObtenerDescripcion());
+        vehiculo.ObtenerDescripcion();
     }
 }
 
@@ -203,17 +204,19 @@ void ListarInformacionVehiculos(List<Vehiculo> listaVehiculos){
 void BuscarPorMatricula(List<Vehiculo> listaVehiculos){
 
     Console.Write("Introduce la matrícula: ");
-    string matricula = Console.ReadLine().ToUpper().Trim();
+    string matriculaTeclado = Console.ReadLine().ToUpper().Trim();
 
     bool encontrado = false;
 
-    for(int i=0; i<listaVehiculos.length && !encontrado; i++){
-        if(listaVehiculos[i].Matricula.ToUpper().Trim() == matricula){
-            Console.WriteLine(listaVehiculos[i].ObtenerDescripcion());
+    foreach(var vehiculo in listaVehiculos){
+        if(vehiculo.Matricula.Equals(matriculaTeclado)){
+            vehiculo.ObtenerDescripcion();
             encontrado = true;
         }
-    }
 
+        if(encontrado) break;
+    } 
+    
     if(!encontrado){
         Console.WriteLine("No se ha encontrado un vehículo con esa matrícula.");
     }
@@ -228,11 +231,11 @@ void MostrarSoloCoches(List<Vehiculo> listaVehiculos){
     foreach(var vehiculo in listaVehiculos){
         if(vehiculo is Coche){
             vehiculo.ObtenerDescripcion();
-            contador++;
+            contadorCoches++;
         }
     }
 
-    if(contador == 0){
-        Consolw.Write("No hay coches registrados en el parking.");
+    if(contadorCoches == 0){
+        Console.WriteLine("No hay coches registrados en el parking.");
     }
 }
