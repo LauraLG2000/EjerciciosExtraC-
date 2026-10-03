@@ -2,6 +2,7 @@
 using ModelsStreaming;
 using ModelsBiblioteca;
 using ModelsParking;
+using ModelsArticulo;
 
 //1. Videojuegos
 Guerrero guerreroMu = new Guerrero("Mu", 20, 9);
@@ -239,4 +240,32 @@ void MostrarSoloCoches(List<Vehiculo> listaVehiculos){
     if(contadorCoches == 0){
         Console.WriteLine("No hay coches registrados en el parking.");
     }
+}
+
+Articulo microfono = new Articulo("Micrófono", 29.99m);
+Articulo ratonInalambrico = new Articulo("Ratón Inalámbrico", 40.99m);
+Articulo cascos = new Articulo("Cascos", 9.99m);
+
+List<Articulo> listaArticulos = [microfono, ratonInalambrico, cascos];
+
+ArticuloMasBarato(listaArticulos);
+
+//Método para mostrar el artículo más barato de la lista
+void ArticuloMasBarato(List<Articulo> articulos)
+{
+
+    for(int i=0; i<articulos.Count; i++)
+    {
+        for(int j=0; j<articulos.Count; j++)
+        {
+            if(articulos[i].Precio < articulos[j].Precio)
+            {
+                Articulo articuloTemporal = articulos[i];
+                articulos[i] = articulos[j];
+                articulos[j] = articuloTemporal;
+            }
+        }
+    }
+
+    articulos[0].DescripcionArticulo();
 }
