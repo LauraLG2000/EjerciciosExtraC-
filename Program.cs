@@ -250,6 +250,7 @@ List<Articulo> listaArticulos = [microfono, ratonInalambrico, cascos];
 
 ArticuloMasBarato(listaArticulos);
 PrecioMedioArticulos(listaArticulos);
+ArticulosPorPrecioMaximo(listaArticulos);
 
 //Método para mostrar el artículo más barato de la lista
 void ArticuloMasBarato(List<Articulo> articulos)
@@ -285,4 +286,33 @@ void PrecioMedioArticulos(List<Articulo> articulos)
     decimal precioMedio = sumaPrecios / cantidadArticulos;
 
     Console.WriteLine($"Precio medio: {precioMedio}€");
+}
+
+//Método para buscar un rango de productos por un precio máximo introducido por teclado
+void ArticulosPorPrecioMaximo(List<Articulo> articulos)
+{
+    Console.WriteLine("Precio máximo de la búsqueda:");
+
+    decimal precioMaximo = 0;
+    int contadorArticulos = 0;
+
+    if(decimal.TryParse(Console.ReadLine(), out precioMaximo))
+    {
+        foreach(var articulo in articulos)
+        {
+            if(articulo.Precio <= precioMaximo)
+            {
+                articulo.DescripcionArticulo();
+                contadorArticulos++;
+            }
+        }
+
+        if(contadorArticulos == 0)
+        {
+            Console.WriteLine($"No hay artículos con un precio inferior o igual a {precioMaximo}€");
+        }
+    } else
+    {
+        Console.WriteLine("Valor no válido.");
+    }
 }
