@@ -1,6 +1,7 @@
 ﻿using ModelsVideojuegos;
 using ModelsStreaming;
 using ModelsBiblioteca;
+using ModelsParking;
 
 //1. Videojuegos
 Guerrero guerreroMu = new Guerrero("Mu", 20, 9);
@@ -130,5 +131,112 @@ void solicitarPublicacionesAnterioresAANio(List<Publicacion> listaPublicaciones)
         {
             Console.WriteLine("No se admiten años futuros.");
         }
+    }
+}
+
+//7-8 Parking
+Coche cocheSeatIbiza = new Coche("1234BCD", "Seat Ibiza", 355, 5);
+Coche cocheHundai = new Coche("5678FGH", "Hyundai Tucson", 620, 5);
+Coche cochePeugeot = new Coche("9012JKL", "Peugeot 5008", 210, 7);
+
+Furgoneta furgonetaMercedesBenz = new Furgoneta("1234XYZ", "Mercedes-Benz Sprinter", 14.0m, 270);
+Furgoneta furgonetaFordTransit = new Furgoneta("5678IJK", "Ford Transit", 11.5m, 180);
+
+Moto motoVespa = new Moto("2468ZAB", "Vespa Primavera", "Urbano Integrado", true);
+Moto motoHonda = new Moto("5678EFG", "Honda PCX 125", "Estándar", true);
+
+List<Vehiculo> listaVehiculosParking = [cocheSeatIbiza, cocheHundai, cochePeugeot, furgonetaMercedesBenz, furgonetaFordTransit, motoVespa, motoHonda];
+
+int opcionMenuParking=-1;
+do{
+    Console.WriteLine("=== PARKING ===");
+    Console.WriteLine("");
+    Console.WriteLine("1. Ver vehículos");
+    Console.WriteLine("2. Buscar por matrícula");
+    Console.WriteLine("3. Mostrar coches");
+    Console.WriteLine("0. Salir");
+    Console.WriteLine("");
+
+    Console.Write("Introduce el número de la opcion: ");
+
+    if(int.TryParse(Console.ReadLine(), out opcionMenuParking)){
+
+        switch (opcionMenuParking)
+        {
+            case 0:
+                Console.WriteLine("Gracias por su visita");
+                break;
+
+            case 1:
+                ListarInformacionVehiculos(listaVehiculosParking);
+                break;
+
+            case 2:
+                BuscarPorMatricula(listaVehiculosParking);
+                break;
+
+            case 3:
+                MostrarSoloCoches(listaVehiculosParking);
+                break;      
+            
+            default:
+                Console.WriteLine("Opción no válida.");
+                break;
+        }
+
+    }else
+    {
+        Console.WriteLine("Opción no válida.");
+        opcionMenuParking = -1;
+    }
+
+}while(opcionMenuParking != 0);
+
+//Método para listar toda la información de los vehículos del parking
+void ListarInformacionVehiculos(List<Vehiculo> listaVehiculos){
+    Console.WriteLine("===  Vehículos del Parking   ===");
+    foreach (var vehiculo in listaVehiculos)
+    {
+        vehiculo.ObtenerDescripcion();
+    }
+}
+
+//Método para buscar un vehículo por su matrícula
+void BuscarPorMatricula(List<Vehiculo> listaVehiculos){
+
+    Console.Write("Introduce la matrícula: ");
+    string matriculaTeclado = Console.ReadLine().ToUpper().Trim();
+
+    bool encontrado = false;
+
+    foreach(var vehiculo in listaVehiculos){
+        if(vehiculo.Matricula.Equals(matriculaTeclado)){
+            vehiculo.ObtenerDescripcion();
+            encontrado = true;
+        }
+
+        if(encontrado) break;
+    } 
+
+    if(!encontrado){
+        Console.WriteLine("No se ha encontrado un vehículo con esa matrícula.");
+    }
+}
+
+//Método para mostrar solo los coches del parking
+void MostrarSoloCoches(List<Vehiculo> listaVehiculos){
+    int contadorCoches = 0;
+
+    Console.WriteLine("===  Coches del Parking  ===");
+
+    foreach(var vehiculo in listaVehiculos){
+        if(vehiculo is Coche){
+            vehiculo.ObtenerDescripcion();
+            contadorCoches++;
+        }
+    }
+
+    if(contadorCoches == 0){
+        Console.WriteLine("No hay coches registrados en el parking.");
     }
 }
