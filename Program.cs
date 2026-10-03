@@ -249,6 +249,7 @@ Articulo cascos = new Articulo("Cascos", 9.99m);
 List<Articulo> listaArticulos = [microfono, ratonInalambrico, cascos];
 
 ArticuloMasBarato(listaArticulos);
+PrecioMedioArticulos(listaArticulos);
 
 //Método para mostrar el artículo más barato de la lista
 void ArticuloMasBarato(List<Articulo> articulos)
@@ -268,4 +269,20 @@ void ArticuloMasBarato(List<Articulo> articulos)
     }
 
     articulos[0].DescripcionArticulo();
+}
+
+//Método para calcular el precio medio de los articulos
+void PrecioMedioArticulos(List<Articulo> articulos)
+{
+    decimal sumaPrecios = 0;
+    int cantidadArticulos = articulos.Count;
+
+    foreach(var articulo in articulos)
+    {
+        sumaPrecios += articulo.Precio;
+    }
+
+    decimal precioMedio = sumaPrecios / cantidadArticulos;
+
+    Console.WriteLine($"Precio medio: {precioMedio}€");
 }
