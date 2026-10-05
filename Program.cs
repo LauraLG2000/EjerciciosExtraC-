@@ -2,6 +2,7 @@
 using ModelsStreaming;
 using ModelsBiblioteca;
 using ModelsParking;
+using ModelsArticulo;
 
 //1. Videojuegos
 Guerrero guerreroMu = new Guerrero("Mu", 20, 9);
@@ -238,5 +239,80 @@ void MostrarSoloCoches(List<Vehiculo> listaVehiculos){
 
     if(contadorCoches == 0){
         Console.WriteLine("No hay coches registrados en el parking.");
+    }
+}
+
+Articulo microfono = new Articulo("Micrófono", 29.99m);
+Articulo ratonInalambrico = new Articulo("Ratón Inalámbrico", 40.99m);
+Articulo cascos = new Articulo("Cascos", 9.99m);
+
+List<Articulo> listaArticulos = [microfono, ratonInalambrico, cascos];
+
+ArticuloMasBarato(listaArticulos);
+PrecioMedioArticulos(listaArticulos);
+ArticulosPorPrecioMaximo(listaArticulos);
+
+//Método para mostrar el artículo más barato de la lista
+void ArticuloMasBarato(List<Articulo> articulos)
+{
+
+    for(int i=0; i<articulos.Count; i++)
+    {
+        for(int j=0; j<articulos.Count; j++)
+        {
+            if(articulos[i].Precio < articulos[j].Precio)
+            {
+                Articulo articuloTemporal = articulos[i];
+                articulos[i] = articulos[j];
+                articulos[j] = articuloTemporal;
+            }
+        }
+    }
+
+    articulos[0].DescripcionArticulo();
+}
+
+//Método para calcular el precio medio de los articulos
+void PrecioMedioArticulos(List<Articulo> articulos)
+{
+    decimal sumaPrecios = 0;
+    int cantidadArticulos = articulos.Count;
+
+    foreach(var articulo in articulos)
+    {
+        sumaPrecios += articulo.Precio;
+    }
+
+    decimal precioMedio = sumaPrecios / cantidadArticulos;
+
+    Console.WriteLine($"Precio medio: {precioMedio}€");
+}
+
+//Método para buscar un rango de productos por un precio máximo introducido por teclado
+void ArticulosPorPrecioMaximo(List<Articulo> articulos)
+{
+    Console.WriteLine("Precio máximo de la búsqueda:");
+
+    decimal precioMaximo = 0;
+    int contadorArticulos = 0;
+
+    if(decimal.TryParse(Console.ReadLine(), out precioMaximo))
+    {
+        foreach(var articulo in articulos)
+        {
+            if(articulo.Precio <= precioMaximo)
+            {
+                articulo.DescripcionArticulo();
+                contadorArticulos++;
+            }
+        }
+
+        if(contadorArticulos == 0)
+        {
+            Console.WriteLine($"No hay artículos con un precio inferior o igual a {precioMaximo}€");
+        }
+    } else
+    {
+        Console.WriteLine("Valor no válido.");
     }
 }
