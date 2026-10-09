@@ -1,20 +1,10 @@
-﻿using ModelsVideojuegos;
-using ModelsStreaming;
+﻿using ModelsStreaming;
 using ModelsBiblioteca;
 using ModelsParking;
 using ModelsArticulo;
 
-//Creación de objetos y listas
 
-//1. Videojuegos
-Guerrero guerreroMu = new Guerrero("Mu", 20, 9);
-Guerrero guerreroGuzran = new Guerrero("Guzran", 21, 12);
-Mago magaOlympa = new Mago("Olympa", 18, 10);
-Mago magoSirocco = new Mago("Sirocco", 19, 10);
-Arquero arqueroVirion = new Arquero("Virion", 19, 20);
-Arquero arqueraLeda = new Arquero("Leda", 20, 20);
-
-List<Personaje> listaPersonajes = [guerreroMu, guerreroGuzran, magaOlympa, magoSirocco, arqueroVirion, arqueraLeda];
+var menuVideojegos = new MenuVideojuegos();
 
 //2-3 Streaming
 Pelicula Anastasia = new Pelicula("Anastasia", 94, "Don Bluth, Gary Goldman");
@@ -58,8 +48,7 @@ List<Articulo> listaArticulos = [microfono, ratonInalambrico, cascos];
 int opcionMenuExtra = -1;
 do
 {
-    Console.WriteLine("====== EJERCICIOS EXTRA C# ======");
-    Console.WriteLine("");
+    Console.WriteLine("====== EJERCICIOS EXTRA C# ======\r\n\r\n");
     Console.WriteLine("1. Videojuegos");
     Console.WriteLine("2. Plataforma de Streaming");
     Console.WriteLine("3. Biblioteca");
@@ -79,9 +68,7 @@ do
 
             //Ejercicios videojuego
             case 1:
-                Console.WriteLine("====== VIDEOJUEGOS ======");
-                Console.WriteLine("");
-                MostrarPersonajes(listaPersonajes);
+                menuVideojegos.MostrarMenu();
                 break;
 
             //Ejercicios Streaming
@@ -89,7 +76,7 @@ do
                 int opcionMenuStreaming = -1;
                 do
                 {
-                    Console.WriteLine("====== PLATAFORMA DE STREAMING ======");
+                    Console.WriteLine("====== PLATAFORMA DE STREAMING ======\r\n\r\n");
                     Console.WriteLine("");
                     Console.WriteLine("1. Listar contenido streaming");
                     Console.WriteLine("2. Buscar título de la lista");
@@ -291,18 +278,6 @@ do
         opcionMenuExtra = -1;
     }
 } while (opcionMenuExtra != 0);
-
-
-//Método para mostrar todos los personajes de la lista
-void MostrarPersonajes(List<Personaje> personajes)
-{
-    Console.WriteLine("====== PERSONAJES ======");
-    foreach (var personaje in personajes)
-    {
-        Console.WriteLine(personaje.ObtenerDescripcion());
-    }
-    Console.WriteLine("");
-}
 
 //Método para mostrar todos los personajes de la lista
 void MostrarContenidoStreaming(List<Contenido> contenido)
