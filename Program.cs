@@ -4,6 +4,7 @@ using ModelsArticulo;
 
 var menuVideojegos = new MenuVideojuegos();
 var menuStreaming = new MenuStreaming();
+var menuBiblioteca = new MenuBiblioteca();
 
 //5-6 Biblioteca
 Libro AlasDeSangre = new Libro("Alas de Sangre", 2023, "Rebecca Yarros");
@@ -56,59 +57,18 @@ do
                 Console.WriteLine("Programa terminado.");
                 break;
 
-            //Ejercicios videojuego
             case 1:
                 menuVideojegos.MostrarMenu();
                 break;
 
-            //Ejercicios Streaming
             case 2:
                 menuStreaming.MostrarMenu();
                 break;
 
-            //Ejercicios biblioteca
             case 3:
-                int opcionMenuBiblioteca = -1;
-                do
-                {
-                    Console.WriteLine("====== BIBLIOTECA ======");
-                    Console.WriteLine("");
-                    Console.WriteLine("1. Listar publicaciones");
-                    Console.WriteLine("2. Mostrar publicaciones posteriores a un año");
-                    Console.WriteLine("0. Volver al menú principal");
-                    Console.WriteLine("");
-                    Console.Write("Introduce el número de la opción: ");
-
-                    if (int.TryParse(Console.ReadLine(), out opcionMenuBiblioteca))
-                    {
-                        switch (opcionMenuBiblioteca)
-                        {
-                            case 0:
-                                Console.WriteLine("Volviendo al menú principal");
-                                break;
-
-                            case 1:
-                                MostrarPublicacionesBiblioteca(publicacionesBiblioteca);
-                                break;
-
-                            case 2:
-                                SolicitarPublicacionesAnterioresAANio(publicacionesBiblioteca);
-                                break;
-
-                            default:
-                                Console.WriteLine("Opción no válida");
-                                break;
-                        }
-                    }
-                    else
-                    {
-                        Console.WriteLine("Opción no válida");
-                        opcionMenuBiblioteca = -1;
-                    }
-                } while (opcionMenuBiblioteca != 0);
+                menuBiblioteca.MostrarMenu();
                 break;
 
-            //Ejercicios parking
             case 4:
                 int opcionMenuParking = -1;
                 do
@@ -227,52 +187,7 @@ do
     }
 } while (opcionMenuExtra != 0);
 
-//Método para mostrar la información de todas las publicaciones de la biblioteca
-void MostrarPublicacionesBiblioteca(List<Publicacion> publicaciones)
-{
-    Console.WriteLine("====== PUBLICACIONES BIBLIOTECA ======");
-    foreach (var publicacion in publicaciones)
-    {
-        publicacion.ObtenerDescripcion();
-    }
-    Console.WriteLine("");
-}
 
-//Método para solicitar publicaciones anteriores a un número introducido por teclado
-void SolicitarPublicacionesAnterioresAANio(List<Publicacion> listaPublicaciones)
-{
-    int anio;
-    DateTime fechaActual = DateTime.Now;
-    int anioActual = fechaActual.Year;
-    int contador = 0;
-
-    Console.WriteLine("Mostrar publicaciones posteriores al año (Introduce un número): ");
-
-    if (int.TryParse(Console.ReadLine(), out anio))
-    {
-
-        if (anio <= anioActual)
-        {
-            Console.WriteLine($"Lista Publicaciones anteriores a {anio}");
-            foreach (var publicacion in listaPublicaciones)
-            {
-                if (publicacion.AnioPublicacion > anio)
-                {
-                    publicacion.ObtenerDescripcion();
-                    contador++;
-                }
-            }
-            if (contador == 0)
-            {
-                Console.WriteLine($"No hay publicaciones posteriores al año {anio}");
-            }
-        }
-        else
-        {
-            Console.WriteLine("No se admiten años futuros.");
-        }
-    }
-}
 
 //Método para listar toda la información de los vehículos del parking
 void ListarInformacionVehiculos(List<Vehiculo> listaVehiculos)

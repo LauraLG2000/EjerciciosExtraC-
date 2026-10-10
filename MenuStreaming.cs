@@ -59,6 +59,7 @@ class MenuStreaming
                     break;
 
                 case OpcionFinal:
+                    Console.WriteLine("Volviendo al menú principal...");
                     break;
             }
 
