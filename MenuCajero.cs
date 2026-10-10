@@ -75,6 +75,22 @@ class MenuCajero
 
     void RetirarDinero()
     {
+        try
+        {
+            decimal dineroRetirar;
 
+            Console.WriteLine("Introduce la cantidad a retirar: ");
+            if (!decimal.TryParse(Console.ReadLine(), out dineroRetirar) || dineroRetirar <= 0 || dineroRetirar > saldo)
+            {
+                throw new ArgumentOutOfRangeException("Error: La cantidad no puede ser 0, negativa o superior al saldo disponible");
+            }
+
+            saldo -= dineroRetirar;
+
+            Console.WriteLine($"Cantidad retirada: {dineroRetirar}. Saldo disponible: {saldo}");
+        } catch(ArgumentOutOfRangeException aoore)
+        {
+            Console.WriteLine(aoore.ToString());
+        }
     }
 }
