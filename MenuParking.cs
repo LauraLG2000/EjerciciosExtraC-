@@ -56,6 +56,7 @@ class MenuParking
                     break;
 
                 case OpcionSalir:
+                    Console.WriteLine("Volviendo al menú principal...");
                     break;
             }
         } while (opcion != OpcionSalir);
