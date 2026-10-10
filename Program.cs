@@ -1,19 +1,9 @@
-﻿using ModelsStreaming;
-using ModelsBiblioteca;
+﻿using ModelsBiblioteca;
 using ModelsParking;
 using ModelsArticulo;
 
-
 var menuVideojegos = new MenuVideojuegos();
-
-//2-3 Streaming
-Pelicula Anastasia = new Pelicula("Anastasia", 94, "Don Bluth, Gary Goldman");
-Pelicula Braveheart = new Pelicula("Braveheart", 177, "Mel Gibson");
-Serie ANHQV = new Serie("Aquí No Hay Quien Viva", 90, 5);
-Serie LQSA = new Serie("La que se Avecina", 90, 16);
-Documental LaVidaEnNuestroPlaneta = new Documental("La Vida en Nuestro Planeta", 56, "Naturaleza y Ciencia");
-
-List<Contenido> contenidoStreaming = [Anastasia, Braveheart, ANHQV, LQSA, LaVidaEnNuestroPlaneta];
+var menuStreaming = new MenuStreaming();
 
 //5-6 Biblioteca
 Libro AlasDeSangre = new Libro("Alas de Sangre", 2023, "Rebecca Yarros");
@@ -48,7 +38,7 @@ List<Articulo> listaArticulos = [microfono, ratonInalambrico, cascos];
 int opcionMenuExtra = -1;
 do
 {
-    Console.WriteLine("====== EJERCICIOS EXTRA C# ======\r\n\r\n");
+    Console.WriteLine("====== EJERCICIOS EXTRA C# ======\n");
     Console.WriteLine("1. Videojuegos");
     Console.WriteLine("2. Plataforma de Streaming");
     Console.WriteLine("3. Biblioteca");
@@ -73,49 +63,7 @@ do
 
             //Ejercicios Streaming
             case 2:
-                int opcionMenuStreaming = -1;
-                do
-                {
-                    Console.WriteLine("====== PLATAFORMA DE STREAMING ======\r\n\r\n");
-                    Console.WriteLine("");
-                    Console.WriteLine("1. Listar contenido streaming");
-                    Console.WriteLine("2. Buscar título de la lista");
-                    Console.WriteLine("3. Filtrar la lista para mostrar solo las películas");
-                    Console.WriteLine("0. Volver al menú principal");
-                    Console.WriteLine("");
-                    Console.Write("Introduce el número de la opción: ");
-
-                    if (int.TryParse(Console.ReadLine(), out opcionMenuStreaming))
-                    {
-                        switch (opcionMenuStreaming)
-                        {
-                            case 0:
-                                Console.WriteLine("Volviendo al menú principal");
-                                break;
-
-                            case 1:
-                                MostrarContenidoStreaming(contenidoStreaming);
-                                break;
-
-                            case 2:
-                                buscarTituloDeStreaming(contenidoStreaming);
-                                break;
-
-                            case 3:
-                                filtrarPeliculas(contenidoStreaming);
-                                break;
-
-                            default:
-                                Console.WriteLine("Opción no válida");
-                                break;
-                        }
-                    }
-                    else
-                    {
-                        Console.WriteLine("Opción no válida");
-                        opcionMenuStreaming = -1;
-                    }
-                } while (opcionMenuStreaming != 0);
+                menuStreaming.MostrarMenu();
                 break;
 
             //Ejercicios biblioteca
@@ -278,55 +226,6 @@ do
         opcionMenuExtra = -1;
     }
 } while (opcionMenuExtra != 0);
-
-//Método para mostrar todos los personajes de la lista
-void MostrarContenidoStreaming(List<Contenido> contenido)
-{
-    Console.WriteLine("====== CONTENIDO STREAMING ======");
-    foreach (var visualizacion in contenido)
-    {
-        Console.WriteLine(visualizacion.ObtenerDescripcion());
-    }
-    Console.WriteLine("");
-}
-
-//Método para buscar título de la lista
-void buscarTituloDeStreaming(List<Contenido> listaStreaming)
-{
-    Console.WriteLine("Introduce el título a buscar: ");
-    string tituloBuscar = Console.ReadLine().ToLower().Trim();
-    bool tituloEncontrado = false;
-
-    foreach (var elementoStreaming in listaStreaming)
-    {
-        if (tituloBuscar == elementoStreaming.Titulo.ToLower().Trim())
-        {
-            Console.WriteLine(elementoStreaming.ObtenerDescripcion());
-            tituloEncontrado = true;
-        }
-    }
-
-    if (!tituloEncontrado)
-    {
-        Console.WriteLine("No se ha encontrado el contenido");
-    }
-
-    Console.WriteLine("");
-}
-
-//Método para filtrar la lista para mostrar solo las peliculas
-void filtrarPeliculas(List<Contenido> listaStreaming)
-{
-    Console.WriteLine("====== Películas ======");
-    foreach (var contenido in listaStreaming)
-    {
-        if (contenido is Pelicula)
-        {
-            Console.WriteLine(contenido.ObtenerDescripcion());
-        }
-    }
-    Console.WriteLine("");
-}
 
 //Método para mostrar la información de todas las publicaciones de la biblioteca
 void MostrarPublicacionesBiblioteca(List<Publicacion> publicaciones)
