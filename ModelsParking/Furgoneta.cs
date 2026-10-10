@@ -12,6 +12,6 @@ public class Furgoneta : Vehiculo
 
     public override void ObtenerDescripcion()
     {
-        Console.WriteLine($"Furgoneta {Marca} - Matrícula: {Matricula} - Volumen de carga: {volumenCarga} m³ - Grados de apertura de la puerta trasera: {gradosAperturaPuertaTrasera}");
+        Console.WriteLine($"Furgoneta {Marca} - Matrícula: {Matricula} - Volumen de carga: {volumenCarga} m³ - Grados de apertura de la puerta trasera: {gradosAperturaPuertaTrasera}º");
     }
 }
