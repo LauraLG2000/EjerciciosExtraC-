@@ -3,8 +3,9 @@ var menuStreaming = new MenuStreaming();
 var menuBiblioteca = new MenuBiblioteca();
 var menuParking = new MenuParking();
 var menuArticulo = new MenuArticulo();
+var menuCajero = new MenuCajero();
 
-const int OpcionSalir = 6;
+const int OpcionSalir = 8;
 int opcion;
 
 do
@@ -15,7 +16,9 @@ do
     Console.WriteLine("3. Biblioteca");
     Console.WriteLine("4. Parking");
     Console.WriteLine("5. Artículos");
-    Console.WriteLine("6. Salir");
+    Console.WriteLine("6. Cajero");
+    Console.WriteLine("7. Adivina el número");
+    Console.WriteLine("8. Salir");
     Console.Write("Introduce el número de la opción: ");
 
     if (!int.TryParse(Console.ReadLine(), out opcion) || opcion < 1 || opcion > OpcionSalir)
@@ -50,8 +53,55 @@ do
             menuArticulo.MostrarMenu();
             break;
 
+        case 6:
+            menuCajero.MostrarMenu();
+            break;
+
+        case 7:
+            AdivinarNumero();
+            break;
+
         case OpcionSalir:
             Console.WriteLine("Programa cerrado");
             break;
     }
 } while (opcion != OpcionSalir);
+
+void AdivinarNumero()
+{
+    int numeroAleatorio = GenerarNumeroAleatorio();
+    int numero;
+    int contador = 0;
+
+    Console.WriteLine("\n====== ADIVINA EL NÚMERO ======");
+
+    do
+    {
+        Console.WriteLine("Introduce un número (1-100):");
+        if(!int.TryParse(Console.ReadLine(), out numero))
+        {
+            Console.WriteLine("Error: Introduce un número válido (1-100)");
+            continue;
+        }
+
+        if(numero < numeroAleatorio)
+        {
+            Console.WriteLine("El número a adivinar es más grande.");
+        }
+
+        if(numero > numeroAleatorio)
+        {
+            Console.WriteLine("El número a adivinar es más pequeño.");
+        }
+
+        contador++;
+    }while(numero != numeroAleatorio);
+
+    Console.WriteLine($"Correcto. El número era {numeroAleatorio}. Has necesitado {contador} intentos.");
+}
+
+int GenerarNumeroAleatorio()
+{
+    Random random = new Random();
+    return random.Next(1, 101);
+}
