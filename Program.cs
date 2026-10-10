@@ -4,8 +4,9 @@ var menuBiblioteca = new MenuBiblioteca();
 var menuParking = new MenuParking();
 var menuArticulo = new MenuArticulo();
 var menuCajero = new MenuCajero();
+var menuGimnasio = new MenuGimnasio();
 
-const int OpcionSalir = 8;
+const int OpcionSalir = 9;
 int opcion;
 
 do
@@ -18,7 +19,8 @@ do
     Console.WriteLine("5. Artículos");
     Console.WriteLine("6. Cajero");
     Console.WriteLine("7. Adivina el número");
-    Console.WriteLine("8. Salir");
+    Console.WriteLine("8. Menú Gimnasio");
+    Console.WriteLine("9. Salir");
     Console.Write("Introduce el número de la opción: ");
 
     if (!int.TryParse(Console.ReadLine(), out opcion) || opcion < 1 || opcion > OpcionSalir)
@@ -59,6 +61,10 @@ do
 
         case 7:
             AdivinarNumero();
+            break;
+
+        case 8:
+            menuGimnasio.MostrarMenu();
             break;
 
         case OpcionSalir:

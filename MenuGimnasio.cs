@@ -7,6 +7,8 @@ class MenuGimnasio
 
     public MenuGimnasio()
     {
+        actividades = new List<Actividad>();
+
         actividades.Add(new Yoga("Yoga Matinal", 60, 15, "Vinyasa", true));
         actividades.Add(new Yoga("Relajación Profunda", 45, 20, "Hatha", false));
         actividades.Add(new Spinning("Ciclo Indoor Pro", 45, 30, 22.5m, 3));
@@ -15,7 +17,7 @@ class MenuGimnasio
         actividades.Add(new CrossTraining("Cross Funcional", 45, 16, 40, 8));
     }
 
-    void MostrarMenu()
+    public void MostrarMenu()
     {
         int opcion;
 
@@ -29,7 +31,7 @@ class MenuGimnasio
             Console.WriteLine("5. Salir");
             Console.WriteLine("Introduce el número de una opción (1-5)");
 
-            if(!int.TryParse(Console.ReadLine(), out opcion) || opcion < 1 || opcion > OpcionSalir)
+            if (!int.TryParse(Console.ReadLine(), out opcion) || opcion < 1 || opcion > OpcionSalir)
             {
                 Console.WriteLine("Error: Opción no listada. Seleccione una válida (1-5)");
                 continue;
@@ -38,41 +40,77 @@ class MenuGimnasio
             switch (opcion)
             {
                 case 1:
+                    VerActividades();
                     break;
 
                 case 2:
+                    BuscarActividad();
                     break;
 
                 case 3:
+                    BuscarActividadesPorDuracionMaxima();
                     break;
 
                 case 4:
+                    BuscarActividadPorTipo();
                     break;
-                
+
                 case OpcionSalir:
                     Console.WriteLine("Volviendo al menú principal...");
                     break;
             }
-        }while(opcion != OpcionSalir);
+        } while (opcion != OpcionSalir);
     }
 
     void VerActividades()
     {
-        
+        Console.WriteLine("\n====== ACTIVIDADES DEL GIMNASIO ======\n");
+        foreach (var actividad in actividades)
+        {
+            Console.WriteLine(actividad.InformacionActividad());
+        }
     }
 
     void BuscarActividad()
     {
-        
+        try
+        {
+            Console.WriteLine("Introduce el nombre de la actividad: ");
+            string buscarActividad = Console.ReadLine();
+            bool actividadEncontrada = false;
+
+            if (buscarActividad is null || buscarActividad == "")
+            {
+                throw new NullReferenceException("Error: El nombre de la actividad no puede estar vacío");
+            }
+
+            foreach (var actividad in actividades)
+            {
+                if (actividad.Nombre.ToLower().Trim().Equals(buscarActividad.ToLower().Trim()))
+                {
+                    Console.WriteLine(actividad.InformacionActividad());
+                    actividadEncontrada = true;
+                    continue;
+                }
+            }
+
+            if (!actividadEncontrada)
+            {
+                Console.WriteLine($"No se ha encontrado ninguna actividad con el nombre {buscarActividad}");
+            }
+        }catch(NullReferenceException nre)
+        {
+            Console.WriteLine(nre.ToString());
+        }
     }
 
     void BuscarActividadesPorDuracionMaxima()
     {
-        
+
     }
 
     void BuscarActividadPorTipo()
     {
-        
+
     }
 }
