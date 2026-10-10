@@ -106,11 +106,69 @@ class MenuGimnasio
 
     void BuscarActividadesPorDuracionMaxima()
     {
+        try
+        {
+            int duracion;
+            int contador = 0;
+            Console.WriteLine("Introduce la duración en minutos: ");
 
+            if(!int.TryParse(Console.ReadLine(), out duracion) || duracion <= 0)
+            {
+                throw new ArgumentOutOfRangeException("Error: La duración no puede ser 0 o negativa");
+            }
+
+            foreach(var actividad in actividades)
+            {
+                if(actividad.Duracion <= duracion)
+                {
+                    Console.WriteLine(actividad.InformacionActividad());
+                    contador++;
+                }
+            }
+
+            if(contador == 0)
+            {
+                Console.WriteLine("No hay actividades con esa duración");
+            }
+
+        }catch(ArgumentOutOfRangeException aoore)
+        {
+            Console.WriteLine(aoore.ToString());
+        }
     }
 
     void BuscarActividadPorTipo()
     {
+        try
+        {
+            int contador = 0;
 
+            Console.WriteLine("Introduce el tipo de actividad a buscar (yoga, crosstraining...): ");
+            string tipo = Console.ReadLine().ToLower().Trim();
+
+            if(tipo is null || tipo == "")
+            {
+                throw new NullReferenceException("Error: El tipo no puede estar vacío.");
+            }
+
+            foreach(var actividad in actividades)
+            {
+
+                if (actividad.Tipo.ToString().Equals(tipo))
+                {
+                    Console.WriteLine(actividad.InformacionActividad());
+                    contador++;
+                }
+            }
+
+            if(contador == 0)
+            {
+                Console.WriteLine($"No hay actividades registrar de tipo {tipo}");
+            }
+
+        }catch(NullReferenceException nre)
+        {
+            Console.WriteLine(nre.ToString());
+        }
     }
 }

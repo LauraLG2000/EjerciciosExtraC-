@@ -1,3 +1,5 @@
+using Models;
+
 namespace ModelsGimnasio;
 
 public abstract class Actividad
@@ -5,6 +7,8 @@ public abstract class Actividad
     public string Nombre{get;set;}
     public int Duracion{get;set;}
     public int MaximoParticipantes{get;set;}
+
+    public ActividadTipoEnum Tipo{get; set;}
 
     public Actividad(string _nombre, int _duracion, int _maximoParticipantes)
     {
