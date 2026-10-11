@@ -8,6 +8,11 @@ class MenuStreaming
     public MenuStreaming()
     {
         listaStreaming = new List<Contenido>();
+        listaStreaming.Add(new Pelicula("Anastasia", 94, "Don Bluth, Gary Goldman"));
+        listaStreaming.Add(new Pelicula("Braveheart", 177, "Mel Gibson"));
+        listaStreaming.Add(new Serie("Aquí No Hay Quien Viva", 90, 5));
+        listaStreaming.Add(new Serie("La que se Avecina", 90, 16));
+        listaStreaming.Add(new Documental("La Vida en Nuestro Planeta", 56, "Naturaleza y Ciencia"));
     }
 
     public void MostrarMenu()
@@ -81,7 +86,7 @@ class MenuStreaming
             Console.WriteLine("Duración (en minutos): ");
             if (!int.TryParse(Console.ReadLine(), out duracion) || duracion < 1)
             {
-                throw new IndexOutOfRangeException("Error: Dato no válido. No puede ser nulo o negativo");
+                throw new ArgumentOutOfRangeException("Error: Dato no válido. No puede ser nulo o negativo");
             }
 
             string director;
@@ -100,9 +105,9 @@ class MenuStreaming
         {
             Console.WriteLine(nre.ToString());
         }
-        catch (IndexOutOfRangeException iofre)
+        catch (ArgumentOutOfRangeException aoore)
         {
-            Console.WriteLine(iofre.ToString());
+            Console.WriteLine(aoore.ToString());
         }
     }
 
@@ -121,14 +126,14 @@ class MenuStreaming
             Console.WriteLine("Duración (en minutos): ");
             if (!int.TryParse(Console.ReadLine(), out duracion) || duracion < 1)
             {
-                throw new IndexOutOfRangeException("Error: Dato no válido. No puede ser nulo o negativo");
+                throw new ArgumentOutOfRangeException("Error: Dato no válido. No puede ser nulo o negativo");
             }
 
             int numeroTemporadas;
             Console.WriteLine("Cantidad temporadas: ");
             if (!int.TryParse(Console.ReadLine(), out numeroTemporadas) || numeroTemporadas < 1)
             {
-                throw new IndexOutOfRangeException("Error: Dato no válido. No puede ser nulo o negativo");
+                throw new ArgumentOutOfRangeException("Error: Dato no válido. No puede ser nulo o negativo");
             }
 
             Serie serie = new Serie(titulo, duracion, numeroTemporadas);
@@ -139,9 +144,9 @@ class MenuStreaming
         {
             Console.WriteLine(nre.ToString());
         }
-        catch (IndexOutOfRangeException iofre)
+        catch (ArgumentOutOfRangeException aoore)
         {
-            Console.WriteLine(iofre.ToString());
+            Console.WriteLine(aoore.ToString());
         }
     }
 
@@ -151,24 +156,21 @@ class MenuStreaming
         {
             Console.WriteLine("Título: ");
             string titulo = Console.ReadLine();
-            if (titulo is null || titulo == "")
-            {
-                throw new NullReferenceException("Error: Dato no válido. No puede estar vacío el campo título.");
-            }
 
             int duracion;
             Console.WriteLine("Duración (en minutos): ");
             if (!int.TryParse(Console.ReadLine(), out duracion) || duracion < 1)
             {
-                throw new IndexOutOfRangeException("Error: Dato no válido. No puede ser nulo o negativo");
+                throw new ArgumentOutOfRangeException("Error: Dato no válido. No puede ser nulo o negativo");
             }
 
             string tematica;
             Console.WriteLine("Temática: ");
+
             tematica = Console.ReadLine();
-            if (tematica is null || tematica == "")
+            if (titulo is null || titulo == "" || tematica is null || tematica == "")
             {
-                throw new NullReferenceException("Error: Dato no válido. No puede estar vacio el campo tematica");
+                throw new NullReferenceException("Error: Dato no válido. Título o temática están vacíos.");
             }
 
             Documental documental = new Documental(titulo, duracion, tematica);
@@ -179,9 +181,9 @@ class MenuStreaming
         {
             Console.WriteLine(nre.ToString());
         }
-        catch (IndexOutOfRangeException iofre)
+        catch (ArgumentOutOfRangeException aoore)
         {
-            Console.WriteLine(iofre.ToString());
+            Console.WriteLine(aoore.ToString());
         }
     }
 
@@ -208,7 +210,7 @@ class MenuStreaming
 
     void FiltrarPeliculas()
     {
-        Console.WriteLine("\n====== PELÍCULAS ======");
+        Console.WriteLine("\n====== PELÍCULAS ======\n");
         foreach (var contenido in listaStreaming)
         {
             if (contenido is Pelicula)
@@ -220,7 +222,7 @@ class MenuStreaming
 
     void ListarContenido()
     {
-        Console.WriteLine("\n====== CONTENIDO STREAMING ======");
+        Console.WriteLine("\n====== CONTENIDO STREAMING ======\n");
         foreach (var contenido in listaStreaming)
         {
             Console.WriteLine(contenido.ObtenerDescripcion());

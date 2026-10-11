@@ -8,6 +8,13 @@ class MenuBiblioteca
     public MenuBiblioteca()
     {
         publicaciones = new List<Publicacion>();
+
+        publicaciones.Add(new Libro("Alas de Sangre", 2023, "Rebecca Yarros"));
+        publicaciones.Add(new Libro("UnaCorteDeLlamasPlateadas", 2021, "Sarah J. Mass"));
+        publicaciones.Add(new Revista("Revista Loka", 2000, 1));
+        publicaciones.Add(new Revista("Revista Loka", 2000, 2));
+        publicaciones.Add(new Comic("The Walking Dead", 2003, "Charlie Adlard Tony Moore"));
+        publicaciones.Add(new Comic("The Walking Dead", 2004, "Charlie Adlard Tony Moore"));
     }
 
     public void MostrarMenu()
@@ -16,7 +23,7 @@ class MenuBiblioteca
 
         do
         {
-            Console.WriteLine("\n====== BIBLIOTECA ======");
+            Console.WriteLine("\n====== BIBLIOTECA ======\n");
             Console.WriteLine("1. Añadir Libro");
             Console.WriteLine("2. Añadir Comic");
             Console.WriteLine("3. Añadir Revista");
@@ -78,7 +85,7 @@ class MenuBiblioteca
             Console.WriteLine("Año de publicación: ");
             if (!int.TryParse(Console.ReadLine(), out año) || año > añoActual)
             {
-                throw new IndexOutOfRangeException("Error: Dato no válido. El año no puede ser posterior al actual.");
+                throw new ArgumentOutOfRangeException("Error: Dato no válido. El año no puede ser posterior al actual.");
             }
 
             string autor;
@@ -97,9 +104,9 @@ class MenuBiblioteca
         {
             Console.WriteLine(nre.ToString());
         }
-        catch (IndexOutOfRangeException iofre)
+        catch (ArgumentOutOfRangeException aoore)
         {
-            Console.WriteLine(iofre.ToString());
+            Console.WriteLine(aoore.ToString());
         }
     }
 
@@ -111,7 +118,7 @@ class MenuBiblioteca
             string titulo = Console.ReadLine();
             if (titulo is null || titulo == "")
             {
-                throw new NullReferenceException("Error: Dato no válido. No puede estar vacío el campo título.");
+                throw new ArgumentOutOfRangeException("Error: Dato no válido. El año no puede ser posterior al actual.");
             }
 
             int año;
@@ -121,7 +128,7 @@ class MenuBiblioteca
             Console.WriteLine("Año de publicación: ");
             if (!int.TryParse(Console.ReadLine(), out año) || año > añoActual)
             {
-                throw new IndexOutOfRangeException("Error: Dato no válido. El año no puede ser posterior al actual.");
+                throw new ArgumentOutOfRangeException("Error: Dato no válido. El año no puede ser posterior al actual.");
             }
 
             string dibujante;
@@ -140,9 +147,9 @@ class MenuBiblioteca
         {
             Console.WriteLine(nre.ToString());
         }
-        catch (IndexOutOfRangeException iofre)
+        catch (ArgumentOutOfRangeException aoore)
         {
-            Console.WriteLine(iofre.ToString());
+            Console.WriteLine(aoore.ToString());
         }
     }
 
@@ -164,14 +171,14 @@ class MenuBiblioteca
             Console.WriteLine("Año de publicación: ");
             if (!int.TryParse(Console.ReadLine(), out año) || año > añoActual)
             {
-                throw new IndexOutOfRangeException("Error: Dato no válido. El año no puede ser posterior al actual.");
+                throw new ArgumentOutOfRangeException("Error: Dato no válido. El año no puede ser posterior al actual.");
             }
 
             int numeroRevista;
-            Console.WriteLine("Año de publicación: ");
-            if (!int.TryParse(Console.ReadLine(), out numeroRevista) || numeroRevista < 1)
+            Console.WriteLine("Número de la revista: ");
+            if (!int.TryParse(Console.ReadLine(), out numeroRevista) || numeroRevista < 0)
             {
-                throw new IndexOutOfRangeException("Error: Dato no válido. El número no puede ser 0 o negativo.");
+                throw new ArgumentOutOfRangeException("Error: Dato no válido. El número de la revista no puede ser negativo");
             }
 
             Revista revista = new Revista(titulo, año, numeroRevista);
@@ -182,16 +189,15 @@ class MenuBiblioteca
         {
             Console.WriteLine(nre.ToString());
         }
-        catch (IndexOutOfRangeException iofre)
+        catch (ArgumentOutOfRangeException aoore)
         {
-            Console.WriteLine(iofre.ToString());
+            Console.WriteLine(aoore.ToString());
         }
     }
 
-    //Método para mostrar la información de todas las publicaciones de la biblioteca
     void MostrarPublicaciones()
     {
-        Console.WriteLine("\n====== PUBLICACIONES BIBLIOTECA ======");
+        Console.WriteLine("\n====== PUBLICACIONES BIBLIOTECA ======\n");
         foreach (var publicacion in publicaciones)
         {
             publicacion.ObtenerDescripcion();
@@ -199,7 +205,6 @@ class MenuBiblioteca
         Console.WriteLine("");
     }
 
-    //Método para solicitar publicaciones anteriores a un número introducido por teclado
     void SolicitarPublicacionesAnterioresAANio()
     {
         int anio;
