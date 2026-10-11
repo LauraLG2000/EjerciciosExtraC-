@@ -1,9 +1,10 @@
 using ModelsVideojuegos;
+using ModelsUtils;
 
 class MenuVideojuegos
 {
     private List<Personaje> personajes;
-    private const int OpcionSalida = 5;
+    private const int OpcionSalida = 6;
 
     public MenuVideojuegos()
     {
@@ -27,7 +28,8 @@ class MenuVideojuegos
             Console.WriteLine("2. Registrar Mago");
             Console.WriteLine("3. Registrar Arquero");
             Console.WriteLine("4. Unidades de la campaña");
-            Console.WriteLine("5. Volver atrás");
+            Console.WriteLine("5. Guardar partida");
+            Console.WriteLine("6. Volver atrás");
             Console.WriteLine("Elige una opción (1-5)");
 
             if (!int.TryParse(Console.ReadLine(), out opcion) || opcion < 1 || opcion > OpcionSalida)
@@ -52,6 +54,10 @@ class MenuVideojuegos
 
                 case 4:
                     ListarUnidades();
+                    break;
+
+                case 5:
+                    GuardarFichero();
                     break;
 
                 case OpcionSalida:
@@ -175,7 +181,19 @@ class MenuVideojuegos
         Console.WriteLine("\n====== UNIDADES ======\n");
         foreach (var personaje in personajes)
         {
-            Console.WriteLine(personaje.ObtenerDescripcion());
+            Console.Write(personaje.ObtenerDescripcion());
+        }
+    }
+
+    void GuardarFichero()
+    {
+        string rutaFichero = "UnidadesVideojuego.txt";
+        
+        FicheroUtils.EliminarFichero(rutaFichero);
+
+        foreach(var personaje in personajes)
+        {
+            FicheroUtils.EscrituraFichero(rutaFichero, personaje.ObtenerDescripcion());
         }
     }
 }

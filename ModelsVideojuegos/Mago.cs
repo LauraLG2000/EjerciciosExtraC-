@@ -10,6 +10,6 @@ public class Mago : Personaje
 
     public override string ObtenerDescripcion()
     {
-        return $"Mago {Nombre} - Vida: {Vida} - Mana: {Mana}";
+        return $"Mago {Nombre} - Vida: {Vida} - Mana: {Mana}\n";
     }
 }

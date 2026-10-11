@@ -10,6 +10,6 @@ public class Arquero : Personaje
 
     public override string ObtenerDescripcion()
     {
-        return $"Arquero {Nombre} - Vida: {Vida} - NumeroFlechas: {NumeroFlechas}";
+        return $"Arquero {Nombre} - Vida: {Vida} - NumeroFlechas: {NumeroFlechas}\n";
     }
 }

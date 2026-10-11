@@ -10,6 +10,6 @@ public class Guerrero : Personaje
 
     public override string ObtenerDescripcion()
     {
-        return $"Guerrero {Nombre} - Vida: {Vida} - Fuerza: {Fuerza}";
+        return $"Guerrero {Nombre} - Vida: {Vida} - Fuerza: {Fuerza}\n";
     }
 }
