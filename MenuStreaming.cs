@@ -237,7 +237,7 @@ class MenuStreaming
 
     void GuardarFichero()
     {
-        string rutaFichero = "ContenidoStreaming.txt";
+        string rutaFichero = "Contenido Streaming.txt";
 
         FicheroUtils.EliminarFichero(rutaFichero);
 

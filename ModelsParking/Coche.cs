@@ -11,8 +11,8 @@ public class Coche : Vehiculo
         this.CapacidadPasajeros = _capacidadPasajeros;
     }
 
-    public override void ObtenerDescripcion()
+    public override string ObtenerDescripcion()
     {
-        Console.WriteLine($"Coche {Marca} - Matrícula: {Matricula} - Volumen del maletero: {volumenMaletero} litros - Número de pasajeros: {CapacidadPasajeros}");
+        return $"Coche {Marca} - Matrícula: {Matricula} - Volumen del maletero: {volumenMaletero} litros - Número de pasajeros: {CapacidadPasajeros}\n";
     }
 }

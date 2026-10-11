@@ -10,5 +10,5 @@ public abstract class Vehiculo
         this.Marca = _marca;
     }
 
-    public abstract void ObtenerDescripcion();
+    public abstract string ObtenerDescripcion();
 }

@@ -10,8 +10,8 @@ public class Moto : Vehiculo
         this.isScooter = _isScooter;
     }
 
-    public override void ObtenerDescripcion()
+    public override string ObtenerDescripcion()
     {
-        Console.WriteLine($"Moto {Marca} - Matrícula: {Matricula} - Tipo de manillar: {TipoManillar} - Es scooter: {isScooter}");
+        return $"Moto {Marca} - Matrícula: {Matricula} - Tipo de manillar: {TipoManillar} - Es scooter: {isScooter}\n";
     }
 }

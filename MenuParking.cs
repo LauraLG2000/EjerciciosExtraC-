@@ -1,9 +1,10 @@
 using ModelsParking;
+using ModelsUtils;
 
 class MenuParking
 {
     private List<Vehiculo> vehiculos;
-    private const int OpcionSalir = 7;
+    private const int OpcionSalir = 8;
     public MenuParking()
     {
         vehiculos = new List<Vehiculo>();
@@ -29,12 +30,13 @@ class MenuParking
             Console.WriteLine("4. Ver vehículos");
             Console.WriteLine("5. Buscar por matrícula");
             Console.WriteLine("6. Mostrar coches");
-            Console.WriteLine("7. Volver al menú principal");
-            Console.Write("Introduce el número de la opcion: ");
+            Console.WriteLine("7. Guardar registro vehículos");
+            Console.WriteLine("8. Volver al menú principal");
+            Console.Write("Introduce el número de la opcion (1-8): ");
 
             if (!int.TryParse(Console.ReadLine(), out opcion) || opcion < 1 || opcion > OpcionSalir)
             {
-                Console.WriteLine("Error: Opción no válida. Introduce una opcion del menú (1-7)");
+                Console.WriteLine("Error: Opción no válida. Introduce una opcion del menú (1-8)");
                 continue;
             }
             switch (opcion)
@@ -61,6 +63,10 @@ class MenuParking
 
                 case 6:
                     MostrarSoloCoches();
+                    break;
+
+                case 7:
+                    GuardarFichero();
                     break;
 
                 case OpcionSalir:
@@ -199,7 +205,7 @@ class MenuParking
         Console.WriteLine("===  Vehículos del Parking   ===");
         foreach (var vehiculo in vehiculos)
         {
-            vehiculo.ObtenerDescripcion();
+            Console.Write(vehiculo.ObtenerDescripcion());
         }
     }
 
@@ -215,7 +221,7 @@ class MenuParking
         {
             if (vehiculo.Matricula.Equals(matriculaTeclado))
             {
-                vehiculo.ObtenerDescripcion();
+                Console.Write(vehiculo.ObtenerDescripcion());
                 encontrado = true;
             }
 
@@ -238,7 +244,7 @@ class MenuParking
         {
             if (vehiculo is Coche)
             {
-                vehiculo.ObtenerDescripcion();
+                Console.Write(vehiculo.ObtenerDescripcion());
                 contadorCoches++;
             }
         }
@@ -246,6 +252,18 @@ class MenuParking
         if (contadorCoches == 0)
         {
             Console.WriteLine("No hay coches registrados en el parking.");
+        }
+    }
+
+    void GuardarFichero()
+    {
+        string rutaFichero = "Registro Parking.txt";
+
+        FicheroUtils.EliminarFichero(rutaFichero);
+
+        foreach(var vehiculo in vehiculos)
+        {
+            FicheroUtils.EscrituraFichero(rutaFichero, vehiculo.ObtenerDescripcion());
         }
     }
 }

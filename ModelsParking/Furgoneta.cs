@@ -10,8 +10,8 @@ public class Furgoneta : Vehiculo
         this.gradosAperturaPuertaTrasera = _gradosAperturaPuertaTrasera;
     }
 
-    public override void ObtenerDescripcion()
+    public override string ObtenerDescripcion()
     {
-        Console.WriteLine($"Furgoneta {Marca} - Matrícula: {Matricula} - Volumen de carga: {volumenCarga} m³ - Grados de apertura de la puerta trasera: {gradosAperturaPuertaTrasera}º");
+        return $"Furgoneta {Marca} - Matrícula: {Matricula} - Volumen de carga: {volumenCarga} m³ - Grados de apertura de la puerta trasera: {gradosAperturaPuertaTrasera}º\n";
     }
 }
