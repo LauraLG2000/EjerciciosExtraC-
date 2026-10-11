@@ -10,8 +10,8 @@ public class Articulo
         this.Precio = _precio;
     }
 
-    public void DescripcionArticulo()
+    public string DescripcionArticulo()
     {
-        Console.WriteLine($"{this.Nombre} - Precio: {this.Precio}€");
+        return $"{this.Nombre} - Precio: {this.Precio}€ \n";
     }
 }

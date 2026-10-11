@@ -1,9 +1,10 @@
 using ModelsArticulo;
+using ModelsUtils;
 
 class MenuArticulo
 {
     private List<Articulo> articulos;
-    private const int OpcionSalir = 6;
+    private const int OpcionSalir = 7;
     public MenuArticulo()
     {
         articulos = new List<Articulo>();
@@ -25,12 +26,13 @@ class MenuArticulo
             Console.WriteLine("3. Artículo más barato");
             Console.WriteLine("4. Precio Medio Artículos");
             Console.WriteLine("5. Listar articulos por un precio máximo");
-            Console.WriteLine("6. Salir");
-            Console.Write("Introduce el número de la opcion: ");
+            Console.WriteLine("6. Guardar listado articulos");
+            Console.WriteLine("7. Salir");
+            Console.Write("Introduce el número de la opcion (1-7): ");
 
             if (!int.TryParse(Console.ReadLine(), out opcion) || opcion < 1 || opcion > OpcionSalir)
             {
-                Console.WriteLine("Error: Opción no válida. Introduce una opcion del menú (1-6)");
+                Console.WriteLine("Error: Opción no válida. Introduce una opcion del menú (1-7)");
                 continue;
             }
 
@@ -54,6 +56,10 @@ class MenuArticulo
 
                 case 5:
                     ArticulosPorPrecioMaximo();
+                    break;
+
+                case 6:
+                    GuardarFichero();
                     break;
 
                 case OpcionSalir:
@@ -97,7 +103,7 @@ class MenuArticulo
         Console.WriteLine("\n====== ARTÍCULOS ======\n");
         foreach (var articulo in articulos)
         {
-            articulo.DescripcionArticulo();
+            Console.Write(articulo.DescripcionArticulo());
         }
     }
 
@@ -117,7 +123,7 @@ class MenuArticulo
             }
         }
 
-        articulos[0].DescripcionArticulo();
+        Console.Write(articulos[0].DescripcionArticulo());
     }
 
     void PrecioMedioArticulos()
@@ -148,7 +154,7 @@ class MenuArticulo
             {
                 if (articulo.Precio <= precioMaximo)
                 {
-                    articulo.DescripcionArticulo();
+                    Console.Write(articulo.DescripcionArticulo());
                     contadorArticulos++;
                 }
             }
@@ -161,6 +167,18 @@ class MenuArticulo
         else
         {
             Console.WriteLine("Valor no válido.");
+        }
+    }
+
+    void GuardarFichero()
+    {
+        string rutaFichero = "Artículos.txt";
+
+        FicheroUtils.EliminarFichero(rutaFichero);
+
+        foreach (var articulo in articulos)
+        {
+            FicheroUtils.EscrituraFichero(rutaFichero, articulo.DescripcionArticulo());
         }
     }
 }
