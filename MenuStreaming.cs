@@ -86,7 +86,7 @@ class MenuStreaming
             Console.WriteLine("Duración (en minutos): ");
             if (!int.TryParse(Console.ReadLine(), out duracion) || duracion < 1)
             {
-                throw new IndexOutOfRangeException("Error: Dato no válido. No puede ser nulo o negativo");
+                throw new ArgumentOutOfRangeException("Error: Dato no válido. No puede ser nulo o negativo");
             }
 
             string director;
@@ -105,9 +105,9 @@ class MenuStreaming
         {
             Console.WriteLine(nre.ToString());
         }
-        catch (IndexOutOfRangeException iofre)
+        catch (ArgumentOutOfRangeException aoore)
         {
-            Console.WriteLine(iofre.ToString());
+            Console.WriteLine(aoore.ToString());
         }
     }
 
@@ -126,14 +126,14 @@ class MenuStreaming
             Console.WriteLine("Duración (en minutos): ");
             if (!int.TryParse(Console.ReadLine(), out duracion) || duracion < 1)
             {
-                throw new IndexOutOfRangeException("Error: Dato no válido. No puede ser nulo o negativo");
+                throw new ArgumentOutOfRangeException("Error: Dato no válido. No puede ser nulo o negativo");
             }
 
             int numeroTemporadas;
             Console.WriteLine("Cantidad temporadas: ");
             if (!int.TryParse(Console.ReadLine(), out numeroTemporadas) || numeroTemporadas < 1)
             {
-                throw new IndexOutOfRangeException("Error: Dato no válido. No puede ser nulo o negativo");
+                throw new ArgumentOutOfRangeException("Error: Dato no válido. No puede ser nulo o negativo");
             }
 
             Serie serie = new Serie(titulo, duracion, numeroTemporadas);
@@ -144,9 +144,9 @@ class MenuStreaming
         {
             Console.WriteLine(nre.ToString());
         }
-        catch (IndexOutOfRangeException iofre)
+        catch (ArgumentOutOfRangeException aoore)
         {
-            Console.WriteLine(iofre.ToString());
+            Console.WriteLine(aoore.ToString());
         }
     }
 
@@ -165,7 +165,7 @@ class MenuStreaming
             Console.WriteLine("Duración (en minutos): ");
             if (!int.TryParse(Console.ReadLine(), out duracion) || duracion < 1)
             {
-                throw new IndexOutOfRangeException("Error: Dato no válido. No puede ser nulo o negativo");
+                throw new ArgumentOutOfRangeException("Error: Dato no válido. No puede ser nulo o negativo");
             }
 
             string tematica;
@@ -184,9 +184,9 @@ class MenuStreaming
         {
             Console.WriteLine(nre.ToString());
         }
-        catch (IndexOutOfRangeException iofre)
+        catch (ArgumentOutOfRangeException aoore)
         {
-            Console.WriteLine(iofre.ToString());
+            Console.WriteLine(aoore.ToString());
         }
     }
 
