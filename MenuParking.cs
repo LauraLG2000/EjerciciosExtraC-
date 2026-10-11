@@ -7,6 +7,14 @@ class MenuParking
     public MenuParking()
     {
         vehiculos = new List<Vehiculo>();
+
+        vehiculos.Add(new Coche("Seat Ibiza", "1234BCD", 355, 5));
+        vehiculos.Add(new Coche("Hyundai Tucson", "5678FGH", 620, 5));
+        vehiculos.Add(new Coche("Peugeot 5008", "9012JKL", 210, 7));
+        vehiculos.Add(new Furgoneta("Mercedes-Benz Sprinter", "1234BCD", 14.0m, 270));
+        vehiculos.Add(new Furgoneta("Ford Transit", "5678FGH", 11.5m, 180));
+        vehiculos.Add(new Moto("Vespa Primavera", "2468VWX", "Urbano Integrado", true));
+        vehiculos.Add(new Moto("Honda PCX 125", "5678FGH", "Estándar", true));
     }
     public void MostrarMenu()
     {

@@ -7,6 +7,10 @@ class MenuArticulo
     public MenuArticulo()
     {
         articulos = new List<Articulo>();
+
+        articulos.Add(new Articulo("Micrófono", 29.99m));
+        articulos.Add(new Articulo("Ratón Inalámbrico", 40.99m));
+        articulos.Add(new Articulo("Cascos", 9.99m));
     }
 
     public void MostrarMenu()

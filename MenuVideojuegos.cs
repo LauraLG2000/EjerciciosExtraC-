@@ -8,6 +8,12 @@ class MenuVideojuegos
     public MenuVideojuegos()
     {
         personajes = new List<Personaje>();
+        personajes.Add(new Guerrero("Mu", 20, 9));
+        personajes.Add(new Guerrero("Guzran", 21, 12));
+        personajes.Add(new Mago("Olympa", 18, 10));
+        personajes.Add(new Mago("Sirocco", 19, 10));
+        personajes.Add(new Arquero("Virion", 19, 20));
+        personajes.Add(new Arquero("Leda", 20, 20));
     }
 
     public void MostrarMenu()
@@ -52,7 +58,7 @@ class MenuVideojuegos
                     Console.WriteLine("Volviendo al menú principal...");
                     break;
             }
-        }while(opcion != OpcionSalida);
+        } while (opcion != OpcionSalida);
     }
 
     void RegistrarGuerrero()
@@ -62,14 +68,14 @@ class MenuVideojuegos
 
         int vida = 1;
         Console.WriteLine("Vida del guerrero: ");
-        if(!int.TryParse(Console.ReadLine(), out vida) || vida < 1)
+        if (!int.TryParse(Console.ReadLine(), out vida) || vida < 1)
         {
             throw new IndexOutOfRangeException("Error: Dato no válido. Se pondrá por defecto 1.");
         }
 
         int fuerza = 1;
         Console.WriteLine("Fuerza del guerrero: ");
-        if(!int.TryParse(Console.ReadLine(), out fuerza) || fuerza < 1)
+        if (!int.TryParse(Console.ReadLine(), out fuerza) || fuerza < 1)
         {
             throw new IndexOutOfRangeException("Error: Dato no válido. Se pondrá por defecto 1.");
         }
@@ -86,14 +92,14 @@ class MenuVideojuegos
 
         int vida = 1;
         Console.WriteLine("Vida del mago: ");
-        if(!int.TryParse(Console.ReadLine(), out vida) || vida < 1)
+        if (!int.TryParse(Console.ReadLine(), out vida) || vida < 1)
         {
             throw new IndexOutOfRangeException("Error: Dato no válido. Se pondrá por defecto 1.");
         }
 
         int mana = 1;
         Console.WriteLine("Mana: ");
-        if(!int.TryParse(Console.ReadLine(), out mana) || mana < 1)
+        if (!int.TryParse(Console.ReadLine(), out mana) || mana < 1)
         {
             throw new IndexOutOfRangeException("Error: Dato no válido. Se pondrá por defecto 1.");
         }
@@ -110,14 +116,14 @@ class MenuVideojuegos
 
         int vida = 1;
         Console.WriteLine("Vida del arquero: ");
-        if(!int.TryParse(Console.ReadLine(), out vida) || vida < 1)
+        if (!int.TryParse(Console.ReadLine(), out vida) || vida < 1)
         {
             throw new IndexOutOfRangeException("Error: Dato no válido. Se pondrá por defecto 1.");
         }
 
         int numeroFlechas = 1;
         Console.WriteLine("Número de flechas: ");
-        if(!int.TryParse(Console.ReadLine(), out numeroFlechas) || numeroFlechas < 1)
+        if (!int.TryParse(Console.ReadLine(), out numeroFlechas) || numeroFlechas < 1)
         {
             throw new IndexOutOfRangeException("Error: Dato no válido. Se pondrá por defecto 1.");
         }
@@ -130,7 +136,7 @@ class MenuVideojuegos
     void ListarUnidades()
     {
         Console.WriteLine("====== UNIDADES ======\r\n\r\n");
-        foreach(var personaje in personajes)
+        foreach (var personaje in personajes)
         {
             Console.WriteLine(personaje.ObtenerDescripcion());
         }

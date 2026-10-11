@@ -8,6 +8,13 @@ class MenuBiblioteca
     public MenuBiblioteca()
     {
         publicaciones = new List<Publicacion>();
+
+        publicaciones.Add(new Libro("Alas de Sangre", 2023, "Rebecca Yarros"));
+        publicaciones.Add(new Libro("UnaCorteDeLlamasPlateadas", 2021, "Sarah J. Mass"));
+        publicaciones.Add(new Revista("Revista Loka", 2000, 1));
+        publicaciones.Add(new Revista("Revista Loka", 2000, 2));
+        publicaciones.Add(new Comic("The Walking Dead", 2003, "Charlie Adlard Tony Moore"));
+        publicaciones.Add(new Comic("The Walking Dead", 2004, "Charlie Adlard Tony Moore"));
     }
 
     public void MostrarMenu()

@@ -8,6 +8,11 @@ class MenuStreaming
     public MenuStreaming()
     {
         listaStreaming = new List<Contenido>();
+        listaStreaming.Add(new Pelicula("Anastasia", 94, "Don Bluth, Gary Goldman"));
+        listaStreaming.Add(new Pelicula("Braveheart", 177, "Mel Gibson"));
+        listaStreaming.Add(new Serie("Aquí No Hay Quien Viva", 90, 5));
+        listaStreaming.Add(new Serie("La que se Avecina", 90, 16));
+        listaStreaming.Add(new Documental("La Vida en Nuestro Planeta", 56, "Naturaleza y Ciencia"));
     }
 
     public void MostrarMenu()
