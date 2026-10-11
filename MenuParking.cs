@@ -22,7 +22,7 @@ class MenuParking
 
         do
         {
-            Console.WriteLine("\n====== PARKING ======");
+            Console.WriteLine("\n====== PARKING ======\n");
             Console.WriteLine("1. Registrar Coche");
             Console.WriteLine("2. Registrar Moto");
             Console.WriteLine("3. Registrar Furgoneta");
@@ -76,30 +76,27 @@ class MenuParking
         {
             Console.WriteLine("Matrícula: ");
             string matricula = Console.ReadLine();
-            if (matricula is null || matricula == "")
-            {
-                throw new NullReferenceException("Error: Dato no válido. No puede estar vacío el campo matrícula.");
-            }
 
             Console.WriteLine("Marca: ");
             string marca = Console.ReadLine();
-            if (marca is null || marca == "")
-            {
-                throw new NullReferenceException("Error: Dato no válido. No puede estar vacío el campo marca.");
-            }
 
             int volumenMaletero;
             Console.WriteLine("Volúmen del maletero (en litros): ");
-            if (!int.TryParse(Console.ReadLine(), out volumenMaletero))
+            if (!int.TryParse(Console.ReadLine(), out volumenMaletero) || volumenMaletero < 1)
             {
-                throw new InvalidCastException("Error: Tipo de dato incorrecto.");
+                throw new ArgumentOutOfRangeException("Error: Dato no válido. El volumen no puede ser negativo o nulo.");
             }
 
             int capacidadPasajeros;
             Console.WriteLine("Cantidad de pasajeros: ");
-            if (!int.TryParse(Console.ReadLine(), out capacidadPasajeros))
+            if (!int.TryParse(Console.ReadLine(), out capacidadPasajeros) || capacidadPasajeros < 1)
             {
-                throw new InvalidCastException("Error: Tipo de dato incorrecto.");
+                throw new ArgumentOutOfRangeException("Error: Dato no válido. El volumen no puede ser negativo o nulo.");
+            }
+
+            if (marca is null || marca == "" || matricula is null || matricula == "")
+            {
+                throw new NullReferenceException("Error: Dato no válido. Marca o Matricula están vacíos.");
             }
 
 
@@ -111,9 +108,9 @@ class MenuParking
         {
             Console.WriteLine(nre.ToString());
         }
-        catch (InvalidCastException ice)
+        catch (ArgumentOutOfRangeException aoore)
         {
-            Console.WriteLine(ice.ToString());
+            Console.WriteLine(aoore.ToString());
         }
     }
 
@@ -123,17 +120,9 @@ class MenuParking
         {
             Console.WriteLine("Matrícula: ");
             string matricula = Console.ReadLine();
-            if (matricula is null || matricula == "")
-            {
-                throw new NullReferenceException("Error: Dato no válido. No puede estar vacío el campo matrícula.");
-            }
 
             Console.WriteLine("Marca: ");
             string marca = Console.ReadLine();
-            if (marca is null || marca == "")
-            {
-                throw new NullReferenceException("Error: Dato no válido. No puede estar vacío el campo marca.");
-            }
 
             Console.WriteLine("Tipo de manillar: ");
             string manillar = Console.ReadLine();
@@ -141,6 +130,11 @@ class MenuParking
             bool isScooter = false;
             Console.WriteLine("¿Es una scooter? (si/no)");
             string scooter = Console.ReadLine().ToLower().Trim();
+
+            if (marca is null || marca == "" || matricula is null || matricula == "")
+            {
+                throw new NullReferenceException("Error: Dato no válido. Marca, matricula están vacíos.");
+            }
 
             if (scooter.Equals("si"))
             {
@@ -163,30 +157,27 @@ class MenuParking
         {
             Console.WriteLine("Matrícula: ");
             string matricula = Console.ReadLine();
-            if (matricula is null || matricula == "")
-            {
-                throw new NullReferenceException("Error: Dato no válido. No puede estar vacío el campo matrícula.");
-            }
 
             Console.WriteLine("Marca: ");
             string marca = Console.ReadLine();
-            if (marca is null || marca == "")
-            {
-                throw new NullReferenceException("Error: Dato no válido. No puede estar vacío el campo marca.");
-            }
 
             int volumenCarga;
             Console.WriteLine("Volúmen de la carga (en metros cúbicos): ");
-            if (!int.TryParse(Console.ReadLine(), out volumenCarga))
+            if (!int.TryParse(Console.ReadLine(), out volumenCarga) || volumenCarga < 1)
             {
-                throw new InvalidCastException("Error: Tipo de dato incorrecto.");
+                throw new ArgumentOutOfRangeException("Error: No puede ser negativo o nulo.");
             }
 
             int gradosAperturaPuerta;
             Console.WriteLine("Apertura de la puerta (en grados): ");
             if (!int.TryParse(Console.ReadLine(), out gradosAperturaPuerta))
             {
-                throw new InvalidCastException("Error: Tipo de dato incorrecto.");
+                throw new ArgumentOutOfRangeException("Error: No puede ser negativo o nulo.");
+            }
+
+            if (marca is null || marca == "" || matricula is null || matricula == "")
+            {
+                throw new NullReferenceException("Error: Dato no válido. Marca, matricula o es scooter están vacíos.");
             }
 
             Furgoneta furgoneta = new Furgoneta(matricula, marca, volumenCarga, gradosAperturaPuerta);
@@ -197,9 +188,9 @@ class MenuParking
         {
             Console.WriteLine(nre.ToString());
         }
-        catch (InvalidCastException ice)
+        catch (ArgumentOutOfRangeException aoore)
         {
-            Console.WriteLine(ice.ToString());
+            Console.WriteLine(aoore.ToString());
         }
     }
 
