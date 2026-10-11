@@ -30,7 +30,7 @@ class MenuVideojuegos
             Console.WriteLine("4. Unidades de la campaña");
             Console.WriteLine("5. Guardar partida");
             Console.WriteLine("6. Volver atrás");
-            Console.WriteLine("Elige una opción (1-5)");
+            Console.WriteLine("Elige una opción (1-6)");
 
             if (!int.TryParse(Console.ReadLine(), out opcion) || opcion < 1 || opcion > OpcionSalida)
             {
@@ -188,7 +188,7 @@ class MenuVideojuegos
     void GuardarFichero()
     {
         string rutaFichero = "UnidadesVideojuego.txt";
-        
+
         FicheroUtils.EliminarFichero(rutaFichero);
 
         foreach(var personaje in personajes)

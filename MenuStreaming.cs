@@ -1,9 +1,10 @@
 using ModelsStreaming;
+using ModelsUtils;
 
 class MenuStreaming
 {
     private List<Contenido> listaStreaming;
-    private const int OpcionFinal = 7;
+    private const int OpcionFinal = 8;
 
     public MenuStreaming()
     {
@@ -28,12 +29,13 @@ class MenuStreaming
             Console.WriteLine("4. Listar contenido streaming");
             Console.WriteLine("5. Buscar título");
             Console.WriteLine("6. Mostrar solo las películas");
-            Console.WriteLine("7. Volver al menú principal");
-            Console.Write("Introduce el número de la opción: ");
+            Console.WriteLine("7. Guardar lista de contenido");
+            Console.WriteLine("8. Volver al menú principal");
+            Console.Write("Introduce el número de la opción (1-8): ");
 
             if (!int.TryParse(Console.ReadLine(), out opcion) || opcion < 1 || opcion > OpcionFinal)
             {
-                Console.WriteLine("Error: Dato no válido, debe ser un valor de la lista (1-7)");
+                Console.WriteLine("Error: Dato no válido, debe ser un valor de la lista (1-8)");
                 continue;
             }
 
@@ -61,6 +63,10 @@ class MenuStreaming
 
                 case 6:
                     FiltrarPeliculas();
+                    break;
+
+                case 7:
+                    GuardarFichero();
                     break;
 
                 case OpcionFinal:
@@ -225,8 +231,19 @@ class MenuStreaming
         Console.WriteLine("\n====== CONTENIDO STREAMING ======\n");
         foreach (var contenido in listaStreaming)
         {
-            Console.WriteLine(contenido.ObtenerDescripcion());
+            Console.Write(contenido.ObtenerDescripcion());
         }
-        Console.WriteLine("");
+    }
+
+    void GuardarFichero()
+    {
+        string rutaFichero = "ContenidoStreaming.txt";
+
+        FicheroUtils.EliminarFichero(rutaFichero);
+
+        foreach (var contenido in listaStreaming)
+        {
+            FicheroUtils.EscrituraFichero(rutaFichero, contenido.ObtenerDescripcion());
+        }
     }
 }

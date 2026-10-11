@@ -10,6 +10,6 @@ public class Documental : Contenido
 
     public override string ObtenerDescripcion()
     {
-        return $"Documental {Titulo} - Duración: {Duracion} min - Tematica: {Tematica}";
+        return $"Documental {Titulo} - Duración: {Duracion} min - Tematica: {Tematica}\n";
     }
 }

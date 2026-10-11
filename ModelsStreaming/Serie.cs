@@ -10,6 +10,6 @@ public class Serie : Contenido
 
     public override string ObtenerDescripcion()
     {
-        return $"Serie {Titulo} - Duración: {Duracion} min/capítulo - NumeroTemporadas: {NumeroTemporadas}";
+        return $"Serie {Titulo} - Duración: {Duracion} min/capítulo - NumeroTemporadas: {NumeroTemporadas}\n";
     }
 }

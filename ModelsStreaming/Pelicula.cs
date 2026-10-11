@@ -10,6 +10,6 @@ public class Pelicula : Contenido
 
     public override string ObtenerDescripcion()
     {
-        return $"Película {Titulo} - Duración: {Duracion} min - Director: {Director}";
+        return $"Película {Titulo} - Duración: {Duracion} min - Director: {Director}\n";
     }
 }
