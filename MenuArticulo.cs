@@ -17,7 +17,6 @@ class MenuArticulo
     {
         int opcion;
 
-
         do
         {
             Console.WriteLine("\n====== ARTÍCULOS ======\n");

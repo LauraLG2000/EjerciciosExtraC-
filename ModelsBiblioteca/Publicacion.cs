@@ -10,5 +10,5 @@ public abstract class Publicacion
         this.AnioPublicacion = _anioPublicacion;
     }
 
-    public abstract void ObtenerDescripcion();
+    public abstract string ObtenerDescripcion();
 }

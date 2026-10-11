@@ -8,8 +8,8 @@ public class Revista : Publicacion
         this.NumeroRevista = _numeroRevista;
     }
 
-    public override void ObtenerDescripcion()
+    public override string ObtenerDescripcion()
     {
-        Console.WriteLine($"Revista {Titulo} - Número: {NumeroRevista} - Año de Publicación: {AnioPublicacion}");
+        return $"Revista {Titulo} - Número: {NumeroRevista} - Año de Publicación: {AnioPublicacion}\n";
     }
 }

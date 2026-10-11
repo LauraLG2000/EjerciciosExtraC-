@@ -8,8 +8,8 @@ public class Libro : Publicacion
         this.Autor = _autor;
     }
 
-    public override void ObtenerDescripcion()
+    public override string ObtenerDescripcion()
     {
-        Console.WriteLine($"Libro {Titulo} - Autor: {Autor} - Año de Publicación: {AnioPublicacion}");
+        return $"Libro {Titulo} - Autor: {Autor} - Año de Publicación: {AnioPublicacion}\n";
     }
 }

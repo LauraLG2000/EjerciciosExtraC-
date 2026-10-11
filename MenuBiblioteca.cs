@@ -1,9 +1,10 @@
 using ModelsBiblioteca;
+using ModelsUtils;
 
 class MenuBiblioteca
 {
     private List<Publicacion> publicaciones;
-    private const int OpcionSalir = 6;
+    private const int OpcionSalir = 7;
 
     public MenuBiblioteca()
     {
@@ -29,12 +30,13 @@ class MenuBiblioteca
             Console.WriteLine("3. Añadir Revista");
             Console.WriteLine("4. Listar publicaciones");
             Console.WriteLine("5. Mostrar publicaciones posteriores a un año");
-            Console.WriteLine("6. Volver al menú principal");
-            Console.Write("Introduce el número de la opción: ");
+            Console.WriteLine("6. Guardar publicaciones");
+            Console.WriteLine("7. Volver al menú principal");
+            Console.Write("Introduce el número de la opción (1-7): ");
 
             if (!int.TryParse(Console.ReadLine(), out opcion) || opcion < 1 || opcion > OpcionSalir)
             {
-                Console.WriteLine("Error: Opción no válida. Introduce una opcion del menú (1-6)");
+                Console.WriteLine("Error: Opción no válida. Introduce una opcion del menú (1-7)");
                 continue;
             }
             switch (opcion)
@@ -57,6 +59,10 @@ class MenuBiblioteca
 
                 case 5:
                     SolicitarPublicacionesAnterioresAANio();
+                    break;
+
+                case 6:
+                    GuardarFichero();
                     break;
 
                 case OpcionSalir:
@@ -200,9 +206,8 @@ class MenuBiblioteca
         Console.WriteLine("\n====== PUBLICACIONES BIBLIOTECA ======\n");
         foreach (var publicacion in publicaciones)
         {
-            publicacion.ObtenerDescripcion();
+            Console.Write(publicacion.ObtenerDescripcion());
         }
-        Console.WriteLine("");
     }
 
     void SolicitarPublicacionesAnterioresAANio()
@@ -224,7 +229,7 @@ class MenuBiblioteca
                 {
                     if (publicacion.AnioPublicacion > anio)
                     {
-                        publicacion.ObtenerDescripcion();
+                        Console.Write(publicacion.ObtenerDescripcion());
                         contador++;
                     }
                 }
@@ -237,6 +242,18 @@ class MenuBiblioteca
             {
                 Console.WriteLine("No se admiten años futuros.");
             }
+        }
+    }
+
+    void GuardarFichero()
+    {
+        string rutaFichero = "Publicaciones.txt";
+
+        FicheroUtils.EliminarFichero(rutaFichero);
+
+        foreach(var publicacion in publicaciones)
+        {
+            FicheroUtils.EscrituraFichero(rutaFichero, publicacion.ObtenerDescripcion());
         }
     }
 }
