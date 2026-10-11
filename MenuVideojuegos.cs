@@ -22,7 +22,7 @@ class MenuVideojuegos
 
         do
         {
-            Console.WriteLine("====== VIDEOJUEGOS ======\r\n\r\n");
+            Console.WriteLine("\n====== VIDEOJUEGOS ======\n");
             Console.WriteLine("1. Registrar Guerrero");
             Console.WriteLine("2. Registrar Mago");
             Console.WriteLine("3. Registrar Arquero");
@@ -63,50 +63,82 @@ class MenuVideojuegos
 
     void RegistrarGuerrero()
     {
-        Console.WriteLine("Nombre del guerrero: ");
-        string nombre = Console.ReadLine();
-
-        int vida = 1;
-        Console.WriteLine("Vida del guerrero: ");
-        if (!int.TryParse(Console.ReadLine(), out vida) || vida < 1)
+        try
         {
-            throw new IndexOutOfRangeException("Error: Dato no válido. Se pondrá por defecto 1.");
-        }
+            Console.WriteLine("Nombre del guerrero: ");
+            string nombre = Console.ReadLine();
 
-        int fuerza = 1;
-        Console.WriteLine("Fuerza del guerrero: ");
-        if (!int.TryParse(Console.ReadLine(), out fuerza) || fuerza < 1)
+            if (nombre is null || nombre == "")
+            {
+                throw new NullReferenceException("Error: el campo nombre no puede estar vacío");
+            }
+
+            int vida;
+            Console.WriteLine("Vida del guerrero: ");
+            if (!int.TryParse(Console.ReadLine(), out vida) || vida < 1)
+            {
+                throw new ArgumentOutOfRangeException("Error: Dato no válido.");
+            }
+
+            int fuerza;
+            Console.WriteLine("Fuerza del guerrero: ");
+            if (!int.TryParse(Console.ReadLine(), out fuerza) || fuerza < 1)
+            {
+                throw new ArgumentOutOfRangeException("Error: Dato no válido.");
+            }
+
+            Guerrero guerrero = new Guerrero(nombre, vida, fuerza);
+
+            personajes.Add(guerrero);
+        }
+        catch (NullReferenceException nre)
         {
-            throw new IndexOutOfRangeException("Error: Dato no válido. Se pondrá por defecto 1.");
+            Console.WriteLine(nre.ToString());
         }
-
-        Guerrero guerrero = new Guerrero(nombre, vida, fuerza);
-
-        personajes.Add(guerrero);
+        catch (ArgumentOutOfRangeException aoore)
+        {
+            Console.WriteLine(aoore.ToString());
+        }
     }
 
     void RegistrarMago()
     {
-        Console.WriteLine("Nombre del mago: ");
-        string nombre = Console.ReadLine();
-
-        int vida = 1;
-        Console.WriteLine("Vida del mago: ");
-        if (!int.TryParse(Console.ReadLine(), out vida) || vida < 1)
+        try
         {
-            throw new IndexOutOfRangeException("Error: Dato no válido. Se pondrá por defecto 1.");
-        }
+            Console.WriteLine("Nombre del mago: ");
+            string nombre = Console.ReadLine();
 
-        int mana = 1;
-        Console.WriteLine("Mana: ");
-        if (!int.TryParse(Console.ReadLine(), out mana) || mana < 1)
+            if (nombre is null || nombre == "")
+            {
+                throw new NullReferenceException("Error: el campo nombre no puede estar vacío");
+            }
+
+            int vida;
+            Console.WriteLine("Vida del mago: ");
+            if (!int.TryParse(Console.ReadLine(), out vida) || vida < 1)
+            {
+                throw new ArgumentOutOfRangeException("Error: Dato no válido.");
+            }
+
+            int mana;
+            Console.WriteLine("Mana: ");
+            if (!int.TryParse(Console.ReadLine(), out mana) || mana < 1)
+            {
+                throw new ArgumentOutOfRangeException("Error: Dato no válido.");
+            }
+
+            Mago mago = new Mago(nombre, vida, mana);
+
+            personajes.Add(mago);
+        }
+        catch (NullReferenceException nre)
         {
-            throw new IndexOutOfRangeException("Error: Dato no válido. Se pondrá por defecto 1.");
+            Console.WriteLine(nre.ToString());
         }
-
-        Mago mago = new Mago(nombre, vida, mana);
-
-        personajes.Add(mago);
+        catch (ArgumentOutOfRangeException aoore)
+        {
+            Console.WriteLine(aoore.ToString());
+        }
     }
 
     void RegistrarArquero()
@@ -114,18 +146,23 @@ class MenuVideojuegos
         Console.WriteLine("Nombre del arquero: ");
         string nombre = Console.ReadLine();
 
-        int vida = 1;
+        if (nombre is null || nombre == "")
+            {
+                throw new NullReferenceException("Error: el campo nombre no puede estar vacío");
+            }
+
+        int vida;
         Console.WriteLine("Vida del arquero: ");
         if (!int.TryParse(Console.ReadLine(), out vida) || vida < 1)
         {
-            throw new IndexOutOfRangeException("Error: Dato no válido. Se pondrá por defecto 1.");
+            throw new ArgumentOutOfRangeException("Error: Dato no válido.");
         }
 
-        int numeroFlechas = 1;
+        int numeroFlechas;
         Console.WriteLine("Número de flechas: ");
         if (!int.TryParse(Console.ReadLine(), out numeroFlechas) || numeroFlechas < 1)
         {
-            throw new IndexOutOfRangeException("Error: Dato no válido. Se pondrá por defecto 1.");
+            throw new ArgumentOutOfRangeException("Error: Dato no válido.");
         }
 
         Arquero arquero = new Arquero(nombre, vida, numeroFlechas);
@@ -135,7 +172,7 @@ class MenuVideojuegos
 
     void ListarUnidades()
     {
-        Console.WriteLine("====== UNIDADES ======\r\n\r\n");
+        Console.WriteLine("\n====== UNIDADES ======\n");
         foreach (var personaje in personajes)
         {
             Console.WriteLine(personaje.ObtenerDescripcion());
