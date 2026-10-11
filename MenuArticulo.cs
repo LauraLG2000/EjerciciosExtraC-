@@ -20,7 +20,7 @@ class MenuArticulo
 
         do
         {
-            Console.WriteLine("\n====== ARTÍCULOS ======");
+            Console.WriteLine("\n====== ARTÍCULOS ======\n");
             Console.WriteLine("1. Añadir artículo");
             Console.WriteLine("2. Ver artículos");
             Console.WriteLine("3. Artículo más barato");
@@ -77,10 +77,10 @@ class MenuArticulo
 
             decimal precio;
 
-            Console.WriteLine("Año de publicación: ");
+            Console.WriteLine("Precio: ");
             if (!decimal.TryParse(Console.ReadLine(), out precio) || precio < 0)
             {
-                throw new InvalidCastException("Error: Dato no válido.");
+                throw new ArgumentOutOfRangeException("Error: Dato no válido. El precio no puede ser negativo");
             }
         }
         catch (NullReferenceException nre)
@@ -95,7 +95,7 @@ class MenuArticulo
 
     void ListarArticulos()
     {
-        Console.WriteLine("\n======  Artículos   ======");
+        Console.WriteLine("\n====== ARTÍCULOS ======\n");
         foreach (var articulo in articulos)
         {
             articulo.DescripcionArticulo();

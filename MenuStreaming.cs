@@ -156,10 +156,6 @@ class MenuStreaming
         {
             Console.WriteLine("Título: ");
             string titulo = Console.ReadLine();
-            if (titulo is null || titulo == "")
-            {
-                throw new NullReferenceException("Error: Dato no válido. No puede estar vacío el campo título.");
-            }
 
             int duracion;
             Console.WriteLine("Duración (en minutos): ");
@@ -170,10 +166,11 @@ class MenuStreaming
 
             string tematica;
             Console.WriteLine("Temática: ");
+
             tematica = Console.ReadLine();
-            if (tematica is null || tematica == "")
+            if (titulo is null || titulo == "" || tematica is null || tematica == "")
             {
-                throw new NullReferenceException("Error: Dato no válido. No puede estar vacio el campo tematica");
+                throw new NullReferenceException("Error: Dato no válido. Título o temática están vacíos.");
             }
 
             Documental documental = new Documental(titulo, duracion, tematica);
@@ -213,7 +210,7 @@ class MenuStreaming
 
     void FiltrarPeliculas()
     {
-        Console.WriteLine("\n====== PELÍCULAS ======");
+        Console.WriteLine("\n====== PELÍCULAS ======\n");
         foreach (var contenido in listaStreaming)
         {
             if (contenido is Pelicula)
@@ -225,7 +222,7 @@ class MenuStreaming
 
     void ListarContenido()
     {
-        Console.WriteLine("\n====== CONTENIDO STREAMING ======");
+        Console.WriteLine("\n====== CONTENIDO STREAMING ======\n");
         foreach (var contenido in listaStreaming)
         {
             Console.WriteLine(contenido.ObtenerDescripcion());
