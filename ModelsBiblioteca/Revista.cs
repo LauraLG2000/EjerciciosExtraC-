@@ -10,6 +10,6 @@ public class Revista : Publicacion
 
     public override void ObtenerDescripcion()
     {
-        Console.WriteLine($"Libro {Titulo} - Número: {NumeroRevista} - Año de Publicación: {AnioPublicacion}");
+        Console.WriteLine($"Revista {Titulo} - Número: {NumeroRevista} - Año de Publicación: {AnioPublicacion}");
     }
 }

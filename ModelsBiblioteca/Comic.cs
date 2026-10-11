@@ -10,6 +10,6 @@ public class Comic : Publicacion
 
     public override void ObtenerDescripcion()
     {
-        Console.WriteLine($"Libro {Titulo} - Dibujante: {Dibujante} - Año de Publicación: {AnioPublicacion}");
+        Console.WriteLine($"Comic {Titulo} - Dibujante: {Dibujante} - Año de Publicación: {AnioPublicacion}");
     }
 }
