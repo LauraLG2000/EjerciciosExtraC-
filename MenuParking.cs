@@ -1,9 +1,11 @@
+using System.Text.Json;
 using ModelsParking;
+using ModelsUtils;
 
 class MenuParking
 {
     private List<Vehiculo> vehiculos;
-    private const int OpcionSalir = 7;
+    private const int OpcionSalir = 8;
     public MenuParking()
     {
         vehiculos = new List<Vehiculo>();
@@ -15,6 +17,8 @@ class MenuParking
         vehiculos.Add(new Furgoneta("Ford Transit", "5678FGH", 11.5m, 180));
         vehiculos.Add(new Moto("Vespa Primavera", "2468VWX", "Urbano Integrado", true));
         vehiculos.Add(new Moto("Honda PCX 125", "5678FGH", "Estándar", true));
+
+        //vehiculos = CargarFicheroJson();
     }
     public void MostrarMenu()
     {
@@ -29,12 +33,13 @@ class MenuParking
             Console.WriteLine("4. Ver vehículos");
             Console.WriteLine("5. Buscar por matrícula");
             Console.WriteLine("6. Mostrar coches");
-            Console.WriteLine("7. Volver al menú principal");
-            Console.Write("Introduce el número de la opcion: ");
+            Console.WriteLine("7. Guardar registro vehículos Json");
+            Console.WriteLine("8. Volver al menú principal");
+            Console.Write("Introduce el número de la opcion (1-8): ");
 
             if (!int.TryParse(Console.ReadLine(), out opcion) || opcion < 1 || opcion > OpcionSalir)
             {
-                Console.WriteLine("Error: Opción no válida. Introduce una opcion del menú (1-7)");
+                Console.WriteLine("Error: Opción no válida. Introduce una opcion del menú (1-8)");
                 continue;
             }
             switch (opcion)
@@ -61,6 +66,10 @@ class MenuParking
 
                 case 6:
                     MostrarSoloCoches();
+                    break;
+
+                case 7:
+                    GuardarFicheroJSON();
                     break;
 
                 case OpcionSalir:
@@ -199,7 +208,7 @@ class MenuParking
         Console.WriteLine("===  Vehículos del Parking   ===");
         foreach (var vehiculo in vehiculos)
         {
-            vehiculo.ObtenerDescripcion();
+            Console.Write(vehiculo.ObtenerDescripcion());
         }
     }
 
@@ -215,7 +224,7 @@ class MenuParking
         {
             if (vehiculo.Matricula.Equals(matriculaTeclado))
             {
-                vehiculo.ObtenerDescripcion();
+                Console.Write(vehiculo.ObtenerDescripcion());
                 encontrado = true;
             }
 
@@ -238,7 +247,7 @@ class MenuParking
         {
             if (vehiculo is Coche)
             {
-                vehiculo.ObtenerDescripcion();
+                Console.Write(vehiculo.ObtenerDescripcion());
                 contadorCoches++;
             }
         }
@@ -246,6 +255,37 @@ class MenuParking
         if (contadorCoches == 0)
         {
             Console.WriteLine("No hay coches registrados en el parking.");
+        }
+    }
+
+    void GuardarFicheroJSON()
+    {
+        string rutaFichero = "vehiculosRegistrados.json";
+        string json = JsonSerializer.Serialize(vehiculos);
+
+        FicheroUtils.EscrituraFicheroJSON(rutaFichero, json);
+    }
+
+    List<Vehiculo> CargarFicheroJson()
+    {
+        string rutaFichero = "vehiculosRegistrados.json";
+        List<Vehiculo> vehiculosJson = new List<Vehiculo>();
+
+        try
+        {
+            if (!File.Exists(rutaFichero))
+            {
+                throw new FileNotFoundException("No se ha encontrado la ruta del fichero");
+            }
+
+            string json = FicheroUtils.LecturaFichero(rutaFichero);
+            vehiculosJson = JsonSerializer.Deserialize<List<Vehiculo>>(json);
+
+            return vehiculosJson;
+        }catch(FileNotFoundException fnfe)
+        {
+            Console.WriteLine(fnfe.ToString());
+            return vehiculosJson;
         }
     }
 }

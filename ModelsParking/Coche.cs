@@ -4,6 +4,11 @@ public class Coche : Vehiculo
 {
     public decimal volumenMaletero {get;set;}
     public int CapacidadPasajeros {get;set;}
+
+    public Coche()
+    {
+        
+    }
     
     public Coche(string _matricula, string _marca, decimal _volumenMaletero, int _capacidadPasajeros) : base(_matricula, _marca)
     {
@@ -11,8 +16,8 @@ public class Coche : Vehiculo
         this.CapacidadPasajeros = _capacidadPasajeros;
     }
 
-    public override void ObtenerDescripcion()
+    public override string ObtenerDescripcion()
     {
-        Console.WriteLine($"Coche {Marca} - Matrícula: {Matricula} - Volumen del maletero: {volumenMaletero} litros - Número de pasajeros: {CapacidadPasajeros}");
+        return $"Coche {Marca} - Matrícula: {Matricula} - Volumen del maletero: {volumenMaletero} litros - Número de pasajeros: {CapacidadPasajeros}\n";
     }
 }

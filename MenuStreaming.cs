@@ -1,9 +1,11 @@
+using System.Text.Json;
 using ModelsStreaming;
+using ModelsUtils;
 
 class MenuStreaming
 {
     private List<Contenido> listaStreaming;
-    private const int OpcionFinal = 7;
+    private const int OpcionFinal = 8;
 
     public MenuStreaming()
     {
@@ -13,6 +15,8 @@ class MenuStreaming
         listaStreaming.Add(new Serie("Aquí No Hay Quien Viva", 90, 5));
         listaStreaming.Add(new Serie("La que se Avecina", 90, 16));
         listaStreaming.Add(new Documental("La Vida en Nuestro Planeta", 56, "Naturaleza y Ciencia"));
+
+        //listaStreaming = CargarFicheroJson();
     }
 
     public void MostrarMenu()
@@ -28,12 +32,13 @@ class MenuStreaming
             Console.WriteLine("4. Listar contenido streaming");
             Console.WriteLine("5. Buscar título");
             Console.WriteLine("6. Mostrar solo las películas");
-            Console.WriteLine("7. Volver al menú principal");
-            Console.Write("Introduce el número de la opción: ");
+            Console.WriteLine("7. Guardar lista de contenido en Json");
+            Console.WriteLine("8. Volver al menú principal");
+            Console.Write("Introduce el número de la opción (1-8): ");
 
             if (!int.TryParse(Console.ReadLine(), out opcion) || opcion < 1 || opcion > OpcionFinal)
             {
-                Console.WriteLine("Error: Dato no válido, debe ser un valor de la lista (1-7)");
+                Console.WriteLine("Error: Dato no válido, debe ser un valor de la lista (1-8)");
                 continue;
             }
 
@@ -61,6 +66,10 @@ class MenuStreaming
 
                 case 6:
                     FiltrarPeliculas();
+                    break;
+
+                case 7:
+                    GuardarFicheroJson();
                     break;
 
                 case OpcionFinal:
@@ -225,8 +234,39 @@ class MenuStreaming
         Console.WriteLine("\n====== CONTENIDO STREAMING ======\n");
         foreach (var contenido in listaStreaming)
         {
-            Console.WriteLine(contenido.ObtenerDescripcion());
+            Console.Write(contenido.ObtenerDescripcion());
         }
-        Console.WriteLine("");
+    }
+
+    void GuardarFicheroJson()
+    {
+        string rutaFichero = "ContenidoStreaming.json";
+        string json = JsonSerializer.Serialize(listaStreaming);
+
+        FicheroUtils.EscrituraFicheroJSON(rutaFichero, json);
+    }
+
+    List<Contenido> CargarFicheroJson()
+    {
+        string rutaFichero = "ContenidoStreaming.json";
+        List<Contenido> contenidoJson = new List<Contenido>();
+
+        try
+        {
+            if (!File.Exists(rutaFichero))
+            {
+                throw new FileNotFoundException("No se ha encontrado la ruta del fichero");
+            }
+
+            string json = FicheroUtils.LecturaFichero(rutaFichero);
+            contenidoJson = JsonSerializer.Deserialize<List<Contenido>>(json);
+
+            return contenidoJson;
+        }
+        catch(FileNotFoundException fnfe)
+        {
+            Console.WriteLine(fnfe.ToString());
+            return contenidoJson;
+        }
     }
 }

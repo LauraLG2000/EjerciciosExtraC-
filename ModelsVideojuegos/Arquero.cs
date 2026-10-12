@@ -3,6 +3,11 @@ namespace ModelsVideojuegos;
 public class Arquero : Personaje
 {
     public int NumeroFlechas{get;set;}
+
+    public Arquero()
+    {
+        
+    }
     public Arquero(string _nombre, int _vida, int _NumeroFlechas) : base(_nombre, _vida)
     {
         this.NumeroFlechas = _NumeroFlechas;
@@ -10,6 +15,6 @@ public class Arquero : Personaje
 
     public override string ObtenerDescripcion()
     {
-        return $"Arquero {Nombre} - Vida: {Vida} - NumeroFlechas: {NumeroFlechas}";
+        return $"Arquero {Nombre} - Vida: {Vida} - NumeroFlechas: {NumeroFlechas}\n";
     }
 }

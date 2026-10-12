@@ -8,8 +8,13 @@ public class Comic : Publicacion
         this.Dibujante = _dibujante;
     }
 
-    public override void ObtenerDescripcion()
+    public Comic()
     {
-        Console.WriteLine($"Comic {Titulo} - Dibujante: {Dibujante} - Año de Publicación: {AnioPublicacion}");
+        
+    }
+
+    public override string ObtenerDescripcion()
+    {
+        return $"Comic {Titulo} - Dibujante: {Dibujante} - Año de Publicación: {AnioPublicacion}\n";
     }
 }

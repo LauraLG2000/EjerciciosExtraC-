@@ -1,9 +1,11 @@
+using System.Text.Json;
 using ModelsGimnasio;
+using ModelsUtils;
 
 class MenuGimnasio
 {
     private List<Actividad> actividades;
-    private const int OpcionSalir = 5;
+    private const int OpcionSalir = 6;
 
     public MenuGimnasio()
     {
@@ -15,6 +17,8 @@ class MenuGimnasio
         actividades.Add(new Spinning("Spinning Resistencia", 60, 25, 30, 5));
         actividades.Add(new CrossTraining("WOD Fuerza", 50, 12, 80, 5));
         actividades.Add(new CrossTraining("Cross Funcional", 45, 16, 40, 8));
+
+        //actividades = CargarFicheroJSON();
     }
 
     public void MostrarMenu()
@@ -28,12 +32,13 @@ class MenuGimnasio
             Console.WriteLine("2. Buscar actividad");
             Console.WriteLine("3. Ver actividades por duración máxima");
             Console.WriteLine("4. Ver actividades por tipo");
-            Console.WriteLine("5. Salir");
-            Console.WriteLine("Introduce el número de una opción (1-5)");
+            Console.WriteLine("5. Guardar actividades en Json");
+            Console.WriteLine("6. Salir");
+            Console.WriteLine("Introduce el número de una opción (1-6)");
 
             if (!int.TryParse(Console.ReadLine(), out opcion) || opcion < 1 || opcion > OpcionSalir)
             {
-                Console.WriteLine("Error: Opción no listada. Seleccione una válida (1-5)");
+                Console.WriteLine("Error: Opción no listada. Seleccione una válida (1-6)");
                 continue;
             }
 
@@ -53,6 +58,10 @@ class MenuGimnasio
 
                 case 4:
                     BuscarActividadPorTipo();
+                    break;
+
+                case 5:
+                    GuardarFicheroJSON();
                     break;
 
                 case OpcionSalir:
@@ -169,6 +178,37 @@ class MenuGimnasio
         }catch(NullReferenceException nre)
         {
             Console.WriteLine(nre.ToString());
+        }
+    }
+
+    void GuardarFicheroJSON()
+    {
+        string rutaFichero = "clasesGimnasio.json";
+        string json = JsonSerializer.Serialize(actividades);
+
+        FicheroUtils.EscrituraFicheroJSON(rutaFichero, json);
+    }
+
+    private List<Actividad> CargarFicheroJSON()
+    {
+        string rutaFichero = "clasesGimnasio.json";
+        List<Actividad> actividadesJson = new List<Actividad>();
+
+        try
+        {
+            if (!File.Exists(rutaFichero))
+            {
+                throw new FileNotFoundException("No se ha encontrado la ruta.");
+            }
+
+            string json = FicheroUtils.LecturaFichero(rutaFichero);
+            actividadesJson = JsonSerializer.Deserialize<List<Actividad>>(json);
+
+            return actividadesJson;
+        } catch(FileNotFoundException fnfe)
+        {
+            Console.WriteLine(fnfe.ToString());
+            return actividadesJson;
         }
     }
 }

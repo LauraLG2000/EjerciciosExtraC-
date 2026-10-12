@@ -1,6 +1,12 @@
+using System.Text.Json.Serialization;
 using Models;
 
 namespace ModelsGimnasio;
+
+[JsonPolymorphic (TypeDiscriminatorPropertyName = "$tipo")]
+[JsonDerivedType (typeof(Yoga), "yoga")]
+[JsonDerivedType (typeof(CrossTraining), "crosstraining")]
+[JsonDerivedType (typeof(Spinning), "spinning")]
 
 public abstract class Actividad
 {
@@ -9,6 +15,11 @@ public abstract class Actividad
     public int MaximoParticipantes{get;set;}
 
     public ActividadTipoEnum Tipo{get; set;}
+
+    public Actividad()
+    {
+        
+    }
 
     public Actividad(string _nombre, int _duracion, int _maximoParticipantes)
     {

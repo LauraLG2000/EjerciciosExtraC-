@@ -6,6 +6,11 @@ public class Yoga : Actividad
 {
     public string EstiloYoga{get;set;}
     public bool UsaAccesorios {get;set;}
+
+    public Yoga()
+    {
+        
+    }
     public Yoga(string _nombre, int _duracion, int _maximoParticipantes, string _estiloYoga, bool _usaAccesorios) : base(_nombre, _duracion, _maximoParticipantes)
     {
         this.EstiloYoga = _estiloYoga;
