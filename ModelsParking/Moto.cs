@@ -4,6 +4,11 @@ public class Moto : Vehiculo
 {
     public string TipoManillar {get;set;}
     public bool isScooter {get;set;}
+
+    public Moto()
+    {
+        
+    }
     public Moto(string _matricula, string _marca, string _tipoManillar, bool _isScooter) : base(_matricula, _marca)
     {
         this.TipoManillar = _tipoManillar;

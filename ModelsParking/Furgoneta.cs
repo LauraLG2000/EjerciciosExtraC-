@@ -4,6 +4,11 @@ public class Furgoneta : Vehiculo
 {
     public decimal volumenCarga{get;set;}
     public int gradosAperturaPuertaTrasera{get;set;}
+
+    public Furgoneta()
+    {
+        
+    }
     public Furgoneta(string _matricula, string _marca, decimal _volumenCarga, int _gradosAperturaPuertaTrasera) : base(_matricula, _marca)
     {
         this.volumenCarga = _volumenCarga;

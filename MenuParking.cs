@@ -1,3 +1,4 @@
+using System.Text.Json;
 using ModelsParking;
 using ModelsUtils;
 
@@ -16,6 +17,8 @@ class MenuParking
         vehiculos.Add(new Furgoneta("Ford Transit", "5678FGH", 11.5m, 180));
         vehiculos.Add(new Moto("Vespa Primavera", "2468VWX", "Urbano Integrado", true));
         vehiculos.Add(new Moto("Honda PCX 125", "5678FGH", "Estándar", true));
+
+        //vehiculos = CargarFicheroJson();
     }
     public void MostrarMenu()
     {
@@ -30,7 +33,7 @@ class MenuParking
             Console.WriteLine("4. Ver vehículos");
             Console.WriteLine("5. Buscar por matrícula");
             Console.WriteLine("6. Mostrar coches");
-            Console.WriteLine("7. Guardar registro vehículos");
+            Console.WriteLine("7. Guardar registro vehículos Json");
             Console.WriteLine("8. Volver al menú principal");
             Console.Write("Introduce el número de la opcion (1-8): ");
 
@@ -66,7 +69,7 @@ class MenuParking
                     break;
 
                 case 7:
-                    GuardarFichero();
+                    GuardarFicheroJSON();
                     break;
 
                 case OpcionSalir:
@@ -255,15 +258,34 @@ class MenuParking
         }
     }
 
-    void GuardarFichero()
+    void GuardarFicheroJSON()
     {
-        string rutaFichero = "Registro Parking.txt";
+        string rutaFichero = "vehiculosRegistrados.json";
+        string json = JsonSerializer.Serialize(vehiculos);
 
-        FicheroUtils.EliminarFichero(rutaFichero);
+        FicheroUtils.EscrituraFicheroJSON(rutaFichero, json);
+    }
 
-        foreach(var vehiculo in vehiculos)
+    List<Vehiculo> CargarFicheroJson()
+    {
+        string rutaFichero = "vehiculosRegistrados.json";
+        List<Vehiculo> vehiculosJson = new List<Vehiculo>();
+
+        try
         {
-            FicheroUtils.EscrituraFichero(rutaFichero, vehiculo.ObtenerDescripcion());
+            if (!File.Exists(rutaFichero))
+            {
+                throw new FileNotFoundException("No se ha encontrado la ruta del fichero");
+            }
+
+            string json = FicheroUtils.LecturaFichero(rutaFichero);
+            vehiculosJson = JsonSerializer.Deserialize<List<Vehiculo>>(json);
+
+            return vehiculosJson;
+        }catch(FileNotFoundException fnfe)
+        {
+            Console.WriteLine(fnfe.ToString());
+            return vehiculosJson;
         }
     }
 }
