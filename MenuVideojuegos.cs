@@ -1,9 +1,11 @@
 using ModelsVideojuegos;
+using ModelsUtils;
+using System.Text.Json;
 
 class MenuVideojuegos
 {
     private List<Personaje> personajes;
-    private const int OpcionSalida = 5;
+    private const int OpcionSalida = 6;
 
     public MenuVideojuegos()
     {
@@ -14,6 +16,8 @@ class MenuVideojuegos
         personajes.Add(new Mago("Sirocco", 19, 10));
         personajes.Add(new Arquero("Virion", 19, 20));
         personajes.Add(new Arquero("Leda", 20, 20));
+
+        //personajes = CargarFicheroJson();
     }
 
     public void MostrarMenu()
@@ -27,8 +31,9 @@ class MenuVideojuegos
             Console.WriteLine("2. Registrar Mago");
             Console.WriteLine("3. Registrar Arquero");
             Console.WriteLine("4. Unidades de la campaña");
-            Console.WriteLine("5. Volver atrás");
-            Console.WriteLine("Elige una opción (1-5)");
+            Console.WriteLine("5. Guardar personajes de la partida en Json");
+            Console.WriteLine("6. Volver atrás");
+            Console.WriteLine("Elige una opción (1-6)");
 
             if (!int.TryParse(Console.ReadLine(), out opcion) || opcion < 1 || opcion > OpcionSalida)
             {
@@ -52,6 +57,10 @@ class MenuVideojuegos
 
                 case 4:
                     ListarUnidades();
+                    break;
+
+                case 5:
+                    GuardarFicheroJson();
                     break;
 
                 case OpcionSalida:
@@ -175,7 +184,39 @@ class MenuVideojuegos
         Console.WriteLine("\n====== UNIDADES ======\n");
         foreach (var personaje in personajes)
         {
-            Console.WriteLine(personaje.ObtenerDescripcion());
+            Console.Write(personaje.ObtenerDescripcion());
+        }
+    }
+
+    void GuardarFicheroJson()
+    {
+        string rutaFichero = "UnidadesCampaña.json";
+        string json = JsonSerializer.Serialize(personajes);
+
+        FicheroUtils.EscrituraFicheroJSON(rutaFichero, json);
+    }
+
+    List<Personaje> CargarFicheroJson()
+    {
+        string rutaFichero = "UnidadesCampaña.json";
+        List<Personaje> personajesJson = new List<Personaje>();
+
+        try
+        {
+            if (!File.Exists(rutaFichero))
+            {
+                throw new FileNotFoundException("No se ha encontrado la ruta del fichero");
+            }
+
+            string json = FicheroUtils.LecturaFichero(rutaFichero);
+            personajesJson = JsonSerializer.Deserialize<List<Personaje>>(json);
+
+            return personajesJson;
+        }
+        catch(FileNotFoundException fnfe)
+        {
+            Console.WriteLine(fnfe.ToString());
+            return personajesJson;
         }
     }
 }

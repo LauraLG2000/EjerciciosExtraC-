@@ -6,6 +6,11 @@ public class CrossTraining : Actividad
 {
     public decimal CargaMaxima{get;set;}
     public int CantidadEstaciones{get;set;}
+
+    public CrossTraining()
+    {
+        
+    }
     public CrossTraining(string _nombre, int _duracion, int _maximoParticipantes, decimal _cargaMaxima, int _cantidadEstaciones) : base(_nombre, _duracion, _maximoParticipantes)
     {
         this.CargaMaxima = _cargaMaxima;

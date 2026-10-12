@@ -3,13 +3,17 @@ namespace ModelsBiblioteca;
 public class Libro : Publicacion
 {
     public string Autor{get;set;}
+
+    public Libro(){
+        
+    }
     public Libro(string _titulo, int _anioPublicacion, string _autor) : base(_titulo, _anioPublicacion)
     {
         this.Autor = _autor;
     }
 
-    public override void ObtenerDescripcion()
+    public override string ObtenerDescripcion()
     {
-        Console.WriteLine($"Libro {Titulo} - Autor: {Autor} - Año de Publicación: {AnioPublicacion}");
+        return $"Libro {Titulo} - Autor: {Autor} - Año de Publicación: {AnioPublicacion}\n";
     }
 }

@@ -1,9 +1,11 @@
+using System.Text.Json;
 using ModelsBiblioteca;
+using ModelsUtils;
 
 class MenuBiblioteca
 {
     private List<Publicacion> publicaciones;
-    private const int OpcionSalir = 6;
+    private const int OpcionSalir = 7;
 
     public MenuBiblioteca()
     {
@@ -15,6 +17,8 @@ class MenuBiblioteca
         publicaciones.Add(new Revista("Revista Loka", 2000, 2));
         publicaciones.Add(new Comic("The Walking Dead", 2003, "Charlie Adlard Tony Moore"));
         publicaciones.Add(new Comic("The Walking Dead", 2004, "Charlie Adlard Tony Moore"));
+
+       publicaciones = CargarFicheroJSON();
     }
 
     public void MostrarMenu()
@@ -29,12 +33,13 @@ class MenuBiblioteca
             Console.WriteLine("3. Añadir Revista");
             Console.WriteLine("4. Listar publicaciones");
             Console.WriteLine("5. Mostrar publicaciones posteriores a un año");
-            Console.WriteLine("6. Volver al menú principal");
-            Console.Write("Introduce el número de la opción: ");
+            Console.WriteLine("6. Guardar publicaciones archivo Json");
+            Console.WriteLine("7. Volver al menú principal");
+            Console.Write("Introduce el número de la opción (1-7): ");
 
             if (!int.TryParse(Console.ReadLine(), out opcion) || opcion < 1 || opcion > OpcionSalir)
             {
-                Console.WriteLine("Error: Opción no válida. Introduce una opcion del menú (1-6)");
+                Console.WriteLine("Error: Opción no válida. Introduce una opcion del menú (1-7)");
                 continue;
             }
             switch (opcion)
@@ -57,6 +62,10 @@ class MenuBiblioteca
 
                 case 5:
                     SolicitarPublicacionesAnterioresAANio();
+                    break;
+
+                case 6:
+                    GuardarFicheroJSON();
                     break;
 
                 case OpcionSalir:
@@ -200,9 +209,8 @@ class MenuBiblioteca
         Console.WriteLine("\n====== PUBLICACIONES BIBLIOTECA ======\n");
         foreach (var publicacion in publicaciones)
         {
-            publicacion.ObtenerDescripcion();
+            Console.Write(publicacion.ObtenerDescripcion());
         }
-        Console.WriteLine("");
     }
 
     void SolicitarPublicacionesAnterioresAANio()
@@ -224,7 +232,7 @@ class MenuBiblioteca
                 {
                     if (publicacion.AnioPublicacion > anio)
                     {
-                        publicacion.ObtenerDescripcion();
+                        Console.Write(publicacion.ObtenerDescripcion());
                         contador++;
                     }
                 }
@@ -238,5 +246,53 @@ class MenuBiblioteca
                 Console.WriteLine("No se admiten años futuros.");
             }
         }
+    }
+
+    void GuardarFichero()
+    {
+        string rutaFichero = "Publicaciones.txt";
+
+        FicheroUtils.EliminarFichero(rutaFichero);
+
+        foreach (var publicacion in publicaciones)
+        {
+            FicheroUtils.EscrituraFichero(rutaFichero, publicacion.ObtenerDescripcion());
+        }
+    }
+
+    private void GuardarFicheroJSON()
+    {
+        string json = JsonSerializer.Serialize(publicaciones);
+        string rutaFichero = "publicaciones.json";
+
+        FicheroUtils.EscrituraFicheroJSON(rutaFichero, json);
+    }
+
+    private List<Publicacion> CargarFicheroJSON()
+    {
+
+        List<Publicacion> publicacionesJson = new List<Publicacion>();
+        string rutaFichero = "publicaciones.json";
+
+        try
+        {
+            if (!File.Exists(rutaFichero))
+            {
+                throw new FileNotFoundException("No se encuentra la ruta");
+            }
+
+            string json = FicheroUtils.LecturaFichero(rutaFichero);
+            publicacionesJson = JsonSerializer.Deserialize<List<Publicacion>>(json);
+
+            return publicacionesJson;
+        }catch(FileNotFoundException fnfe)
+        {
+            Console.WriteLine(fnfe.ToString());
+            return publicacionesJson;
+        }
+
+
+
+
     }
 }
