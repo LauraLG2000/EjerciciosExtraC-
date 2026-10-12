@@ -8,6 +8,11 @@ public class Revista : Publicacion
         this.NumeroRevista = _numeroRevista;
     }
 
+    public Revista()
+    {
+        
+    }
+
     public override string ObtenerDescripcion()
     {
         return $"Revista {Titulo} - Número: {NumeroRevista} - Año de Publicación: {AnioPublicacion}\n";

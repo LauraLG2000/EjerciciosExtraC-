@@ -182,7 +182,7 @@ class MenuArticulo
             {
                 throw new NullReferenceException("No hay articulos registrados");
             }
-            
+
             Console.WriteLine("Precio máximo de la búsqueda:");
 
             decimal precioMaximo = 0;
@@ -237,26 +237,27 @@ class MenuArticulo
 
     private List<Articulo> CargarFicheroJson()
     {
+        string rutaFichero = "articulos.json";
+        List<Articulo> articulosJson = new List<Articulo>();
+
         try
         {
-            string rutaFichero = "articulos.json";
-
             if (!File.Exists(rutaFichero))
             {
                 throw new FileNotFoundException("No se encuentra la ruta");
             }
 
             string json = FicheroUtils.LecturaFichero(rutaFichero);
-            articulos = JsonSerializer.Deserialize<List<Articulo>>(json);
+            articulosJson = JsonSerializer.Deserialize<List<Articulo>>(json);
 
-            return articulos;
+            return articulosJson;
 
 
         }
         catch (FileNotFoundException fnfe)
         {
             Console.WriteLine(fnfe.ToString());
-            return articulos;
+            return articulosJson;
         }
     }
 }

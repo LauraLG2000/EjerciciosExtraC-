@@ -8,6 +8,11 @@ public class Comic : Publicacion
         this.Dibujante = _dibujante;
     }
 
+    public Comic()
+    {
+        
+    }
+
     public override string ObtenerDescripcion()
     {
         return $"Comic {Titulo} - Dibujante: {Dibujante} - Año de Publicación: {AnioPublicacion}\n";
