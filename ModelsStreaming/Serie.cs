@@ -3,6 +3,11 @@ namespace ModelsStreaming;
 public class Serie : Contenido
 {
     public int NumeroTemporadas{get;set;}
+
+    public Serie()
+    {
+        
+    }
     public Serie(string _titulo, int _duracion, int _NumeroTemporadas) : base(_titulo, _duracion)
     {
         this.NumeroTemporadas = _NumeroTemporadas;

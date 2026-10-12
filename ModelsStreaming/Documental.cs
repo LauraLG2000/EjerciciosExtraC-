@@ -3,6 +3,11 @@ namespace ModelsStreaming;
 public class Documental : Contenido
 {
     public string Tematica{get;set;}
+
+    public Documental()
+    {
+        
+    }
     public Documental(string _titulo, int _duracion, string _Tematica) : base(_titulo, _duracion)
     {
         this.Tematica = _Tematica;

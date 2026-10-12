@@ -1,3 +1,4 @@
+using System.Text.Json;
 using ModelsStreaming;
 using ModelsUtils;
 
@@ -14,6 +15,8 @@ class MenuStreaming
         listaStreaming.Add(new Serie("Aquí No Hay Quien Viva", 90, 5));
         listaStreaming.Add(new Serie("La que se Avecina", 90, 16));
         listaStreaming.Add(new Documental("La Vida en Nuestro Planeta", 56, "Naturaleza y Ciencia"));
+
+        //listaStreaming = CargarFicheroJson();
     }
 
     public void MostrarMenu()
@@ -29,7 +32,7 @@ class MenuStreaming
             Console.WriteLine("4. Listar contenido streaming");
             Console.WriteLine("5. Buscar título");
             Console.WriteLine("6. Mostrar solo las películas");
-            Console.WriteLine("7. Guardar lista de contenido");
+            Console.WriteLine("7. Guardar lista de contenido en Json");
             Console.WriteLine("8. Volver al menú principal");
             Console.Write("Introduce el número de la opción (1-8): ");
 
@@ -66,7 +69,7 @@ class MenuStreaming
                     break;
 
                 case 7:
-                    GuardarFichero();
+                    GuardarFicheroJson();
                     break;
 
                 case OpcionFinal:
@@ -235,15 +238,35 @@ class MenuStreaming
         }
     }
 
-    void GuardarFichero()
+    void GuardarFicheroJson()
     {
-        string rutaFichero = "Contenido Streaming.txt";
+        string rutaFichero = "ContenidoStreaming.json";
+        string json = JsonSerializer.Serialize(listaStreaming);
 
-        FicheroUtils.EliminarFichero(rutaFichero);
+        FicheroUtils.EscrituraFicheroJSON(rutaFichero, json);
+    }
 
-        foreach (var contenido in listaStreaming)
+    List<Contenido> CargarFicheroJson()
+    {
+        string rutaFichero = "ContenidoStreaming.json";
+        List<Contenido> contenidoJson = new List<Contenido>();
+
+        try
         {
-            FicheroUtils.EscrituraFichero(rutaFichero, contenido.ObtenerDescripcion());
+            if (!File.Exists(rutaFichero))
+            {
+                throw new FileNotFoundException("No se ha encontrado la ruta del fichero");
+            }
+
+            string json = FicheroUtils.LecturaFichero(rutaFichero);
+            contenidoJson = JsonSerializer.Deserialize<List<Contenido>>(json);
+
+            return contenidoJson;
+        }
+        catch(FileNotFoundException fnfe)
+        {
+            Console.WriteLine(fnfe.ToString());
+            return contenidoJson;
         }
     }
 }
