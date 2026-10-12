@@ -1,17 +1,20 @@
+using System.Text.Json;
 using ModelsArticulo;
 using ModelsUtils;
 
 class MenuArticulo
 {
     private List<Articulo> articulos;
-    private const int OpcionSalir = 7;
+    private const int OpcionSalir = 8;
     public MenuArticulo()
     {
         articulos = new List<Articulo>();
 
-        articulos.Add(new Articulo("Micrófono", 29.99m));
+        /*articulos.Add(new Articulo("Micrófono", 29.99m));
         articulos.Add(new Articulo("Ratón Inalámbrico", 40.99m));
-        articulos.Add(new Articulo("Cascos", 9.99m));
+        articulos.Add(new Articulo("Cascos", 9.99m));*/
+
+        articulos = CargarFicheroJson();
     }
 
     public void MostrarMenu()
@@ -27,8 +30,9 @@ class MenuArticulo
             Console.WriteLine("4. Precio Medio Artículos");
             Console.WriteLine("5. Listar articulos por un precio máximo");
             Console.WriteLine("6. Guardar listado articulos");
-            Console.WriteLine("7. Salir");
-            Console.Write("Introduce el número de la opcion (1-7): ");
+            Console.WriteLine("7. Guardar fichero JSON");
+            Console.WriteLine("8. Salir");
+            Console.Write("Introduce el número de la opcion (1-8): ");
 
             if (!int.TryParse(Console.ReadLine(), out opcion) || opcion < 1 || opcion > OpcionSalir)
             {
@@ -60,6 +64,10 @@ class MenuArticulo
 
                 case 6:
                     GuardarFichero();
+                    break;
+
+                case 7:
+                    GuardarFicheroJson();
                     break;
 
                 case OpcionSalir:
@@ -109,47 +117,81 @@ class MenuArticulo
 
     void ArticuloMasBarato()
     {
-
-        for (int i = 0; i < articulos.Count; i++)
+        try
         {
-            for (int j = 0; j < articulos.Count; j++)
+            if (articulos is null || articulos.Count == 0)
             {
-                if (articulos[i].Precio < articulos[j].Precio)
+                throw new NullReferenceException("No hay articulos registrados");
+            }
+
+            for (int i = 0; i < articulos.Count; i++)
+            {
+                for (int j = 0; j < articulos.Count; j++)
                 {
-                    Articulo articuloTemporal = articulos[i];
-                    articulos[i] = articulos[j];
-                    articulos[j] = articuloTemporal;
+                    if (articulos[i].Precio < articulos[j].Precio)
+                    {
+                        Articulo articuloTemporal = articulos[i];
+                        articulos[i] = articulos[j];
+                        articulos[j] = articuloTemporal;
+                    }
                 }
             }
-        }
 
-        Console.Write(articulos[0].DescripcionArticulo());
+            Console.Write(articulos[0].DescripcionArticulo());
+        }
+        catch (NullReferenceException nre)
+        {
+            Console.WriteLine(nre.ToString());
+        }
     }
 
     void PrecioMedioArticulos()
     {
-        decimal sumaPrecios = 0;
-        int cantidadArticulos = articulos.Count;
-
-        foreach (var articulo in articulos)
+        try
         {
-            sumaPrecios += articulo.Precio;
+            if (articulos is null || articulos.Count == 0)
+            {
+                throw new NullReferenceException("No hay articulos registrados");
+            }
+
+            decimal sumaPrecios = 0;
+            int cantidadArticulos = articulos.Count;
+
+            foreach (var articulo in articulos)
+            {
+                sumaPrecios += articulo.Precio;
+            }
+
+            decimal precioMedio = sumaPrecios / cantidadArticulos;
+
+            Console.WriteLine($"Precio medio: {precioMedio}€");
+        }
+        catch (NullReferenceException nre)
+        {
+            Console.WriteLine(nre.ToString());
         }
 
-        decimal precioMedio = sumaPrecios / cantidadArticulos;
-
-        Console.WriteLine($"Precio medio: {precioMedio}€");
     }
 
     void ArticulosPorPrecioMaximo()
     {
-        Console.WriteLine("Precio máximo de la búsqueda:");
-
-        decimal precioMaximo = 0;
-        int contadorArticulos = 0;
-
-        if (decimal.TryParse(Console.ReadLine(), out precioMaximo))
+        try
         {
+
+            if (articulos is null || articulos.Count == 0)
+            {
+                throw new NullReferenceException("No hay articulos registrados");
+            }
+            
+            Console.WriteLine("Precio máximo de la búsqueda:");
+
+            decimal precioMaximo = 0;
+            int contadorArticulos = 0;
+
+            if (!decimal.TryParse(Console.ReadLine(), out precioMaximo))
+            {
+                throw new InvalidCastException("Dato erroneo");
+            }
             foreach (var articulo in articulos)
             {
                 if (articulo.Precio <= precioMaximo)
@@ -164,13 +206,18 @@ class MenuArticulo
                 Console.WriteLine($"No hay artículos con un precio inferior o igual a {precioMaximo}€");
             }
         }
-        else
+        catch (NullReferenceException nre)
         {
-            Console.WriteLine("Valor no válido.");
+            Console.WriteLine(nre.ToString());
         }
+        catch (InvalidCastException ice)
+        {
+            Console.WriteLine(ice.ToString());
+        }
+
     }
 
-    void GuardarFichero()
+    private void GuardarFichero()
     {
         string rutaFichero = "Artículos.txt";
 
@@ -179,6 +226,37 @@ class MenuArticulo
         foreach (var articulo in articulos)
         {
             FicheroUtils.EscrituraFichero(rutaFichero, articulo.DescripcionArticulo());
+        }
+    }
+
+    private void GuardarFicheroJson()
+    {
+        string json = JsonSerializer.Serialize(articulos);
+        FicheroUtils.EscrituraFicheroJSON("articulos.json", json);
+    }
+
+    private List<Articulo> CargarFicheroJson()
+    {
+        try
+        {
+            string rutaFichero = "articulos.json";
+
+            if (!File.Exists(rutaFichero))
+            {
+                throw new FileNotFoundException("No se encuentra la ruta");
+            }
+
+            string json = FicheroUtils.LecturaFichero(rutaFichero);
+            articulos = JsonSerializer.Deserialize<List<Articulo>>(json);
+
+            return articulos;
+
+
+        }
+        catch (FileNotFoundException fnfe)
+        {
+            Console.WriteLine(fnfe.ToString());
+            return articulos;
         }
     }
 }

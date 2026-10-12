@@ -1,5 +1,9 @@
+using System.Text.Json.Serialization;
+
 namespace ModelsArticulo;
 
+[JsonPolymorphic (TypeDiscriminatorPropertyName = "$tipo")]
+[JsonDerivedType (typeof(Articulo), "articulo")]
 public class Articulo
 {
     public string Nombre{get;set;}
@@ -8,6 +12,11 @@ public class Articulo
     {
         this.Nombre = _nombre;
         this.Precio = _precio;
+    }
+
+    public Articulo()
+    {
+        
     }
 
     public string DescripcionArticulo()
