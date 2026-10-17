@@ -76,7 +76,7 @@ class MenuBiblioteca
         } while (opcion != OpcionSalir);
     }
 
-    void RegistrarLibro()
+    public void RegistrarLibro()
     {
         try
         {
@@ -119,7 +119,7 @@ class MenuBiblioteca
         }
     }
 
-    void RegistrarComic()
+    public void RegistrarComic()
     {
         try
         {
@@ -162,7 +162,7 @@ class MenuBiblioteca
         }
     }
 
-    void RegistrarRevista()
+    public void RegistrarRevista()
     {
         try
         {
@@ -204,7 +204,7 @@ class MenuBiblioteca
         }
     }
 
-    void MostrarPublicaciones()
+    public void MostrarPublicaciones()
     {
         Console.WriteLine("\n====== PUBLICACIONES BIBLIOTECA ======\n");
         foreach (var publicacion in publicaciones)
@@ -213,7 +213,7 @@ class MenuBiblioteca
         }
     }
 
-    void SolicitarPublicacionesAnterioresAANio()
+    public void SolicitarPublicacionesAnterioresAANio()
     {
         int anio;
         DateTime fechaActual = DateTime.Now;
@@ -248,7 +248,7 @@ class MenuBiblioteca
         }
     }
 
-    void GuardarFichero()
+    private void GuardarFichero()
     {
         string rutaFichero = "Publicaciones.txt";
 

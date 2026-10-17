@@ -77,7 +77,7 @@ class MenuArticulo
         } while (opcion != OpcionSalir);
     }
 
-    void AñadirArticulo()
+    public void AñadirArticulo()
     {
         try
         {
@@ -106,7 +106,7 @@ class MenuArticulo
         }
     }
 
-    void ListarArticulos()
+    public void ListarArticulos()
     {
         Console.WriteLine("\n====== ARTÍCULOS ======\n");
         foreach (var articulo in articulos)
@@ -115,7 +115,7 @@ class MenuArticulo
         }
     }
 
-    void ArticuloMasBarato()
+    public void ArticuloMasBarato()
     {
         try
         {
@@ -145,7 +145,7 @@ class MenuArticulo
         }
     }
 
-    void PrecioMedioArticulos()
+    public void PrecioMedioArticulos()
     {
         try
         {
@@ -173,7 +173,7 @@ class MenuArticulo
 
     }
 
-    void ArticulosPorPrecioMaximo()
+    public void ArticulosPorPrecioMaximo()
     {
         try
         {

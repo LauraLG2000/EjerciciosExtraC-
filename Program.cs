@@ -5,6 +5,7 @@ var menuParking = new MenuParking();
 var menuArticulo = new MenuArticulo();
 var menuCajero = new MenuCajero();
 var menuGimnasio = new MenuGimnasio();
+var menuAdivinarNumero = new MenuAdivinarNumero();
 
 const int OpcionSalir = 9;
 int opcion;
@@ -60,7 +61,7 @@ do
             break;
 
         case 7:
-            AdivinarNumero();
+            menuAdivinarNumero.AdivinarNumero();
             break;
 
         case 8:
@@ -72,42 +73,3 @@ do
             break;
     }
 } while (opcion != OpcionSalir);
-
-void AdivinarNumero()
-{
-    int numeroAleatorio = GenerarNumeroAleatorio();
-    int numero;
-    int contador = 0;
-
-    Console.WriteLine("\n====== ADIVINA EL NÚMERO ======");
-
-    do
-    {
-        Console.WriteLine("Introduce un número (1-100):");
-        if(!int.TryParse(Console.ReadLine(), out numero))
-        {
-            Console.WriteLine("Error: Introduce un número válido (1-100)");
-            continue;
-        }
-
-        if(numero < numeroAleatorio)
-        {
-            Console.WriteLine("El número a adivinar es más grande.");
-        }
-
-        if(numero > numeroAleatorio)
-        {
-            Console.WriteLine("El número a adivinar es más pequeño.");
-        }
-
-        contador++;
-    }while(numero != numeroAleatorio);
-
-    Console.WriteLine($"Correcto. El número era {numeroAleatorio}. Has necesitado {contador} intentos.");
-}
-
-int GenerarNumeroAleatorio()
-{
-    Random random = new Random();
-    return random.Next(1, 101);
-}

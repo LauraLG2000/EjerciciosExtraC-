@@ -79,7 +79,7 @@ class MenuParking
         } while (opcion != OpcionSalir);
     }
 
-    void RegistrarCoche()
+    public void RegistrarCoche()
     {
         try
         {
@@ -123,7 +123,7 @@ class MenuParking
         }
     }
 
-    void RegistrarMoto()
+    public void RegistrarMoto()
     {
         try
         {
@@ -160,7 +160,7 @@ class MenuParking
         }
     }
 
-    void RegistrarFurgoneta()
+    public void RegistrarFurgoneta()
     {
         try
         {
@@ -203,7 +203,7 @@ class MenuParking
         }
     }
 
-    void ListarVehiculos()
+    public void ListarVehiculos()
     {
         Console.WriteLine("===  Vehículos del Parking   ===");
         foreach (var vehiculo in vehiculos)
@@ -212,7 +212,7 @@ class MenuParking
         }
     }
 
-    void BuscarPorMatricula()
+    public void BuscarPorMatricula()
     {
 
         Console.Write("Introduce la matrícula: ");
@@ -237,7 +237,7 @@ class MenuParking
         }
     }
 
-    void MostrarSoloCoches()
+    public void MostrarSoloCoches()
     {
         int contadorCoches = 0;
 
@@ -258,7 +258,7 @@ class MenuParking
         }
     }
 
-    void GuardarFicheroJSON()
+    private void GuardarFicheroJSON()
     {
         string rutaFichero = "vehiculosRegistrados.json";
         string json = JsonSerializer.Serialize(vehiculos);
@@ -266,7 +266,7 @@ class MenuParking
         FicheroUtils.EscrituraFicheroJSON(rutaFichero, json);
     }
 
-    List<Vehiculo> CargarFicheroJson()
+    private List<Vehiculo> CargarFicheroJson()
     {
         string rutaFichero = "vehiculosRegistrados.json";
         List<Vehiculo> vehiculosJson = new List<Vehiculo>();

@@ -47,12 +47,12 @@ class MenuCajero
         } while (opcion != OpcionSalir);
     }
 
-    void ConsultarSaldo()
+    public void ConsultarSaldo()
     {
         Console.WriteLine($"Saldo actual: {saldo} euros");
     }
 
-    void IngresarDinero()
+    public void IngresarDinero()
     {
         try
         {
@@ -73,7 +73,7 @@ class MenuCajero
         }
     }
 
-    void RetirarDinero()
+    public void RetirarDinero()
     {
         try
         {

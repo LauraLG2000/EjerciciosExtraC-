@@ -71,7 +71,7 @@ class MenuGimnasio
         } while (opcion != OpcionSalir);
     }
 
-    void VerActividades()
+    public void VerActividades()
     {
         Console.WriteLine("\n====== ACTIVIDADES DEL GIMNASIO ======\n");
         foreach (var actividad in actividades)
@@ -80,7 +80,7 @@ class MenuGimnasio
         }
     }
 
-    void BuscarActividad()
+    public void BuscarActividad()
     {
         try
         {
@@ -113,7 +113,7 @@ class MenuGimnasio
         }
     }
 
-    void BuscarActividadesPorDuracionMaxima()
+    public void BuscarActividadesPorDuracionMaxima()
     {
         try
         {
@@ -146,7 +146,7 @@ class MenuGimnasio
         }
     }
 
-    void BuscarActividadPorTipo()
+    public void BuscarActividadPorTipo()
     {
         try
         {
@@ -181,7 +181,7 @@ class MenuGimnasio
         }
     }
 
-    void GuardarFicheroJSON()
+    private void GuardarFicheroJSON()
     {
         string rutaFichero = "clasesGimnasio.json";
         string json = JsonSerializer.Serialize(actividades);

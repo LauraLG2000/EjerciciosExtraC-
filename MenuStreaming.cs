@@ -80,7 +80,7 @@ class MenuStreaming
         } while (opcion != OpcionFinal);
     }
 
-    void RegistrarPelicula()
+    public void RegistrarPelicula()
     {
         try
         {
@@ -120,7 +120,7 @@ class MenuStreaming
         }
     }
 
-    void RegistrarSerie()
+    public void RegistrarSerie()
     {
         try
         {
@@ -159,7 +159,7 @@ class MenuStreaming
         }
     }
 
-    void RegistrarDocumental()
+    public void RegistrarDocumental()
     {
         try
         {
@@ -196,7 +196,7 @@ class MenuStreaming
         }
     }
 
-    void BuscarTituloDeStreaming()
+    public void BuscarTituloDeStreaming()
     {
         Console.WriteLine("Introduce el título a buscar: ");
         string tituloBuscar = Console.ReadLine().ToLower().Trim();
@@ -217,7 +217,7 @@ class MenuStreaming
         }
     }
 
-    void FiltrarPeliculas()
+    public void FiltrarPeliculas()
     {
         Console.WriteLine("\n====== PELÍCULAS ======\n");
         foreach (var contenido in listaStreaming)
@@ -229,7 +229,7 @@ class MenuStreaming
         }
     }
 
-    void ListarContenido()
+    public void ListarContenido()
     {
         Console.WriteLine("\n====== CONTENIDO STREAMING ======\n");
         foreach (var contenido in listaStreaming)
@@ -238,7 +238,7 @@ class MenuStreaming
         }
     }
 
-    void GuardarFicheroJson()
+    private void GuardarFicheroJson()
     {
         string rutaFichero = "ContenidoStreaming.json";
         string json = JsonSerializer.Serialize(listaStreaming);
@@ -246,7 +246,7 @@ class MenuStreaming
         FicheroUtils.EscrituraFicheroJSON(rutaFichero, json);
     }
 
-    List<Contenido> CargarFicheroJson()
+    private List<Contenido> CargarFicheroJson()
     {
         string rutaFichero = "ContenidoStreaming.json";
         List<Contenido> contenidoJson = new List<Contenido>();
