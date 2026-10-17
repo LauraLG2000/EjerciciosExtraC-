@@ -6,6 +6,7 @@ class MenuVideojuegos
 {
     private List<Personaje> personajes;
     private const int OpcionSalida = 6;
+    string mensajeInput;
 
     public MenuVideojuegos()
     {
@@ -32,12 +33,12 @@ class MenuVideojuegos
             Console.WriteLine("3. Registrar Arquero");
             Console.WriteLine("4. Unidades de la campaña");
             Console.WriteLine("5. Guardar personajes de la partida en Json");
-            Console.WriteLine("6. Volver atrás");
-            Console.WriteLine("Elige una opción (1-6)");
+            Console.WriteLine($"{OpcionSalida}. Volver atrás");
+            Console.WriteLine($"Elige una opción (1-{OpcionSalida})");
 
             if (!int.TryParse(Console.ReadLine(), out opcion) || opcion < 1 || opcion > OpcionSalida)
             {
-                Console.WriteLine("Error: Introduce una opción válida (1-5)");
+                Console.WriteLine($"Error: Introduce una opción válida (1-{OpcionSalida})");
                 continue;
             }
 
@@ -74,13 +75,13 @@ class MenuVideojuegos
     {
         try
         {
-            string mensajeInput = "Nombre del guerrero: ";
+            mensajeInput = "Nombre del guerrero ";
             string nombre = InputUtils.InputString(mensajeInput);
 
-            mensajeInput = "Vida del guerrero: ";
+            mensajeInput = "Vida del guerrero ";
             int vida = InputUtils.InputIntMayorQueUno(mensajeInput);
 
-            mensajeInput = "Fuerza del guerrero: ";
+            mensajeInput = "Fuerza del guerrero ";
             int fuerza = InputUtils.InputIntMayorQueUno(mensajeInput);
 
             Guerrero guerrero = new Guerrero(nombre, vida, fuerza);
@@ -100,13 +101,13 @@ class MenuVideojuegos
     {
         try
         {
-            string mensajeInput = "Nombre del mago: ";
+            mensajeInput = "Nombre del mago ";
             string nombre = InputUtils.InputString(mensajeInput);
 
-            mensajeInput = "Vida del mago: ";
+            mensajeInput = "Vida del mago ";
             int vida = InputUtils.InputIntMayorQueUno(mensajeInput);
 
-            mensajeInput = "Mana del mago: ";
+            mensajeInput = "Mana del mago ";
             int mana = InputUtils.InputIntMayorQueUno(mensajeInput);
 
             Mago mago = new Mago(nombre, vida, mana);
@@ -126,13 +127,13 @@ class MenuVideojuegos
     {
         try
         {
-            string mensajeInput = "Nombre del mago: ";
+            mensajeInput = "Nombre del mago ";
             string nombre = InputUtils.InputString(mensajeInput);
 
-            mensajeInput = "Vida del mago: ";
+            mensajeInput = "Vida del mago ";
             int vida = InputUtils.InputIntMayorQueUno(mensajeInput);
 
-            mensajeInput = "Mana del mago: ";
+            mensajeInput = "Mana del mago ";
             int numeroFlechas = InputUtils.InputIntMayorQueUno(mensajeInput);
 
             Arquero arquero = new Arquero(nombre, vida, numeroFlechas);

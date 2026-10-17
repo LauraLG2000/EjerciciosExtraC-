@@ -9,7 +9,7 @@ public class InputUtils
 
         if (entrada is null || entrada == "")
         {
-            throw new NullReferenceException("Error: El campo no puede estar vacío");
+            throw new NullReferenceException($"Error: {mensaje} no puede estar vacío");
         }
 
         return entrada;

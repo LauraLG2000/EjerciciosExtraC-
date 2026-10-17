@@ -5,7 +5,9 @@ using ModelsUtils;
 class MenuStreaming
 {
     private List<Contenido> listaStreaming;
-    private const int OpcionFinal = 8;
+    private const int OpcionSalir = 8;
+
+    string mensajeInput;
 
     public MenuStreaming()
     {
@@ -33,12 +35,12 @@ class MenuStreaming
             Console.WriteLine("5. Buscar título");
             Console.WriteLine("6. Mostrar solo las películas");
             Console.WriteLine("7. Guardar lista de contenido en Json");
-            Console.WriteLine("8. Volver al menú principal");
-            Console.Write("Introduce el número de la opción (1-8): ");
+            Console.WriteLine($"{OpcionSalir}. Volver al menú principal");
+            Console.Write($"Introduce el número de la opción (1-{OpcionSalir}): ");
 
-            if (!int.TryParse(Console.ReadLine(), out opcion) || opcion < 1 || opcion > OpcionFinal)
+            if (!int.TryParse(Console.ReadLine(), out opcion) || opcion < 1 || opcion > OpcionSalir)
             {
-                Console.WriteLine("Error: Dato no válido, debe ser un valor de la lista (1-8)");
+                Console.WriteLine($"Error: Dato no válido, debe ser un valor de la lista (1-{OpcionSalir})");
                 continue;
             }
 
@@ -72,42 +74,28 @@ class MenuStreaming
                     GuardarFicheroJson();
                     break;
 
-                case OpcionFinal:
+                case OpcionSalir:
                     Console.WriteLine("Volviendo al menú principal...");
                     break;
             }
 
-        } while (opcion != OpcionFinal);
+        } while (opcion != OpcionSalir);
     }
 
     public void RegistrarPelicula()
     {
         try
         {
-            Console.WriteLine("Título: ");
-            string titulo = Console.ReadLine();
-            if (titulo is null || titulo == "")
-            {
-                throw new NullReferenceException("Error: Dato no válido. No puede estar vacío el campo título.");
-            }
+            mensajeInput = "Título ";
+            string titulo = InputUtils.InputString(mensajeInput);
 
-            int duracion;
-            Console.WriteLine("Duración (en minutos): ");
-            if (!int.TryParse(Console.ReadLine(), out duracion) || duracion < 1)
-            {
-                throw new ArgumentOutOfRangeException("Error: Dato no válido. No puede ser nulo o negativo");
-            }
+            mensajeInput = "Duración (en minutos) ";
+            int duracion = InputUtils.InputIntMayorQueUno(mensajeInput);
 
-            string director;
-            Console.WriteLine("Director(es): ");
-            director = Console.ReadLine();
-            if (director is null || director == "")
-            {
-                throw new NullReferenceException("Error: Dato no válido. No puede estar vacio el campo director");
-            }
+            mensajeInput = "Director(es) ";
+            string director = InputUtils.InputString(mensajeInput);
 
             Pelicula pelicula = new Pelicula(titulo, duracion, director);
-
             listaStreaming.Add(pelicula);
         }
         catch (NullReferenceException nre)
@@ -124,29 +112,16 @@ class MenuStreaming
     {
         try
         {
-            Console.WriteLine("Título: ");
-            string titulo = Console.ReadLine();
-            if (titulo is null || titulo == "")
-            {
-                throw new NullReferenceException("Error: Dato no válido. No puede estar vacío el campo título.");
-            }
+            mensajeInput = "Título ";
+            string titulo = InputUtils.InputString(mensajeInput);
 
-            int duracion;
-            Console.WriteLine("Duración (en minutos): ");
-            if (!int.TryParse(Console.ReadLine(), out duracion) || duracion < 1)
-            {
-                throw new ArgumentOutOfRangeException("Error: Dato no válido. No puede ser nulo o negativo");
-            }
+            mensajeInput = "Duración (en minutos) ";
+            int duracion = InputUtils.InputIntMayorQueUno(mensajeInput);
 
-            int numeroTemporadas;
-            Console.WriteLine("Cantidad temporadas: ");
-            if (!int.TryParse(Console.ReadLine(), out numeroTemporadas) || numeroTemporadas < 1)
-            {
-                throw new ArgumentOutOfRangeException("Error: Dato no válido. No puede ser nulo o negativo");
-            }
+            mensajeInput = "Duración (en minutos) ";
+            int numeroTemporadas = InputUtils.InputIntMayorQueUno(mensajeInput);
 
             Serie serie = new Serie(titulo, duracion, numeroTemporadas);
-
             listaStreaming.Add(serie);
         }
         catch (NullReferenceException nre)
@@ -163,27 +138,16 @@ class MenuStreaming
     {
         try
         {
-            Console.WriteLine("Título: ");
-            string titulo = Console.ReadLine();
+            mensajeInput = "Título ";
+            string titulo = InputUtils.InputString(mensajeInput);
 
-            int duracion;
-            Console.WriteLine("Duración (en minutos): ");
-            if (!int.TryParse(Console.ReadLine(), out duracion) || duracion < 1)
-            {
-                throw new ArgumentOutOfRangeException("Error: Dato no válido. No puede ser nulo o negativo");
-            }
+            mensajeInput = "Duración (en minutos) ";
+            int duracion = InputUtils.InputIntMayorQueUno(mensajeInput);
 
-            string tematica;
-            Console.WriteLine("Temática: ");
-
-            tematica = Console.ReadLine();
-            if (titulo is null || titulo == "" || tematica is null || tematica == "")
-            {
-                throw new NullReferenceException("Error: Dato no válido. Título o temática están vacíos.");
-            }
+            mensajeInput = "Temática ";
+            string tematica = InputUtils.InputString(mensajeInput);
 
             Documental documental = new Documental(titulo, duracion, tematica);
-
             listaStreaming.Add(documental);
         }
         catch (NullReferenceException nre)
@@ -263,7 +227,7 @@ class MenuStreaming
 
             return contenidoJson;
         }
-        catch(FileNotFoundException fnfe)
+        catch (FileNotFoundException fnfe)
         {
             Console.WriteLine(fnfe.ToString());
             return contenidoJson;
