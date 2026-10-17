@@ -32,12 +32,26 @@ public class InputUtils
     {
         bool entrada = false;
 
-        Console.WriteLine("¿Es una scooter? (si/no)");
+        Console.Write("¿Es una scooter? (si/no)");
         string respuesta = Console.ReadLine().ToLower().Trim();
 
         if (respuesta.Equals("si") || respuesta.Equals("sí"))
         {
             entrada = true;
+        }
+
+        return entrada;
+    }
+
+    public static decimal InputDecimalMayorQueCero(string mensaje)
+    {
+        decimal entrada;
+
+        Console.Write(mensaje);
+
+        if (!decimal.TryParse(Console.ReadLine(), out entrada) || entrada <= 0)
+        {
+            throw new ArgumentOutOfRangeException("Error: La cantidad a ingresar no puede ser 0 o negativa");
         }
 
         return entrada;
