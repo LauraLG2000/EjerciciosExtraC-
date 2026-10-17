@@ -162,7 +162,7 @@ class MenuStreaming
 
     public void BuscarTituloDeStreaming()
     {
-        Console.WriteLine("Introduce el título a buscar: ");
+        Console.Write("Introduce el título a buscar: ");
         string tituloBuscar = Console.ReadLine().ToLower().Trim();
         bool tituloEncontrado = false;
 
@@ -183,13 +183,20 @@ class MenuStreaming
 
     public void FiltrarPeliculas()
     {
-        Console.WriteLine("\n====== PELÍCULAS ======\n");
+        List<Contenido> filtradoPeliculas = new List<Contenido>();
+
         foreach (var contenido in listaStreaming)
         {
-            if (contenido is Pelicula)
+            if(contenido is Pelicula)
             {
-                Console.WriteLine(contenido.ObtenerDescripcion());
+                filtradoPeliculas.Add(contenido);
             }
+        }
+
+        Console.WriteLine("\n====== PELÍCULAS ======\n");
+        foreach (var pelicula in filtradoPeliculas)
+        {
+            Console.WriteLine(pelicula.ObtenerDescripcion());
         }
     }
 
