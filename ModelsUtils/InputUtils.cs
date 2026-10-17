@@ -28,6 +28,19 @@ public class InputUtils
         return entrada;
     }
 
+    public static int InputIntMayorQueCero(string mensaje)
+    {
+        int entrada;
+        Console.Write(mensaje);
+
+        if (!int.TryParse(Console.ReadLine(), out entrada) || entrada < 0)
+        {
+            throw new ArgumentOutOfRangeException("Error: Tipo de dato no válido.");
+        }
+
+        return entrada;
+    }
+
     public static bool InputBoolOpcionSiNo(string mensaje)
     {
         bool entrada = false;
@@ -52,6 +65,22 @@ public class InputUtils
         if (!decimal.TryParse(Console.ReadLine(), out entrada) || entrada <= 0)
         {
             throw new ArgumentOutOfRangeException("Error: La cantidad a ingresar no puede ser 0 o negativa");
+        }
+
+        return entrada;
+    }
+
+    public static int ComparacionAñoConAñoFechaActual(string mensaje)
+    {
+        int entrada;
+        int añoActual = DateTime.Now.Year;
+
+        Console.Write(mensaje);
+        
+        Console.WriteLine("Año de publicación: ");
+        if (!int.TryParse(Console.ReadLine(), out entrada) || entrada > añoActual)
+        {
+            throw new ArgumentOutOfRangeException("Error: No se admiten años futuros.");
         }
 
         return entrada;

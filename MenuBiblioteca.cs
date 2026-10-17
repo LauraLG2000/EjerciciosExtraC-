@@ -6,6 +6,9 @@ class MenuBiblioteca
 {
     private List<Publicacion> publicaciones;
     private const int OpcionSalir = 7;
+    private const int PrimeraOpcion = 1;
+    string mensajeInput;
+    DateTime fechaActual = DateTime.Now;
 
     public MenuBiblioteca()
     {
@@ -18,7 +21,7 @@ class MenuBiblioteca
         publicaciones.Add(new Comic("The Walking Dead", 2003, "Charlie Adlard Tony Moore"));
         publicaciones.Add(new Comic("The Walking Dead", 2004, "Charlie Adlard Tony Moore"));
 
-       publicaciones = CargarFicheroJSON();
+        //publicaciones = CargarFicheroJSON();
     }
 
     public void MostrarMenu()
@@ -28,23 +31,23 @@ class MenuBiblioteca
         do
         {
             Console.WriteLine("\n====== BIBLIOTECA ======\n");
-            Console.WriteLine("1. Añadir Libro");
+            Console.WriteLine($"{PrimeraOpcion}. Añadir Libro");
             Console.WriteLine("2. Añadir Comic");
             Console.WriteLine("3. Añadir Revista");
             Console.WriteLine("4. Listar publicaciones");
             Console.WriteLine("5. Mostrar publicaciones posteriores a un año");
             Console.WriteLine("6. Guardar publicaciones archivo Json");
-            Console.WriteLine("7. Volver al menú principal");
-            Console.Write("Introduce el número de la opción (1-7): ");
+            Console.WriteLine($"{OpcionSalir}. Volver al menú principal");
+            Console.Write($"Introduce el número de la opción ({PrimeraOpcion}-{OpcionSalir}): ");
 
-            if (!int.TryParse(Console.ReadLine(), out opcion) || opcion < 1 || opcion > OpcionSalir)
+            if (!int.TryParse(Console.ReadLine(), out opcion) || opcion < PrimeraOpcion || opcion > OpcionSalir)
             {
-                Console.WriteLine("Error: Opción no válida. Introduce una opcion del menú (1-7)");
+                Console.WriteLine($"Error: Opción no válida. Introduce una opcion del menú ({PrimeraOpcion}-{OpcionSalir})");
                 continue;
             }
             switch (opcion)
             {
-                case 1:
+                case PrimeraOpcion:
                     RegistrarLibro();
                     break;
 
@@ -80,33 +83,16 @@ class MenuBiblioteca
     {
         try
         {
-            Console.WriteLine("Título: ");
-            string titulo = Console.ReadLine();
-            if (titulo is null || titulo == "")
-            {
-                throw new NullReferenceException("Error: Dato no válido. No puede estar vacío el campo título.");
-            }
+            mensajeInput = "Título ";
+            string titulo = InputUtils.InputString(mensajeInput);
 
-            int año;
-            DateTime dateTime = DateTime.Now;
-            int añoActual = dateTime.Year;
+            mensajeInput = "Año de publicación ";
+            int año = InputUtils.ComparacionAñoConAñoFechaActual(mensajeInput);
 
-            Console.WriteLine("Año de publicación: ");
-            if (!int.TryParse(Console.ReadLine(), out año) || año > añoActual)
-            {
-                throw new ArgumentOutOfRangeException("Error: Dato no válido. El año no puede ser posterior al actual.");
-            }
-
-            string autor;
-            Console.WriteLine("Director(es): ");
-            autor = Console.ReadLine();
-            if (autor is null || autor == "")
-            {
-                throw new NullReferenceException("Error: Dato no válido. No puede estar vacio el campo autor");
-            }
+            mensajeInput = "Título ";
+            string autor = InputUtils.InputString(mensajeInput);
 
             Libro libro = new Libro(titulo, año, autor);
-
             publicaciones.Add(libro);
         }
         catch (NullReferenceException nre)
@@ -123,33 +109,16 @@ class MenuBiblioteca
     {
         try
         {
-            Console.WriteLine("Título: ");
-            string titulo = Console.ReadLine();
-            if (titulo is null || titulo == "")
-            {
-                throw new ArgumentOutOfRangeException("Error: Dato no válido. El año no puede ser posterior al actual.");
-            }
+            mensajeInput = "Título ";
+            string titulo = InputUtils.InputString(mensajeInput);
 
-            int año;
-            DateTime dateTime = DateTime.Now;
-            int añoActual = dateTime.Year;
+            mensajeInput = "Año de publicación ";
+            int año = InputUtils.ComparacionAñoConAñoFechaActual(mensajeInput);
 
-            Console.WriteLine("Año de publicación: ");
-            if (!int.TryParse(Console.ReadLine(), out año) || año > añoActual)
-            {
-                throw new ArgumentOutOfRangeException("Error: Dato no válido. El año no puede ser posterior al actual.");
-            }
-
-            string dibujante;
-            Console.WriteLine("Director(es): ");
-            dibujante = Console.ReadLine();
-            if (dibujante is null || dibujante == "")
-            {
-                throw new NullReferenceException("Error: Dato no válido. No puede estar vacio el campo dibujante");
-            }
+            mensajeInput = "Dibujante(s) ";
+            string dibujante = InputUtils.InputString(mensajeInput);
 
             Comic comic = new Comic(titulo, año, dibujante);
-
             publicaciones.Add(comic);
         }
         catch (NullReferenceException nre)
@@ -166,32 +135,17 @@ class MenuBiblioteca
     {
         try
         {
-            Console.WriteLine("Título: ");
-            string titulo = Console.ReadLine();
-            if (titulo is null || titulo == "")
-            {
-                throw new NullReferenceException("Error: Dato no válido. No puede estar vacío el campo título.");
-            }
+            mensajeInput = "Título ";
+            string titulo = InputUtils.InputString(mensajeInput);
 
-            int año;
-            DateTime dateTime = DateTime.Now;
-            int añoActual = dateTime.Year;
+            mensajeInput = "Año de publicación ";
+            int año = InputUtils.ComparacionAñoConAñoFechaActual(mensajeInput);
 
-            Console.WriteLine("Año de publicación: ");
-            if (!int.TryParse(Console.ReadLine(), out año) || año > añoActual)
-            {
-                throw new ArgumentOutOfRangeException("Error: Dato no válido. El año no puede ser posterior al actual.");
-            }
+            mensajeInput = "Número de la revista ";
 
-            int numeroRevista;
-            Console.WriteLine("Número de la revista: ");
-            if (!int.TryParse(Console.ReadLine(), out numeroRevista) || numeroRevista < 0)
-            {
-                throw new ArgumentOutOfRangeException("Error: Dato no válido. El número de la revista no puede ser negativo");
-            }
+            int numeroRevista = InputUtils.InputIntMayorQueCero(mensajeInput);
 
             Revista revista = new Revista(titulo, año, numeroRevista);
-
             publicaciones.Add(revista);
         }
         catch (NullReferenceException nre)
@@ -215,36 +169,28 @@ class MenuBiblioteca
 
     public void SolicitarPublicacionesAnterioresAANio()
     {
-        int anio;
-        DateTime fechaActual = DateTime.Now;
-        int anioActual = fechaActual.Year;
-        int contador = 0;
+        List<Publicacion> publicacionesFiltradas = new List<Publicacion>();
+        int añoActual = fechaActual.Year;
 
-        Console.WriteLine("Mostrar publicaciones posteriores al año (Introduce un número): ");
+        mensajeInput = "Mostrar publicaciones posteriores al año (Introduce un número) ";
+        int añoTeclado = InputUtils.ComparacionAñoConAñoFechaActual(mensajeInput);
 
-        if (int.TryParse(Console.ReadLine(), out anio))
+        foreach (var publicacion in publicaciones)
         {
+            if (añoTeclado <= añoActual)
+            {
+                publicaciones.Add(publicacion);
+            }
+        }
 
-            if (anio <= anioActual)
-            {
-                Console.WriteLine($"Lista Publicaciones anteriores a {anio}");
-                foreach (var publicacion in publicaciones)
-                {
-                    if (publicacion.AnioPublicacion > anio)
-                    {
-                        Console.Write(publicacion.ObtenerDescripcion());
-                        contador++;
-                    }
-                }
-                if (contador == 0)
-                {
-                    Console.WriteLine($"No hay publicaciones posteriores al año {anio}");
-                }
-            }
-            else
-            {
-                Console.WriteLine("No se admiten años futuros.");
-            }
+        foreach (var publicacion in publicacionesFiltradas)
+        {
+            Console.Write(publicacion.ObtenerDescripcion());
+        }
+
+        if (publicacionesFiltradas.Count == 0)
+        {
+            Console.WriteLine($"No hay publicaciones posteriores al año {añoTeclado}");
         }
     }
 
@@ -285,14 +231,11 @@ class MenuBiblioteca
             publicacionesJson = JsonSerializer.Deserialize<List<Publicacion>>(json);
 
             return publicacionesJson;
-        }catch(FileNotFoundException fnfe)
+        }
+        catch (FileNotFoundException fnfe)
         {
             Console.WriteLine(fnfe.ToString());
             return publicacionesJson;
         }
-
-
-
-
     }
 }
