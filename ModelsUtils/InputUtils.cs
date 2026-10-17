@@ -27,4 +27,19 @@ public class InputUtils
 
         return entrada;
     }
+
+    public static bool InputBoolOpcionSiNo(string mensaje)
+    {
+        bool entrada = false;
+
+        Console.WriteLine("¿Es una scooter? (si/no)");
+        string respuesta = Console.ReadLine().ToLower().Trim();
+
+        if (respuesta.Equals("si") || respuesta.Equals("sí"))
+        {
+            entrada = true;
+        }
+
+        return entrada;
+    }
 }
