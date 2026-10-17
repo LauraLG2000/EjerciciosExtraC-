@@ -6,6 +6,8 @@ class MenuGimnasio
 {
     private List<Actividad> actividades;
     private const int OpcionSalir = 6;
+    private const int PrimeraOpcion = 1;
+    string mensajeInput;
 
     public MenuGimnasio()
     {
@@ -28,15 +30,15 @@ class MenuGimnasio
         do
         {
             Console.WriteLine("\n====== GIMNASIO ======\n");
-            Console.WriteLine("1. Ver actividades");
+            Console.WriteLine($"{PrimeraOpcion}. Ver actividades");
             Console.WriteLine("2. Buscar actividad");
             Console.WriteLine("3. Ver actividades por duración máxima");
             Console.WriteLine("4. Ver actividades por tipo");
             Console.WriteLine("5. Guardar actividades en Json");
-            Console.WriteLine("6. Salir");
-            Console.WriteLine("Introduce el número de una opción (1-6)");
+            Console.WriteLine($"{OpcionSalir}. Salir");
+            Console.WriteLine($"Introduce el número de una opción ({PrimeraOpcion}-{OpcionSalir})");
 
-            if (!int.TryParse(Console.ReadLine(), out opcion) || opcion < 1 || opcion > OpcionSalir)
+            if (!int.TryParse(Console.ReadLine(), out opcion) || opcion < PrimeraOpcion || opcion > OpcionSalir)
             {
                 Console.WriteLine("Error: Opción no listada. Seleccione una válida (1-6)");
                 continue;
@@ -44,7 +46,7 @@ class MenuGimnasio
 
             switch (opcion)
             {
-                case 1:
+                case PrimeraOpcion:
                     VerActividades();
                     break;
 
@@ -84,14 +86,10 @@ class MenuGimnasio
     {
         try
         {
-            Console.WriteLine("Introduce el nombre de la actividad: ");
+            mensajeInput = "Introduce el nombre de la actividad ";
             string buscarActividad = Console.ReadLine();
-            bool actividadEncontrada = false;
 
-            if (buscarActividad is null || buscarActividad == "")
-            {
-                throw new NullReferenceException("Error: El nombre de la actividad no puede estar vacío");
-            }
+            bool actividadEncontrada = false;
 
             foreach (var actividad in actividades)
             {
@@ -107,7 +105,8 @@ class MenuGimnasio
             {
                 Console.WriteLine($"No se ha encontrado ninguna actividad con el nombre {buscarActividad}");
             }
-        }catch(NullReferenceException nre)
+        }
+        catch (NullReferenceException nre)
         {
             Console.WriteLine(nre.ToString());
         }
@@ -117,30 +116,31 @@ class MenuGimnasio
     {
         try
         {
-            int duracion;
-            int contador = 0;
-            Console.WriteLine("Introduce la duración en minutos: ");
+            List<Actividad> actividadesPorDuracion = new List<Actividad>();
 
-            if(!int.TryParse(Console.ReadLine(), out duracion) || duracion <= 0)
-            {
-                throw new ArgumentOutOfRangeException("Error: La duración no puede ser 0 o negativa");
-            }
+            mensajeInput = "Introduce la duración en minutos ";
+            int duracion = InputUtils.InputIntMayorQueUno(mensajeInput);
 
-            foreach(var actividad in actividades)
+            foreach (var actividad in actividades)
             {
-                if(actividad.Duracion <= duracion)
+                if (actividad.Duracion <= duracion)
                 {
-                    Console.WriteLine(actividad.InformacionActividad());
-                    contador++;
+                    actividadesPorDuracion.Add(actividad);
                 }
             }
 
-            if(contador == 0)
+            foreach (var actividad in actividadesPorDuracion)
             {
-                Console.WriteLine("No hay actividades con esa duración");
+                Console.WriteLine(actividad.InformacionActividad());
             }
 
-        }catch(ArgumentOutOfRangeException aoore)
+            if (actividadesPorDuracion.Count == 0)
+            {
+                Console.WriteLine($"No hay actividades con una duración máxima de {duracion}");
+            }
+
+        }
+        catch (ArgumentOutOfRangeException aoore)
         {
             Console.WriteLine(aoore.ToString());
         }
@@ -150,32 +150,32 @@ class MenuGimnasio
     {
         try
         {
-            int contador = 0;
+            List<Actividad> actividadesPorTipo = new List<Actividad>();
 
-            Console.WriteLine("Introduce el tipo de actividad a buscar (yoga, crosstraining...): ");
-            string tipo = Console.ReadLine().ToLower().Trim();
+            mensajeInput = "Introduce el tipo de actividad a buscar (yoga, crosstraining...) ";
+            string tipo = InputUtils.InputString(mensajeInput);
 
-            if(tipo is null || tipo == "")
-            {
-                throw new NullReferenceException("Error: El tipo no puede estar vacío.");
-            }
-
-            foreach(var actividad in actividades)
+            foreach (var actividad in actividades)
             {
 
-                if (actividad.Tipo.ToString().Equals(tipo))
+                if (actividad.Tipo.ToString().Equals(tipo.ToLower().Trim()))
                 {
-                    Console.WriteLine(actividad.InformacionActividad());
-                    contador++;
+                    actividadesPorTipo.Add(actividad);
                 }
             }
 
-            if(contador == 0)
+            foreach (var actividad in actividadesPorTipo)
             {
-                Console.WriteLine($"No hay actividades registrar de tipo {tipo}");
+                Console.WriteLine(actividad.InformacionActividad());
             }
 
-        }catch(NullReferenceException nre)
+            if (actividades.Count == 0)
+            {
+                Console.WriteLine($"No hay actividades registradas de tipo {tipo}");
+            }
+
+        }
+        catch (NullReferenceException nre)
         {
             Console.WriteLine(nre.ToString());
         }
@@ -205,7 +205,8 @@ class MenuGimnasio
             actividadesJson = JsonSerializer.Deserialize<List<Actividad>>(json);
 
             return actividadesJson;
-        } catch(FileNotFoundException fnfe)
+        }
+        catch (FileNotFoundException fnfe)
         {
             Console.WriteLine(fnfe.ToString());
             return actividadesJson;
