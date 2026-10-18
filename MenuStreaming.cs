@@ -7,7 +7,6 @@ class MenuStreaming
     private List<Contenido> listaStreaming;
     private const int OpcionSalir = 8;
     private const int PrimeraOpcion = 1;
-
     string mensajeInput;
 
     public MenuStreaming()
@@ -163,20 +162,25 @@ class MenuStreaming
 
     public void BuscarTituloDeStreaming()
     {
-        Console.Write("Introduce el título a buscar: ");
-        string tituloBuscar = Console.ReadLine().ToLower().Trim();
-        bool tituloEncontrado = false;
+        mensajeInput = "Introduce el título a buscar ";
+        string tituloBuscar = InputUtils.InputString(mensajeInput).ToLower().Trim();
+
+        bool isTituloEncontrado = false;
+        Contenido contenidoEncontrado;
 
         foreach (var contenido in listaStreaming)
         {
             if (tituloBuscar == contenido.Titulo.ToLower().Trim())
             {
-                Console.WriteLine(contenido.ObtenerDescripcion());
-                tituloEncontrado = true;
+                contenidoEncontrado = contenido;
+                Console.WriteLine(contenidoEncontrado.ObtenerDescripcion());
+                isTituloEncontrado = true;
             }
+
+            if (isTituloEncontrado) break;
         }
 
-        if (!tituloEncontrado)
+        if (!isTituloEncontrado)
         {
             Console.WriteLine("No se ha encontrado ningún elemento con ese título");
         }
@@ -188,16 +192,23 @@ class MenuStreaming
 
         foreach (var contenido in listaStreaming)
         {
-            if(contenido is Pelicula)
+            if (contenido is Pelicula)
             {
                 filtradoPeliculas.Add(contenido);
             }
         }
 
-        Console.WriteLine("\n====== PELÍCULAS ======\n");
-        foreach (var pelicula in filtradoPeliculas)
+        if (filtradoPeliculas.Count == 0)
         {
-            Console.WriteLine(pelicula.ObtenerDescripcion());
+            Console.WriteLine("No hay peliculas en el listado de streaming.");
+        }
+        else
+        {
+            Console.WriteLine("\n====== PELÍCULAS ======\n");
+            foreach (var pelicula in filtradoPeliculas)
+            {
+                Console.WriteLine(pelicula.ObtenerDescripcion());
+            }
         }
     }
 
@@ -222,7 +233,6 @@ class MenuStreaming
     {
         string rutaFichero = "ContenidoStreaming.json";
         List<Contenido> contenidoJson = FicheroUtils.CargarDatosFicheroJson<Contenido>(rutaFichero);
-
         return contenidoJson;
     }
 }

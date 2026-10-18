@@ -185,16 +185,19 @@ class MenuBiblioteca
                 }
             }
 
-            foreach (var publicacion in publicacionesFiltradas)
-            {
-                Console.Write(publicacion.ObtenerDescripcion());
-            }
-
             if (publicacionesFiltradas.Count == 0)
             {
                 Console.WriteLine($"No hay publicaciones posteriores al año {añoTeclado}");
             }
-        }catch(ArgumentOutOfRangeException aoore)
+            else
+            {
+                foreach (var publicacion in publicacionesFiltradas)
+                {
+                    Console.Write(publicacion.ObtenerDescripcion());
+                }
+            }
+        }
+        catch (ArgumentOutOfRangeException aoore)
         {
             Console.WriteLine(aoore.ToString());
         }

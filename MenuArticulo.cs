@@ -84,7 +84,7 @@ class MenuArticulo
         try
         {
             mensajeInput = "Nombre ";
-            string nombre =InputUtils.InputString(mensajeInput);
+            string nombre = InputUtils.InputString(mensajeInput);
 
             mensajeInput = "Precio ";
             decimal precio = InputUtils.InputDecimalMayorQueCero(mensajeInput);
@@ -143,7 +143,6 @@ class MenuArticulo
     {
         try
         {
-
             decimal sumaPrecios = 0;
             int cantidadArticulos = articulos.Count;
 
@@ -189,17 +188,19 @@ class MenuArticulo
                 }
             }
 
-            foreach (var articulo in articulosPrecioMaximo)
-            {
-                if (articulo.Precio <= precioMaximo)
-                {
-                    Console.Write(articulo.DescripcionArticulo());
-                }
-            }
-
             if (articulosPrecioMaximo.Count == 0)
             {
                 Console.WriteLine($"No hay artículos con un precio inferior o igual a {precioMaximo}€");
+            }
+            else
+            {
+                foreach (var articulo in articulosPrecioMaximo)
+                {
+                    if (articulo.Precio <= precioMaximo)
+                    {
+                        Console.Write(articulo.DescripcionArticulo());
+                    }
+                }
             }
         }
         catch (NullReferenceException nre)

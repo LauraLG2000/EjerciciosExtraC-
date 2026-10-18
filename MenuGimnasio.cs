@@ -87,21 +87,24 @@ class MenuGimnasio
         try
         {
             mensajeInput = "Introduce el nombre de la actividad ";
-            string buscarActividad = Console.ReadLine();
+            string buscarActividad = InputUtils.InputString(mensajeInput);
 
-            bool actividadEncontrada = false;
+            bool isActividadEncontrada = false;
+            Actividad actividadEncontrada;
 
             foreach (var actividad in actividades)
             {
                 if (actividad.Nombre.ToLower().Trim().Equals(buscarActividad.ToLower().Trim()))
                 {
-                    Console.WriteLine(actividad.InformacionActividad());
-                    actividadEncontrada = true;
-                    continue;
+                    actividadEncontrada = actividad;
+                    Console.WriteLine(actividadEncontrada);
+                    isActividadEncontrada = true;
                 }
+
+                if(isActividadEncontrada) break;
             }
 
-            if (!actividadEncontrada)
+            if (!isActividadEncontrada)
             {
                 Console.WriteLine($"No se ha encontrado ninguna actividad con el nombre {buscarActividad}");
             }
@@ -116,10 +119,10 @@ class MenuGimnasio
     {
         try
         {
-            List<Actividad> actividadesPorDuracion = new List<Actividad>();
-
             mensajeInput = "Introduce la duración en minutos ";
             int duracion = InputUtils.InputIntMayorQueUno(mensajeInput);
+
+            List<Actividad> actividadesPorDuracion = new List<Actividad>();
 
             foreach (var actividad in actividades)
             {
@@ -129,16 +132,17 @@ class MenuGimnasio
                 }
             }
 
-            foreach (var actividad in actividadesPorDuracion)
-            {
-                Console.WriteLine(actividad.InformacionActividad());
-            }
-
             if (actividadesPorDuracion.Count == 0)
             {
                 Console.WriteLine($"No hay actividades con una duración máxima de {duracion}");
             }
-
+            else
+            {
+                foreach (var actividad in actividadesPorDuracion)
+                {
+                    Console.WriteLine(actividad.InformacionActividad());
+                }
+            }
         }
         catch (ArgumentOutOfRangeException aoore)
         {
@@ -150,30 +154,30 @@ class MenuGimnasio
     {
         try
         {
-            List<Actividad> actividadesPorTipo = new List<Actividad>();
-
             mensajeInput = "Introduce el tipo de actividad a buscar (yoga, crosstraining...) ";
             string tipo = InputUtils.InputString(mensajeInput);
 
+            List<Actividad> actividadesPorTipo = new List<Actividad>();
+
             foreach (var actividad in actividades)
             {
-
                 if (actividad.Tipo.ToString().Equals(tipo.ToLower().Trim()))
                 {
                     actividadesPorTipo.Add(actividad);
                 }
             }
 
-            foreach (var actividad in actividadesPorTipo)
-            {
-                Console.WriteLine(actividad.InformacionActividad());
-            }
-
             if (actividades.Count == 0)
             {
                 Console.WriteLine($"No hay actividades registradas de tipo {tipo}");
             }
-
+            else
+            {
+                foreach (var actividad in actividadesPorTipo)
+                {
+                    Console.WriteLine(actividad.InformacionActividad());
+                }
+            }
         }
         catch (NullReferenceException nre)
         {

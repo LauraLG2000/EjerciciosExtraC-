@@ -178,6 +178,7 @@ class MenuParking
 
         Console.Write("Introduce la matrícula: ");
         string matriculaTeclado = Console.ReadLine().ToUpper().Trim();
+        Vehiculo vehiculoEncontrado;
 
         bool encontrado = false;
 
@@ -185,7 +186,8 @@ class MenuParking
         {
             if (vehiculo.Matricula.Equals(matriculaTeclado))
             {
-                Console.Write(vehiculo.ObtenerDescripcion());
+                vehiculoEncontrado = vehiculo;
+                Console.Write(vehiculoEncontrado.ObtenerDescripcion());
                 encontrado = true;
             }
 
@@ -210,16 +212,18 @@ class MenuParking
             }
         }
 
-        Console.WriteLine("\n======  COCHES DEL PARKING  ======\n");
-
-        foreach (var coche in listaCoches)
-        {
-            Console.Write(coche.ObtenerDescripcion());
-        }
-
         if (listaCoches.Count == 0)
         {
             Console.WriteLine("No hay coches registrados en el parking.");
+        }
+        else
+        {
+            Console.WriteLine("\n======  COCHES DEL PARKING  ======\n");
+
+            foreach (var coche in listaCoches)
+            {
+                Console.Write(coche.ObtenerDescripcion());
+            }
         }
     }
 
