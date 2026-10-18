@@ -8,12 +8,14 @@ var menuGimnasio = new MenuGimnasio();
 var menuAdivinarNumero = new MenuAdivinarNumero();
 
 const int OpcionSalir = 9;
+const int PrimeraOpcion = 1;
+
 int opcion;
 
 do
 {
     Console.WriteLine("\n====== EJERCICIOS EXTRA C# ======\n");
-    Console.WriteLine("1. Videojuegos");
+    Console.WriteLine($"{PrimeraOpcion}. Videojuegos");
     Console.WriteLine("2. Plataforma de Streaming");
     Console.WriteLine("3. Biblioteca");
     Console.WriteLine("4. Parking");
@@ -21,22 +23,18 @@ do
     Console.WriteLine("6. Cajero");
     Console.WriteLine("7. Adivina el número");
     Console.WriteLine("8. Menú Gimnasio");
-    Console.WriteLine("9. Salir");
-    Console.Write("Introduce el número de la opción: ");
+    Console.WriteLine($"{OpcionSalir}. Salir");
+    Console.Write($"Introduce el número de la opción ({PrimeraOpcion}-{OpcionSalir}): ");
 
-    if (!int.TryParse(Console.ReadLine(), out opcion) || opcion < 1 || opcion > OpcionSalir)
+    if (!int.TryParse(Console.ReadLine(), out opcion) || opcion < PrimeraOpcion || opcion > OpcionSalir)
     {
-        Console.WriteLine("Error: Opción no válida. Introduce una opcion del menú (1-6)");
+        Console.WriteLine($"Error: Opción no válida. Introduce una opcion del menú ({PrimeraOpcion}-{OpcionSalir})");
         continue;
     }
 
     switch (opcion)
     {
-        case 0:
-            Console.WriteLine("Programa terminado.");
-            break;
-
-        case 1:
+        case PrimeraOpcion:
             menuVideojegos.MostrarMenu();
             break;
 

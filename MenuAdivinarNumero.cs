@@ -1,8 +1,10 @@
 public class MenuAdivinarNumero
 {
+    private const int NumeroMinimo = 1;
+    private const int NumeroMaximo = 100;
     public void AdivinarNumero()
     {
-        int numeroAleatorio = new Random().Next(1, 101);
+        int numeroAleatorio = new Random().Next(NumeroMinimo, NumeroMaximo+1);
         int numero;
         int contador = 0;
 
@@ -10,10 +12,10 @@ public class MenuAdivinarNumero
 
         do
         {
-            Console.WriteLine("Introduce un número (1-100):");
+            Console.WriteLine($"Introduce un número ({NumeroMinimo}-{NumeroMaximo}):");
             if (!int.TryParse(Console.ReadLine(), out numero))
             {
-                Console.WriteLine("Error: Introduce un número válido (1-100)");
+                Console.WriteLine($"Error: Introduce un número válido ({NumeroMinimo}-{NumeroMaximo})");
                 continue;
             }
 
