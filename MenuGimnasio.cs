@@ -192,24 +192,7 @@ class MenuGimnasio
     private List<Actividad> CargarFicheroJSON()
     {
         string rutaFichero = "clasesGimnasio.json";
-        List<Actividad> actividadesJson = new List<Actividad>();
-
-        try
-        {
-            if (!File.Exists(rutaFichero))
-            {
-                throw new FileNotFoundException("No se ha encontrado la ruta.");
-            }
-
-            string json = FicheroUtils.LecturaFichero(rutaFichero);
-            actividadesJson = JsonSerializer.Deserialize<List<Actividad>>(json);
-
-            return actividadesJson;
-        }
-        catch (FileNotFoundException fnfe)
-        {
-            Console.WriteLine(fnfe.ToString());
-            return actividadesJson;
-        }
+        List<Actividad> actividadesJson = FicheroUtils.CargarDatosFicheroJson<Actividad>(rutaFichero);
+        return actividadesJson;
     }
 }

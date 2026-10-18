@@ -6,6 +6,7 @@ class MenuStreaming
 {
     private List<Contenido> listaStreaming;
     private const int OpcionSalir = 8;
+    private const int PrimeraOpcion = 1;
 
     string mensajeInput;
 
@@ -28,7 +29,7 @@ class MenuStreaming
         do
         {
             Console.WriteLine("\n====== PLATAFORMA DE STREAMING ======");
-            Console.WriteLine("1. Añadir pelicula");
+            Console.WriteLine($"{PrimeraOpcion}. Añadir pelicula");
             Console.WriteLine("2. Añadir serie");
             Console.WriteLine("3. Añadir documental");
             Console.WriteLine("4. Listar contenido streaming");
@@ -36,17 +37,17 @@ class MenuStreaming
             Console.WriteLine("6. Mostrar solo las películas");
             Console.WriteLine("7. Guardar lista de contenido en Json");
             Console.WriteLine($"{OpcionSalir}. Volver al menú principal");
-            Console.Write($"Introduce el número de la opción (1-{OpcionSalir}): ");
+            Console.Write($"Introduce el número de la opción ({PrimeraOpcion}-{OpcionSalir}): ");
 
-            if (!int.TryParse(Console.ReadLine(), out opcion) || opcion < 1 || opcion > OpcionSalir)
+            if (!int.TryParse(Console.ReadLine(), out opcion) || opcion < PrimeraOpcion || opcion > OpcionSalir)
             {
-                Console.WriteLine($"Error: Dato no válido, debe ser un valor de la lista (1-{OpcionSalir})");
+                Console.WriteLine($"Error: Dato no válido, debe ser un valor de la lista ({PrimeraOpcion}-{OpcionSalir})");
                 continue;
             }
 
             switch (opcion)
             {
-                case 1:
+                case PrimeraOpcion:
                     RegistrarPelicula();
                     break;
 
@@ -220,24 +221,8 @@ class MenuStreaming
     private List<Contenido> CargarFicheroJson()
     {
         string rutaFichero = "ContenidoStreaming.json";
-        List<Contenido> contenidoJson = new List<Contenido>();
+        List<Contenido> contenidoJson = FicheroUtils.CargarDatosFicheroJson<Contenido>(rutaFichero);
 
-        try
-        {
-            if (!File.Exists(rutaFichero))
-            {
-                throw new FileNotFoundException("No se ha encontrado la ruta del fichero");
-            }
-
-            string json = FicheroUtils.LecturaFichero(rutaFichero);
-            contenidoJson = JsonSerializer.Deserialize<List<Contenido>>(json);
-
-            return contenidoJson;
-        }
-        catch (FileNotFoundException fnfe)
-        {
-            Console.WriteLine(fnfe.ToString());
-            return contenidoJson;
-        }
+        return contenidoJson;
     }
 }

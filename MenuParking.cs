@@ -234,24 +234,7 @@ class MenuParking
     private List<Vehiculo> CargarFicheroJson()
     {
         string rutaFichero = "vehiculosRegistrados.json";
-        List<Vehiculo> vehiculosJson = new List<Vehiculo>();
-
-        try
-        {
-            if (!File.Exists(rutaFichero))
-            {
-                throw new FileNotFoundException("No se ha encontrado la ruta del fichero");
-            }
-
-            string json = FicheroUtils.LecturaFichero(rutaFichero);
-            vehiculosJson = JsonSerializer.Deserialize<List<Vehiculo>>(json);
-
-            return vehiculosJson;
-        }
-        catch (FileNotFoundException fnfe)
-        {
-            Console.WriteLine(fnfe.ToString());
-            return vehiculosJson;
-        }
+        List<Vehiculo> vehiculosJson = FicheroUtils.CargarDatosFicheroJson<Vehiculo>(rutaFichero);
+        return vehiculosJson;
     }
 }

@@ -169,24 +169,8 @@ class MenuVideojuegos
     private List<Personaje> CargarFicheroJson()
     {
         string rutaFichero = "UnidadesCampaña.json";
-        List<Personaje> personajesJson = new List<Personaje>();
+        List<Personaje> personajesJson = FicheroUtils.CargarDatosFicheroJson<Personaje>(rutaFichero);
 
-        try
-        {
-            if (!File.Exists(rutaFichero))
-            {
-                throw new FileNotFoundException("No se ha encontrado la ruta del fichero");
-            }
-
-            string json = FicheroUtils.LecturaFichero(rutaFichero);
-            personajesJson = JsonSerializer.Deserialize<List<Personaje>>(json);
-
-            return personajesJson;
-        }
-        catch (FileNotFoundException fnfe)
-        {
-            Console.WriteLine(fnfe.ToString());
-            return personajesJson;
-        }
+        return personajesJson;
     }
 }

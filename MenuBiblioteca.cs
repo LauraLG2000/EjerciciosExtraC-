@@ -216,26 +216,8 @@ class MenuBiblioteca
 
     private List<Publicacion> CargarFicheroJSON()
     {
-
-        List<Publicacion> publicacionesJson = new List<Publicacion>();
         string rutaFichero = "publicaciones.json";
-
-        try
-        {
-            if (!File.Exists(rutaFichero))
-            {
-                throw new FileNotFoundException("No se encuentra la ruta");
-            }
-
-            string json = FicheroUtils.LecturaFichero(rutaFichero);
-            publicacionesJson = JsonSerializer.Deserialize<List<Publicacion>>(json);
-
-            return publicacionesJson;
-        }
-        catch (FileNotFoundException fnfe)
-        {
-            Console.WriteLine(fnfe.ToString());
-            return publicacionesJson;
-        }
+        List<Publicacion> publicacionesJson = FicheroUtils.CargarDatosFicheroJson<Publicacion>(rutaFichero);
+        return publicacionesJson;
     }
 }
