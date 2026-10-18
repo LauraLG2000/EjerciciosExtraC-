@@ -64,7 +64,7 @@ class MenuBiblioteca
                     break;
 
                 case 5:
-                    SolicitarPublicacionesAnterioresAANio();
+                    SolicitarPublicacionesPosterioresAAño();
                     break;
 
                 case 6:
@@ -167,30 +167,36 @@ class MenuBiblioteca
         }
     }
 
-    public void SolicitarPublicacionesAnterioresAANio()
+    public void SolicitarPublicacionesPosterioresAAño()
     {
-        List<Publicacion> publicacionesFiltradas = new List<Publicacion>();
-        int añoActual = fechaActual.Year;
-
-        mensajeInput = "Mostrar publicaciones posteriores al año (Introduce un número) ";
-        int añoTeclado = InputUtils.ComparacionAñoConAñoFechaActual(mensajeInput);
-
-        foreach (var publicacion in publicaciones)
+        try
         {
-            if (añoTeclado <= añoActual)
+            List<Publicacion> publicacionesFiltradas = new List<Publicacion>();
+            int añoActual = fechaActual.Year;
+
+            mensajeInput = "Mostrar publicaciones posteriores al año (Introduce un número) ";
+            int añoTeclado = InputUtils.ComparacionAñoConAñoFechaActual(mensajeInput);
+
+            foreach (var publicacion in publicaciones)
             {
-                publicaciones.Add(publicacion);
+                if (añoTeclado <= añoActual)
+                {
+                    publicaciones.Add(publicacion);
+                }
             }
-        }
 
-        foreach (var publicacion in publicacionesFiltradas)
-        {
-            Console.Write(publicacion.ObtenerDescripcion());
-        }
+            foreach (var publicacion in publicacionesFiltradas)
+            {
+                Console.Write(publicacion.ObtenerDescripcion());
+            }
 
-        if (publicacionesFiltradas.Count == 0)
+            if (publicacionesFiltradas.Count == 0)
+            {
+                Console.WriteLine($"No hay publicaciones posteriores al año {añoTeclado}");
+            }
+        }catch(ArgumentOutOfRangeException aoore)
         {
-            Console.WriteLine($"No hay publicaciones posteriores al año {añoTeclado}");
+            Console.WriteLine(aoore.ToString());
         }
     }
 
