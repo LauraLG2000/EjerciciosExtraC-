@@ -6,6 +6,8 @@ class MenuParking
 {
     private List<Vehiculo> vehiculos;
     private const int OpcionSalir = 8;
+    private const int PrimeraOpcion = 1;
+    string mensajeInput;
     public MenuParking()
     {
         vehiculos = new List<Vehiculo>();
@@ -27,24 +29,24 @@ class MenuParking
         do
         {
             Console.WriteLine("\n====== PARKING ======\n");
-            Console.WriteLine("1. Registrar Coche");
+            Console.WriteLine($"{PrimeraOpcion}. Registrar Coche");
             Console.WriteLine("2. Registrar Moto");
             Console.WriteLine("3. Registrar Furgoneta");
             Console.WriteLine("4. Ver vehículos");
             Console.WriteLine("5. Buscar por matrícula");
             Console.WriteLine("6. Mostrar coches");
             Console.WriteLine("7. Guardar registro vehículos Json");
-            Console.WriteLine("8. Volver al menú principal");
-            Console.Write("Introduce el número de la opcion (1-8): ");
+            Console.WriteLine($"{OpcionSalir}. Volver al menú principal");
+            Console.Write($"Introduce el número de la opcion ({PrimeraOpcion}-{OpcionSalir}): ");
 
-            if (!int.TryParse(Console.ReadLine(), out opcion) || opcion < 1 || opcion > OpcionSalir)
+            if (!int.TryParse(Console.ReadLine(), out opcion) || opcion < PrimeraOpcion || opcion > OpcionSalir)
             {
-                Console.WriteLine("Error: Opción no válida. Introduce una opcion del menú (1-8)");
+                Console.WriteLine($"Error: Opción no válida. Introduce una opcion del menú ({PrimeraOpcion}-{OpcionSalir})");
                 continue;
             }
             switch (opcion)
             {
-                case 1:
+                case PrimeraOpcion:
                     RegistrarCoche();
                     break;
 
@@ -79,38 +81,23 @@ class MenuParking
         } while (opcion != OpcionSalir);
     }
 
-    void RegistrarCoche()
+    public void RegistrarCoche()
     {
         try
         {
-            Console.WriteLine("Matrícula: ");
-            string matricula = Console.ReadLine();
+            mensajeInput = "Matrícula ";
+            string matricula = InputUtils.InputString(mensajeInput);
 
-            Console.WriteLine("Marca: ");
-            string marca = Console.ReadLine();
+            mensajeInput = "Marca ";
+            string marca = InputUtils.InputString(mensajeInput);
 
-            int volumenMaletero;
-            Console.WriteLine("Volúmen del maletero (en litros): ");
-            if (!int.TryParse(Console.ReadLine(), out volumenMaletero) || volumenMaletero < 1)
-            {
-                throw new ArgumentOutOfRangeException("Error: Dato no válido. El volumen no puede ser negativo o nulo.");
-            }
+            mensajeInput = "Volúmen del maletero (en litros): ";
+            int volumenMaletero = InputUtils.InputIntMayorQueUno(mensajeInput);
 
-            int capacidadPasajeros;
-            Console.WriteLine("Cantidad de pasajeros: ");
-            if (!int.TryParse(Console.ReadLine(), out capacidadPasajeros) || capacidadPasajeros < 1)
-            {
-                throw new ArgumentOutOfRangeException("Error: Dato no válido. El volumen no puede ser negativo o nulo.");
-            }
-
-            if (marca is null || marca == "" || matricula is null || matricula == "")
-            {
-                throw new NullReferenceException("Error: Dato no válido. Marca o Matricula están vacíos.");
-            }
-
+            mensajeInput = "Volúmen del maletero (en litros): ";
+            int capacidadPasajeros = InputUtils.InputIntMayorQueUno(mensajeInput);
 
             Coche coche = new Coche(matricula, marca, volumenMaletero, capacidadPasajeros);
-
             vehiculos.Add(coche);
         }
         catch (NullReferenceException nre)
@@ -123,35 +110,23 @@ class MenuParking
         }
     }
 
-    void RegistrarMoto()
+    public void RegistrarMoto()
     {
         try
         {
-            Console.WriteLine("Matrícula: ");
-            string matricula = Console.ReadLine();
+            mensajeInput = "Matrícula ";
+            string matricula = InputUtils.InputString(mensajeInput);
 
-            Console.WriteLine("Marca: ");
-            string marca = Console.ReadLine();
+            mensajeInput = "Marca ";
+            string marca = InputUtils.InputString(mensajeInput);
 
-            Console.WriteLine("Tipo de manillar: ");
-            string manillar = Console.ReadLine();
+            mensajeInput = "Tipo de manillar ";
+            string manillar = InputUtils.InputString(mensajeInput);
 
-            bool isScooter = false;
-            Console.WriteLine("¿Es una scooter? (si/no)");
-            string scooter = Console.ReadLine().ToLower().Trim();
-
-            if (marca is null || marca == "" || matricula is null || matricula == "")
-            {
-                throw new NullReferenceException("Error: Dato no válido. Marca, matricula están vacíos.");
-            }
-
-            if (scooter.Equals("si"))
-            {
-                isScooter = true;
-            }
+            mensajeInput = "¿Es una scooter? (si/no) ";
+            bool isScooter = InputUtils.InputBoolOpcionSiNo(mensajeInput);
 
             Moto moto = new Moto(matricula, marca, manillar, isScooter);
-
             vehiculos.Add(moto);
         }
         catch (NullReferenceException nre)
@@ -160,37 +135,23 @@ class MenuParking
         }
     }
 
-    void RegistrarFurgoneta()
+    public void RegistrarFurgoneta()
     {
         try
         {
-            Console.WriteLine("Matrícula: ");
-            string matricula = Console.ReadLine();
+            mensajeInput = "Matrícula ";
+            string matricula = InputUtils.InputString(mensajeInput);
 
-            Console.WriteLine("Marca: ");
-            string marca = Console.ReadLine();
+            mensajeInput = "Marca ";
+            string marca = InputUtils.InputString(mensajeInput);
 
-            int volumenCarga;
-            Console.WriteLine("Volúmen de la carga (en metros cúbicos): ");
-            if (!int.TryParse(Console.ReadLine(), out volumenCarga) || volumenCarga < 1)
-            {
-                throw new ArgumentOutOfRangeException("Error: No puede ser negativo o nulo.");
-            }
+            mensajeInput = "Volúmen de la carga (en metros cúbicos) ";
+            int volumenCarga = InputUtils.InputIntMayorQueUno(mensajeInput);
 
-            int gradosAperturaPuerta;
-            Console.WriteLine("Apertura de la puerta (en grados): ");
-            if (!int.TryParse(Console.ReadLine(), out gradosAperturaPuerta))
-            {
-                throw new ArgumentOutOfRangeException("Error: No puede ser negativo o nulo.");
-            }
-
-            if (marca is null || marca == "" || matricula is null || matricula == "")
-            {
-                throw new NullReferenceException("Error: Dato no válido. Marca, matricula o es scooter están vacíos.");
-            }
+            mensajeInput = "Apertura de la puerta (en grados) ";
+            int gradosAperturaPuerta = InputUtils.InputIntMayorQueUno(mensajeInput);
 
             Furgoneta furgoneta = new Furgoneta(matricula, marca, volumenCarga, gradosAperturaPuerta);
-
             vehiculos.Add(furgoneta);
         }
         catch (NullReferenceException nre)
@@ -203,7 +164,7 @@ class MenuParking
         }
     }
 
-    void ListarVehiculos()
+    public void ListarVehiculos()
     {
         Console.WriteLine("===  Vehículos del Parking   ===");
         foreach (var vehiculo in vehiculos)
@@ -212,11 +173,12 @@ class MenuParking
         }
     }
 
-    void BuscarPorMatricula()
+    public void BuscarPorMatricula()
     {
 
         Console.Write("Introduce la matrícula: ");
         string matriculaTeclado = Console.ReadLine().ToUpper().Trim();
+        Vehiculo vehiculoEncontrado;
 
         bool encontrado = false;
 
@@ -224,7 +186,8 @@ class MenuParking
         {
             if (vehiculo.Matricula.Equals(matriculaTeclado))
             {
-                Console.Write(vehiculo.ObtenerDescripcion());
+                vehiculoEncontrado = vehiculo;
+                Console.Write(vehiculoEncontrado.ObtenerDescripcion());
                 encontrado = true;
             }
 
@@ -237,28 +200,34 @@ class MenuParking
         }
     }
 
-    void MostrarSoloCoches()
+    public void MostrarSoloCoches()
     {
-        int contadorCoches = 0;
-
-        Console.WriteLine("===  Coches del Parking  ===");
+        List<Vehiculo> listaCoches = new List<Vehiculo>();
 
         foreach (var vehiculo in vehiculos)
         {
             if (vehiculo is Coche)
             {
-                Console.Write(vehiculo.ObtenerDescripcion());
-                contadorCoches++;
+                listaCoches.Add(vehiculo);
             }
         }
 
-        if (contadorCoches == 0)
+        if (listaCoches.Count == 0)
         {
             Console.WriteLine("No hay coches registrados en el parking.");
         }
+        else
+        {
+            Console.WriteLine("\n======  COCHES DEL PARKING  ======\n");
+
+            foreach (var coche in listaCoches)
+            {
+                Console.Write(coche.ObtenerDescripcion());
+            }
+        }
     }
 
-    void GuardarFicheroJSON()
+    private void GuardarFicheroJSON()
     {
         string rutaFichero = "vehiculosRegistrados.json";
         string json = JsonSerializer.Serialize(vehiculos);
@@ -266,26 +235,10 @@ class MenuParking
         FicheroUtils.EscrituraFicheroJSON(rutaFichero, json);
     }
 
-    List<Vehiculo> CargarFicheroJson()
+    private List<Vehiculo> CargarFicheroJson()
     {
         string rutaFichero = "vehiculosRegistrados.json";
-        List<Vehiculo> vehiculosJson = new List<Vehiculo>();
-
-        try
-        {
-            if (!File.Exists(rutaFichero))
-            {
-                throw new FileNotFoundException("No se ha encontrado la ruta del fichero");
-            }
-
-            string json = FicheroUtils.LecturaFichero(rutaFichero);
-            vehiculosJson = JsonSerializer.Deserialize<List<Vehiculo>>(json);
-
-            return vehiculosJson;
-        }catch(FileNotFoundException fnfe)
-        {
-            Console.WriteLine(fnfe.ToString());
-            return vehiculosJson;
-        }
+        List<Vehiculo> vehiculosJson = FicheroUtils.CargarDatosFicheroJson<Vehiculo>(rutaFichero);
+        return vehiculosJson;
     }
 }

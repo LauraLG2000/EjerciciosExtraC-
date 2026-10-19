@@ -1,3 +1,5 @@
+using System.Text.Json;
+
 namespace ModelsUtils;
 class FicheroUtils
 {
@@ -24,5 +26,28 @@ class FicheroUtils
     public static string LecturaFichero(string _rutaFichero)
     {
         return File.ReadAllText(_rutaFichero);
+    }
+
+    public static List<T> CargarDatosFicheroJson<T>(string rutaFichero)
+    {
+        List<T> contenidoJson = new List<T>();
+
+        try
+        {
+            if (!File.Exists(rutaFichero))
+            {
+                throw new FileNotFoundException("No se ha encontrado la ruta del fichero");
+            }
+
+            string json = LecturaFichero(rutaFichero);
+            contenidoJson = JsonSerializer.Deserialize<List<T>>(json);
+
+            return contenidoJson;
+        }
+        catch (FileNotFoundException fnfe)
+        {
+            Console.WriteLine(fnfe.ToString());
+            return contenidoJson;
+        }
     }
 }

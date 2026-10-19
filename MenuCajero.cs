@@ -1,7 +1,11 @@
+using ModelsUtils;
+
 class MenuCajero
 {
     private decimal saldo;
     private const int OpcionSalir = 4;
+    private const int PrimeraOpcion = 1;
+    string mensajeInput;
 
     public MenuCajero()
     {
@@ -15,21 +19,21 @@ class MenuCajero
         do
         {
             Console.WriteLine("\n====== CAJERO ======");
-            Console.WriteLine("1. Consultar saldo");
+            Console.WriteLine($"{PrimeraOpcion}. Consultar saldo");
             Console.WriteLine("2. Ingresar dinero");
             Console.WriteLine("3. Retirar dinero");
-            Console.WriteLine("4. Salir");
-            Console.WriteLine("Introduce una opción (1-4): ");
+            Console.WriteLine($"{OpcionSalir}. Salir");
+            Console.WriteLine($"Introduce una opción ({PrimeraOpcion}-{OpcionSalir}): ");
 
-            if (!int.TryParse(Console.ReadLine(), out opcion) || opcion < 1 || opcion > OpcionSalir)
+            if (!int.TryParse(Console.ReadLine(), out opcion) || opcion < PrimeraOpcion || opcion > OpcionSalir)
             {
-                Console.WriteLine("Error: Opción no válida. Introduce una opcion del menú (1-4)");
+                Console.WriteLine($"Error: Opción no válida. Introduce una opcion del menú ({PrimeraOpcion}-{OpcionSalir})");
                 continue;
             }
 
             switch (opcion)
             {
-                case 1:
+                case PrimeraOpcion:
                     ConsultarSaldo();
                     break;
 
@@ -47,22 +51,17 @@ class MenuCajero
         } while (opcion != OpcionSalir);
     }
 
-    void ConsultarSaldo()
+    public void ConsultarSaldo()
     {
         Console.WriteLine($"Saldo actual: {saldo} euros");
     }
 
-    void IngresarDinero()
+    public void IngresarDinero()
     {
         try
         {
-            decimal dineroIngresar;
-            Console.WriteLine("Introduce la cantidad a ingresar: ");
-
-            if (!decimal.TryParse(Console.ReadLine(), out dineroIngresar) || dineroIngresar <= 0)
-            {
-                throw new ArgumentOutOfRangeException("Error: La cantidad a ingresar no puede ser 0 o negativa");
-            }
+            mensajeInput = "Introduce la cantidad a ingresar ";
+            decimal dineroIngresar = InputUtils.InputDecimalMayorQueCero(mensajeInput);
 
             saldo += dineroIngresar;
             Console.WriteLine($"Saldo actualizado: {saldo} euros");
@@ -73,16 +72,16 @@ class MenuCajero
         }
     }
 
-    void RetirarDinero()
+    public void RetirarDinero()
     {
         try
         {
-            decimal dineroRetirar;
-
-            Console.WriteLine("Introduce la cantidad a retirar: ");
-            if (!decimal.TryParse(Console.ReadLine(), out dineroRetirar) || dineroRetirar <= 0 || dineroRetirar > saldo)
+            mensajeInput = "Introduce la cantidad a retirar ";
+            decimal dineroRetirar = InputUtils.InputDecimalMayorQueCero(mensajeInput);
+            
+            if (dineroRetirar > saldo)
             {
-                throw new ArgumentOutOfRangeException("Error: La cantidad no puede ser 0, negativa o superior al saldo disponible");
+                throw new ArgumentOutOfRangeException("Error: La cantidad no puede ser superior al saldo disponible");
             }
 
             saldo -= dineroRetirar;

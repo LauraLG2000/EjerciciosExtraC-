@@ -6,6 +6,7 @@ class MenuVideojuegos
 {
     private List<Personaje> personajes;
     private const int OpcionSalida = 6;
+    string mensajeInput;
 
     public MenuVideojuegos()
     {
@@ -32,12 +33,12 @@ class MenuVideojuegos
             Console.WriteLine("3. Registrar Arquero");
             Console.WriteLine("4. Unidades de la campaña");
             Console.WriteLine("5. Guardar personajes de la partida en Json");
-            Console.WriteLine("6. Volver atrás");
-            Console.WriteLine("Elige una opción (1-6)");
+            Console.WriteLine($"{OpcionSalida}. Volver atrás");
+            Console.WriteLine($"Elige una opción (1-{OpcionSalida})");
 
             if (!int.TryParse(Console.ReadLine(), out opcion) || opcion < 1 || opcion > OpcionSalida)
             {
-                Console.WriteLine("Error: Introduce una opción válida (1-5)");
+                Console.WriteLine($"Error: Introduce una opción válida (1-{OpcionSalida})");
                 continue;
             }
 
@@ -70,34 +71,20 @@ class MenuVideojuegos
         } while (opcion != OpcionSalida);
     }
 
-    void RegistrarGuerrero()
+    public void RegistrarGuerrero()
     {
         try
         {
-            Console.WriteLine("Nombre del guerrero: ");
-            string nombre = Console.ReadLine();
+            mensajeInput = "Nombre del guerrero ";
+            string nombre = InputUtils.InputString(mensajeInput);
 
-            if (nombre is null || nombre == "")
-            {
-                throw new NullReferenceException("Error: el campo nombre no puede estar vacío");
-            }
+            mensajeInput = "Vida del guerrero ";
+            int vida = InputUtils.InputIntMayorQueUno(mensajeInput);
 
-            int vida;
-            Console.WriteLine("Vida del guerrero: ");
-            if (!int.TryParse(Console.ReadLine(), out vida) || vida < 1)
-            {
-                throw new ArgumentOutOfRangeException("Error: Dato no válido.");
-            }
-
-            int fuerza;
-            Console.WriteLine("Fuerza del guerrero: ");
-            if (!int.TryParse(Console.ReadLine(), out fuerza) || fuerza < 1)
-            {
-                throw new ArgumentOutOfRangeException("Error: Dato no válido.");
-            }
+            mensajeInput = "Fuerza del guerrero ";
+            int fuerza = InputUtils.InputIntMayorQueUno(mensajeInput);
 
             Guerrero guerrero = new Guerrero(nombre, vida, fuerza);
-
             personajes.Add(guerrero);
         }
         catch (NullReferenceException nre)
@@ -110,34 +97,20 @@ class MenuVideojuegos
         }
     }
 
-    void RegistrarMago()
+    public void RegistrarMago()
     {
         try
         {
-            Console.WriteLine("Nombre del mago: ");
-            string nombre = Console.ReadLine();
+            mensajeInput = "Nombre del mago ";
+            string nombre = InputUtils.InputString(mensajeInput);
 
-            if (nombre is null || nombre == "")
-            {
-                throw new NullReferenceException("Error: el campo nombre no puede estar vacío");
-            }
+            mensajeInput = "Vida del mago ";
+            int vida = InputUtils.InputIntMayorQueUno(mensajeInput);
 
-            int vida;
-            Console.WriteLine("Vida del mago: ");
-            if (!int.TryParse(Console.ReadLine(), out vida) || vida < 1)
-            {
-                throw new ArgumentOutOfRangeException("Error: Dato no válido.");
-            }
-
-            int mana;
-            Console.WriteLine("Mana: ");
-            if (!int.TryParse(Console.ReadLine(), out mana) || mana < 1)
-            {
-                throw new ArgumentOutOfRangeException("Error: Dato no válido.");
-            }
+            mensajeInput = "Mana del mago ";
+            int mana = InputUtils.InputIntMayorQueUno(mensajeInput);
 
             Mago mago = new Mago(nombre, vida, mana);
-
             personajes.Add(mago);
         }
         catch (NullReferenceException nre)
@@ -150,36 +123,33 @@ class MenuVideojuegos
         }
     }
 
-    void RegistrarArquero()
+    public void RegistrarArquero()
     {
-        Console.WriteLine("Nombre del arquero: ");
-        string nombre = Console.ReadLine();
-
-        if (nombre is null || nombre == "")
-            {
-                throw new NullReferenceException("Error: el campo nombre no puede estar vacío");
-            }
-
-        int vida;
-        Console.WriteLine("Vida del arquero: ");
-        if (!int.TryParse(Console.ReadLine(), out vida) || vida < 1)
+        try
         {
-            throw new ArgumentOutOfRangeException("Error: Dato no válido.");
-        }
+            mensajeInput = "Nombre del mago ";
+            string nombre = InputUtils.InputString(mensajeInput);
 
-        int numeroFlechas;
-        Console.WriteLine("Número de flechas: ");
-        if (!int.TryParse(Console.ReadLine(), out numeroFlechas) || numeroFlechas < 1)
+            mensajeInput = "Vida del mago ";
+            int vida = InputUtils.InputIntMayorQueUno(mensajeInput);
+
+            mensajeInput = "Mana del mago ";
+            int numeroFlechas = InputUtils.InputIntMayorQueUno(mensajeInput);
+
+            Arquero arquero = new Arquero(nombre, vida, numeroFlechas);
+            personajes.Add(arquero);
+        }
+        catch (NullReferenceException nre)
         {
-            throw new ArgumentOutOfRangeException("Error: Dato no válido.");
+            Console.WriteLine(nre.ToString());
         }
-
-        Arquero arquero = new Arquero(nombre, vida, numeroFlechas);
-
-        personajes.Add(arquero);
+        catch (ArgumentOutOfRangeException aoore)
+        {
+            Console.WriteLine(aoore.ToString());
+        }
     }
 
-    void ListarUnidades()
+    public void ListarUnidades()
     {
         Console.WriteLine("\n====== UNIDADES ======\n");
         foreach (var personaje in personajes)
@@ -188,7 +158,7 @@ class MenuVideojuegos
         }
     }
 
-    void GuardarFicheroJson()
+    private void GuardarFicheroJson()
     {
         string rutaFichero = "UnidadesCampaña.json";
         string json = JsonSerializer.Serialize(personajes);
@@ -196,27 +166,11 @@ class MenuVideojuegos
         FicheroUtils.EscrituraFicheroJSON(rutaFichero, json);
     }
 
-    List<Personaje> CargarFicheroJson()
+    private List<Personaje> CargarFicheroJson()
     {
         string rutaFichero = "UnidadesCampaña.json";
-        List<Personaje> personajesJson = new List<Personaje>();
+        List<Personaje> personajesJson = FicheroUtils.CargarDatosFicheroJson<Personaje>(rutaFichero);
 
-        try
-        {
-            if (!File.Exists(rutaFichero))
-            {
-                throw new FileNotFoundException("No se ha encontrado la ruta del fichero");
-            }
-
-            string json = FicheroUtils.LecturaFichero(rutaFichero);
-            personajesJson = JsonSerializer.Deserialize<List<Personaje>>(json);
-
-            return personajesJson;
-        }
-        catch(FileNotFoundException fnfe)
-        {
-            Console.WriteLine(fnfe.ToString());
-            return personajesJson;
-        }
+        return personajesJson;
     }
 }
