@@ -6,15 +6,17 @@ class MenuArticulo
 {
     private List<Articulo> articulos;
     private const int OpcionSalir = 8;
+    private const int PrimeraOpcion = 1;
+    string mensajeInput;
     public MenuArticulo()
     {
         articulos = new List<Articulo>();
 
-        /*articulos.Add(new Articulo("Micrófono", 29.99m));
+        articulos.Add(new Articulo("Micrófono", 29.99m));
         articulos.Add(new Articulo("Ratón Inalámbrico", 40.99m));
-        articulos.Add(new Articulo("Cascos", 9.99m));*/
+        articulos.Add(new Articulo("Cascos", 9.99m));
 
-        articulos = CargarFicheroJson();
+        //articulos = CargarFicheroJson();
     }
 
     public void MostrarMenu()
@@ -24,25 +26,25 @@ class MenuArticulo
         do
         {
             Console.WriteLine("\n====== ARTÍCULOS ======\n");
-            Console.WriteLine("1. Añadir artículo");
+            Console.WriteLine($"{PrimeraOpcion}. Añadir artículo");
             Console.WriteLine("2. Ver artículos");
             Console.WriteLine("3. Artículo más barato");
             Console.WriteLine("4. Precio Medio Artículos");
             Console.WriteLine("5. Listar articulos por un precio máximo");
             Console.WriteLine("6. Guardar listado articulos");
             Console.WriteLine("7. Guardar fichero JSON");
-            Console.WriteLine("8. Salir");
-            Console.Write("Introduce el número de la opcion (1-8): ");
+            Console.WriteLine($"{OpcionSalir}. Salir");
+            Console.Write($"Introduce el número de la opcion ({PrimeraOpcion}-{OpcionSalir}): ");
 
-            if (!int.TryParse(Console.ReadLine(), out opcion) || opcion < 1 || opcion > OpcionSalir)
+            if (!int.TryParse(Console.ReadLine(), out opcion) || opcion < PrimeraOpcion || opcion > OpcionSalir)
             {
-                Console.WriteLine("Error: Opción no válida. Introduce una opcion del menú (1-7)");
+                Console.WriteLine($"Error: Opción no válida. Introduce una opcion del menú ({PrimeraOpcion}-{OpcionSalir})");
                 continue;
             }
 
             switch (opcion)
             {
-                case 1:
+                case PrimeraOpcion:
                     AñadirArticulo();
                     break;
 
@@ -77,24 +79,15 @@ class MenuArticulo
         } while (opcion != OpcionSalir);
     }
 
-    void AñadirArticulo()
+    public void AñadirArticulo()
     {
         try
         {
-            Console.WriteLine("Nombre: ");
-            string nombre = Console.ReadLine();
-            if (nombre is null || nombre == "")
-            {
-                throw new NullReferenceException("Error: Dato no válido. No puede estar vacío el campo nombre.");
-            }
+            mensajeInput = "Nombre ";
+            string nombre = InputUtils.InputString(mensajeInput);
 
-            decimal precio;
-
-            Console.WriteLine("Precio: ");
-            if (!decimal.TryParse(Console.ReadLine(), out precio) || precio < 0)
-            {
-                throw new ArgumentOutOfRangeException("Error: Dato no válido. El precio no puede ser negativo");
-            }
+            mensajeInput = "Precio ";
+            decimal precio = InputUtils.InputDecimalMayorQueCero(mensajeInput);
         }
         catch (NullReferenceException nre)
         {
@@ -106,7 +99,7 @@ class MenuArticulo
         }
     }
 
-    void ListarArticulos()
+    public void ListarArticulos()
     {
         Console.WriteLine("\n====== ARTÍCULOS ======\n");
         foreach (var articulo in articulos)
@@ -115,7 +108,7 @@ class MenuArticulo
         }
     }
 
-    void ArticuloMasBarato()
+    public void ArticuloMasBarato()
     {
         try
         {
@@ -137,7 +130,8 @@ class MenuArticulo
                 }
             }
 
-            Console.Write(articulos[0].DescripcionArticulo());
+            Articulo articuloMasBarato = articulos[0];
+            Console.Write(articuloMasBarato.DescripcionArticulo());
         }
         catch (NullReferenceException nre)
         {
@@ -145,17 +139,17 @@ class MenuArticulo
         }
     }
 
-    void PrecioMedioArticulos()
+    public void PrecioMedioArticulos()
     {
         try
         {
+            decimal sumaPrecios = 0;
+            int cantidadArticulos = articulos.Count;
+
             if (articulos is null || articulos.Count == 0)
             {
                 throw new NullReferenceException("No hay articulos registrados");
             }
-
-            decimal sumaPrecios = 0;
-            int cantidadArticulos = articulos.Count;
 
             foreach (var articulo in articulos)
             {
@@ -170,40 +164,43 @@ class MenuArticulo
         {
             Console.WriteLine(nre.ToString());
         }
-
     }
 
-    void ArticulosPorPrecioMaximo()
+    public void ArticulosPorPrecioMaximo()
     {
         try
         {
-
             if (articulos is null || articulos.Count == 0)
             {
                 throw new NullReferenceException("No hay articulos registrados");
             }
 
-            Console.WriteLine("Precio máximo de la búsqueda:");
+            List<Articulo> articulosPrecioMaximo = new List<Articulo>();
 
-            decimal precioMaximo = 0;
-            int contadorArticulos = 0;
+            mensajeInput = "Precio máximo de la búsqueda ";
+            decimal precioMaximo = InputUtils.InputDecimalMayorQueCero(mensajeInput);
 
-            if (!decimal.TryParse(Console.ReadLine(), out precioMaximo))
-            {
-                throw new InvalidCastException("Dato erroneo");
-            }
             foreach (var articulo in articulos)
             {
                 if (articulo.Precio <= precioMaximo)
                 {
-                    Console.Write(articulo.DescripcionArticulo());
-                    contadorArticulos++;
+                    articulosPrecioMaximo.Add(articulo);
                 }
             }
 
-            if (contadorArticulos == 0)
+            if (articulosPrecioMaximo.Count == 0)
             {
                 Console.WriteLine($"No hay artículos con un precio inferior o igual a {precioMaximo}€");
+            }
+            else
+            {
+                foreach (var articulo in articulosPrecioMaximo)
+                {
+                    if (articulo.Precio <= precioMaximo)
+                    {
+                        Console.Write(articulo.DescripcionArticulo());
+                    }
+                }
             }
         }
         catch (NullReferenceException nre)
@@ -214,7 +211,6 @@ class MenuArticulo
         {
             Console.WriteLine(ice.ToString());
         }
-
     }
 
     private void GuardarFichero()
@@ -238,26 +234,7 @@ class MenuArticulo
     private List<Articulo> CargarFicheroJson()
     {
         string rutaFichero = "articulos.json";
-        List<Articulo> articulosJson = new List<Articulo>();
-
-        try
-        {
-            if (!File.Exists(rutaFichero))
-            {
-                throw new FileNotFoundException("No se encuentra la ruta");
-            }
-
-            string json = FicheroUtils.LecturaFichero(rutaFichero);
-            articulosJson = JsonSerializer.Deserialize<List<Articulo>>(json);
-
-            return articulosJson;
-
-
-        }
-        catch (FileNotFoundException fnfe)
-        {
-            Console.WriteLine(fnfe.ToString());
-            return articulosJson;
-        }
+        List<Articulo> articulosJson = FicheroUtils.CargarDatosFicheroJson<Articulo>(rutaFichero);
+        return articulosJson;
     }
 }
